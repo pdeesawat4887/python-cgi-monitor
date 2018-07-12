@@ -2,18 +2,20 @@
 import cgi
 from easysnmp import Session
 
+
 class Router:
 
     def __init__(self, host, community, version):
         self.host = host
         self.community = community
         self.version = version
-        self.session =  Session(hostname=self.host,
+        self.session = Session(hostname=self.host,
                                community=self.community, version=self.version)
 
     def walkthrough(self, oid):
         items = self.session.walk(oid)
         return items
+
 
 print "Content-type: text/html\n\n"
 print '<!DOCTYPE html>'
@@ -44,22 +46,42 @@ print '<p><input name="oid" class="input is-rounded" type="text" placeholder="sy
 print '<p><input type="submit" class="button is-primary" value="submit" />'
 print '</form>'
 
-
 form = cgi.FieldStorage()
 if form.getvalue("ipaddress"):
     ipaddress = form.getvalue('ipaddress')
-    print '<br><h1> You want to monitor router that contain ip address <strong>'+ipaddress+'.</strong> Wait a min ... </h1><br>'
+    print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
 if form.getvalue("oid"):
     oid = form.getvalue('oid')
 
-router = Router(ipaddress, 'public', 2)
-info = router.walkthrough(oid)
-help = '-'
+    router = Router(ipaddress, 'public', 2)
+    info = router.walkthrough(oid)
+
+print '''
+<br>
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+  <tr>
+    <th>OID</th>
+    <th>Description</th> 
+  </tr> '''
+#   <tr>
+#     <td>Jill</td>
+#     <td>Smith</td>
+#     <td>50</td>
+#   </tr>
+#   <tr>
+#     <td>Eve</td>
+#     <td>Jackson</td>
+#     <td>94</td>
+#   </tr>
+# </table> '''
+
 for item in info:
-    print '<p> {:.<50} <strong> {} </strong>'.format(item.oid, item.value)
+    print '<tr>' \
+          '<td>'+item.oid+'</td>' \
+                          '<td>'+item.value+'</td>'
+    # print '<p> {:.<50} <strong> {} </strong>'.format(item.oid, item.value)
+print '</table>'
 print '</div>'
 print '</section>'
 print '</body>'
 print '</html>'
-
-# hello
