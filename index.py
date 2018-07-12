@@ -43,18 +43,59 @@ print '<p class="subtitle">Fill ip address of router that you want to monitor.</
 print '<p><input name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1"/></p><br>'
 print '<p class="subtitle">Fill oid in MIB-II that you want to monitor.</p>'
 print '<p><input name="oid" class="input is-rounded" type="text" placeholder="system or 1.6.3.9.1"/></p><br>'
+print '''
+<table class="table is-fullwidth">
+<tr>
+<th><label class="checkbox"><input type="checkbox" name="system" value="system">  System</label></th>
+<th><label class="checkbox"><input type="checkbox" name="icmp" value="icmp">    ICMP</label></th>
+</tr>
+<tr>
+<th><label class="checkbox"><input type="checkbox" name="snmp" value="snmp">    SNMP</label></th> 
+<th><label class="checkbox"><input type="checkbox" name="udp" value="udp"> UDP</label></th>
+</tr>
+<tr>
+<th><label class="checkbox"><input type="checkbox" name="aaa" > ALL</label></th>
+<th><label class="checkbox"><input type="checkbox" name="bbb" > ALL...</label></th>
+</tr>
+</table>
+'''
+
 print '<p><input type="submit" class="button is-primary" value="submit" />'
 print '</form>'
 
+list = []
+
 form = cgi.FieldStorage()
+
+#Get value from textfeild
 if form.getvalue("ipaddress"):
     ipaddress = form.getvalue('ipaddress')
     print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
 if form.getvalue("oid"):
     oid = form.getvalue('oid')
 
-    router = Router(ipaddress, 'public', 2)
-    info = router.walkthrough(oid)
+#Get value from checkbox
+if form.getvalue("system"):
+    list.append("system")
+
+if form.getvalue("icmp"):
+    list.append("icmp")
+
+if form.getvalue("snmp"):
+    list.append("snmp")
+
+if form.getvalue("udp"):
+    list.append("udp")
+
+if form.getvalue("aaa"):
+    list.append("hello")
+
+if form.getvalue("bbb"):
+    list.append("world")
+
+print list
+
+
 
 print '''
 <br>
@@ -63,17 +104,9 @@ print '''
     <th>OID</th>
     <th>Description</th> 
   </tr> '''
-#   <tr>
-#     <td>Jill</td>
-#     <td>Smith</td>
-#     <td>50</td>
-#   </tr>
-#   <tr>
-#     <td>Eve</td>
-#     <td>Jackson</td>
-#     <td>94</td>
-#   </tr>
-# </table> '''
+
+router = Router(ipaddress, 'public', 2)
+info = router.walkthrough(oid)
 
 for item in info:
     print '<tr>' \
