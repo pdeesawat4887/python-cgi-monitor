@@ -1,10 +1,15 @@
 #!/Applications/XAMPP/xamppfiles/htdocs/python/venv/bin/python
 import cgi
 from easysnmp import Session
+# import ntplib
+# from time import ctime
 
 list = []
 info = []
 dict_oid = {}
+
+# c = ntplib.NTPClient()
+# response = c.request('pool.ntp.org')
 
 
 def create_dict(dict, file):
@@ -81,21 +86,21 @@ print '''
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="system"> System
+                                    <input type="checkbox" name="system" id="check_0"> System
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="snmp"> SNMP
+                                    <input type="checkbox" name="snmp" id="check_1"> SNMP
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="icmp"> ICMP
+                                    <input type="checkbox" name="icmp" id="check_2"> ICMP
                                 </label>
                             </div>
                         </div>
@@ -104,14 +109,14 @@ print '''
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="udp"> UDP
+                                    <input type="checkbox" name="udp" id="check_3"> UDP
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="all"> All
+                                    <input type="checkbox" name="all" onclick="check_all()" id="checkall"> All
                                 </label>
                             </div>
                         </div>
@@ -135,6 +140,7 @@ form = cgi.FieldStorage()
 if form.getvalue("ipaddress"):
     ipaddress = form.getvalue('ipaddress')
     print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
+
 if form.getvalue("oid"):
     oid = form.getvalue('oid')
     list.append(oid)
@@ -152,9 +158,6 @@ if form.getvalue("snmp"):
 if form.getvalue("udp"):
     list.append("udp")
 
-if form.getvalue("all"):
-    list.extend(["system", "icmp", "snmp", "udp"])
-
 print '''
 <br>
 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -171,7 +174,7 @@ for oid_spec in list:
     temp_result.append(walker.walkthrough(oid_spec))
 
 for item in temp_result:
-    print '<tr class="is-selected"><td><strong>' + (list[temp_result.index(item)].upper()) + '</strong></td><td></td></tr>'
+    print '<tr class="is-selected"><td><strong>' + list[temp_result.index(item)].upper() + '</strong></td><td></td></tr>'
     for result in item:
         if result.value != '0' and result.value != '0.0.0.0':                                                           # Condition cut-off 0 result
             print '<tr>' \
@@ -205,3 +208,26 @@ print '</div>'
 print '</section>'
 print '</body>'
 print '</html>'
+
+print '''<script type="text/javascript">
+function check_all()
+{
+ 
+    for(i=0;i<4;i++)
+    {
+        tmp_checkbox_id = "check_"+i;
+            //alert(tmp_checkbox_id);
+            if(document.getElementById("checkall").checked == true)
+            {    
+                //alert("hi");
+                document.getElementById(tmp_checkbox_id).checked = true;
+            }
+            else
+            {    
+                //alert("bye");
+                document.getElementById(tmp_checkbox_id).checked = false;
+            }
+ 
+    }
+}
+</script>'''
