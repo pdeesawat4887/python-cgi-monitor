@@ -53,10 +53,28 @@ print 'My first website with <strong>Bulma</strong>!'
 print '</p>'
 print '<br><br>'
 print '<form method="POST" action="index.py">'
-print '<p class="subtitle">Fill ip address of router that you want to monitor.</p>'
-print '<p><input name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1"/></p><br>'
-print '<p class="subtitle">Fill oid in MIB-II that you want to monitor.</p>'
-print '<p><input name="oid" class="input is-rounded" type="text" placeholder="system or 1.6.3.9.1"/></p><br>'
+print '''
+                <div class="columns">
+                    <div class="column is-4">
+                        <div class="field">
+                            <label class="label">
+                                Fill ip address of router that you want to monitor.
+                            </label>
+                            <div class="control">
+                                <input name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">
+                                Fill oid in MIB-II that you want to monitor.
+                            </label>
+                            <div class="control">
+                                <input name="oid" class="input is-rounded" type="text" placeholder="system or 1.6.3.9.1" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+'''
 print '''
                 <div class="columns">
                     <div class="column is-2">
@@ -153,11 +171,12 @@ for oid_spec in list:
     temp_result.append(walker.walkthrough(oid_spec))
 
 for item in temp_result:
-    print '<tr><td><strong>' + list[temp_result.index(item)] + '</strong></td><td></td></tr>'
+    print '<tr class="is-selected"><td><strong>' + (list[temp_result.index(item)].upper()) + '</strong></td><td></td></tr>'
     for result in item:
-        print '<tr>' \
-              '<td>' + result.oid + '</td>' \
-                                    '<td>' + result.value + '</td>'
+        if result.value != '0' and result.value != '0.0.0.0':                                                           # Condition cut-off 0 result
+            print '<tr>' \
+                  '<td>' + result.oid + '</td>' \
+                                        '<td>' + result.value + '</td>'
 # Start thinking concept
 # temp = []
 # info = walker.walkthrough('1.3.6.1.2.1.2.1')
