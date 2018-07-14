@@ -2,7 +2,7 @@
 import cgi
 from easysnmp import Session
 # import ntplib
-# from time import ctime
+from time import ctime
 
 list = []
 info = []
@@ -37,6 +37,30 @@ class Router:
 
 
 print "Content-type: text/html\n\n"
+# Javascrip use for checkbox all disable
+print '''<script type="text/javascript">
+function check_all()
+{
+
+    for(i=0;i<4;i++)
+    {
+        tmp_checkbox_id = "check_"+i;
+            //alert(tmp_checkbox_id);
+            if(document.getElementById("checkall").checked == true)
+            {    
+                //alert("hi");
+                document.getElementById(tmp_checkbox_id).checked = true;
+            }
+            else
+            {    
+                //alert("bye");
+                document.getElementById(tmp_checkbox_id).checked = false;
+            }
+
+    }
+}
+</script>'''
+
 print '<!DOCTYPE html>'
 print '<html>'
 print '<head>'
@@ -208,26 +232,3 @@ print '</div>'
 print '</section>'
 print '</body>'
 print '</html>'
-
-print '''<script type="text/javascript">
-function check_all()
-{
- 
-    for(i=0;i<4;i++)
-    {
-        tmp_checkbox_id = "check_"+i;
-            //alert(tmp_checkbox_id);
-            if(document.getElementById("checkall").checked == true)
-            {    
-                //alert("hi");
-                document.getElementById(tmp_checkbox_id).checked = true;
-            }
-            else
-            {    
-                //alert("bye");
-                document.getElementById(tmp_checkbox_id).checked = false;
-            }
- 
-    }
-}
-</script>'''
