@@ -1,97 +1,45 @@
-#!/Applications/XAMPP/xamppfiles/htdocs/python/venv/bin/python
-import cgi
-from easysnmp import Session
-# import ntplib
-from time import ctime
+<!DOCTYPE html>
+<html>
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIT-CATMA</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script> -->
 
-first_dict = {}
+</head>
 
-def create_dict(dict, file):
-    with open(file) as f:
-        for line in f:
-            key, value = line.strip().split()
-            dict[key] = value
-
-
-create_dict(first_dict, "oid_list.txt")
-
-val = str(first_dict.__len__() - 1)
-
-print "Content-type: text/html\n\n"
-
-# Javascript use for checkbox all disable
-print '''
-<script type="text/javascript">
-function check_all()
-{
-    for(i=0;i<''' + (val) + ''';i++)
-    {
-        tmp_checkbox_id = "check_"+i;
-            //alert(tmp_checkbox_id);
-            if(document.getElementById("checkall").checked == true)
-            {    
-                //alert("hi");
-                document.getElementById(tmp_checkbox_id).checked = true;
-            }
-            else
-            {    
-                //alert("bye");                
-                document.getElementById(tmp_checkbox_id).checked = false;
-            }
-
-    }
-}
-
-var list_ip = [];
-function myFunction(){
-    var x = document.getElementById("ipaddress").value;
-    list_ip.push(x);
-    console.log(list_ip);
-}
-
-</script>'''
-
-print '<!DOCTYPE html>'
-print '<html>'
-print '<head>'
-print '<meta charset="utf-8">'
-print '<meta name="viewport" content="width=device-width, initial-scale=1">'
-print '<title>AIT-CATMA</title>'
-print '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">'
-print '<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>'
-print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>'
-print '</head>'
-print '<body>'
-print '<section class="section">'
-print '<div class="container">'
-print '<h1 class="title">'
-print 'Hello SNMP at CATMA'
-print '</h1>'
-print '<p class="subtitle">'
-print 'My first website with <strong>Bulma</strong>!'
-print '</p>'
-print '<br><br>'
-print '<form method="POST" action="test.py" target="_blank">'
-print '''
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Hello SNMP at CATMA</h1>
+            <p class="subtitle">my first website with
+                <strong>Bulma</strong>!</strong>
+            </p>
+            <br>
+            <br>
+            <form method="POST" action="test.py">
                 <div class="columns">
                     <div class="column is-6">
-                        <div class="field">
+                        <div class="field" id="test">
                             <label class="label">
                                 Fill ip address of router that you want to monitor.
                             </label>
                             <div class="field is-grouped">
                                 <div class="control is-expanded">
-                                    <input id="ipaddress" name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1" />
+                                    <input name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1" id="ip" />
                                 </div>
                                 <div class="control is-expanded">
-                                    <a class="button is-link" id="add_fields" onclick="myFunction()">Add</a>
+                                    <a class="button is-link" id="add_fields">Add</a>
                                 </div>
                             </div>
+                            <p class="help is-success" id="good">Success.</p>
+                            <p class="help is-danger" id="bad">Error.</p>
                         </div>
                     </div>
                 </div>
-                
                 <div class="columns">
                     <div class="column is-5">
                         <div class="field">
@@ -104,28 +52,26 @@ print '''
                         </div>
                     </div>
                 </div>
-'''
-print '''
                 <div class="columns">
                     <div class="column is-2">
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="system" id="check_0"> System
+                                    <input type="checkbox" value="System"> System
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="snmp" id="check_1"> SNMP
+                                    <input type="checkbox" value="SNMP"> SNMP
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="icmp" id="check_2"> ICMP
+                                    <input type="checkbox" value="ICMP"> ICMP
                                 </label>
                             </div>
                         </div>
@@ -134,21 +80,21 @@ print '''
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="udp" id="check_3"> UDP
+                                    <input type="checkbox" value="UDP"> UDP
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="interface" id="check_4"> interface
+                                    <input type="checkbox" value="All"> All
                                 </label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="field-body">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="all" onclick="check_all()" id="checkall"> All
+                                    <input type="checkbox" value="All"> All
                                 </label>
                             </div>
                         </div>
@@ -163,12 +109,34 @@ print '''
                         </div>
                     </div>
                 </div>
-'''
-print '</form>'
-print '</div>'
-print '</section>'
-print '</body>'
-print '</html>'
-print '<script type="text/javascript">'
-print '$(".example").html("' + val + '")'
-print '</script>'
+            </form>
+        </div>
+    </section>
+</body>
+<script>
+    $(function () {
+        $('#good').hide();
+        $('#bad').hide();
+        var list_host = [];
+
+        $('#add_fields').on('click', function () {
+            if ($('#ip').val() != '') {
+                if ($('#ip').val().length > 6) {
+                    list_host.push(($('#ip').val()));
+                    console.log(list_host);
+                    $('#good').show();
+                    $('#bad').hide();
+                    $('#ip').val('');
+                }
+                else {
+                    $('#good').hide();
+                    $('#bad').show();
+                }
+            }
+
+        });
+
+    });
+</script>
+
+</html>

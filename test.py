@@ -17,7 +17,7 @@ def create_dict(dict, file):
     with open(file) as f:
         for line in f:
             key, value = line.strip().split()
-            dict[key] = value
+            dict[key] = value.split(',')
 
 
 create_dict(dict_oid, "oid_list.txt")
@@ -87,6 +87,11 @@ if form.getvalue("snmp"):
 if form.getvalue("udp"):
     list.append("udp")
 
+if form.getvalue("interface"):
+    for int in dict_oid['interface']:
+        list.append(int)
+
+
 print '''
 <br>
 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -106,7 +111,7 @@ for item in temp_result:
     print '<tr class="is-selected"><td><strong>' + list[
         temp_result.index(item)].upper() + '</strong></td><td></td></tr>'
     for result in item:
-        if result.value != '0' and result.value != '0.0.0.0':  # Condition cut-off 0 result
+        # if result.value != '0' and result.value != '0.0.0.0':  # Condition cut-off 0 result
             print '<tr>' \
                   '<td>' + result.oid + '</td>' \
                                         '<td>' + result.value + '</td>'

@@ -1,4 +1,5 @@
 from easysnmp import Session
+import unicodedata
 
 dict_oid = {}
 
@@ -25,9 +26,15 @@ def create_dict(dict, file):
 
 create_dict(dict_oid, "oid_list.txt")
 
-router = Router('192.168.1.8', 'public', 2)
+router = Router('192.168.1.5', 'public', 2)
 
-list = ['system']
+aaa = router.walkthrough('ifPhysAddress')
+
+for i in aaa:
+    print unicodedata.normalize('NFKD', i.value).encode('ascii', 'ignore')
+    # print type(i.value)
+
+list = ['interface']
 info = []
 
 for it in list:
