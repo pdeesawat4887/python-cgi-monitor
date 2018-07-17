@@ -163,6 +163,24 @@ if form.getvalue("oid"):
 if form.getvalue("droplist"):
     mib = form.getvalue("droplist")
 
+# Get value from checkbox
+# if form.getvalue("system"):
+#     list.append("system")
+#
+# if form.getvalue("icmp"):
+#     list.append("icmp")
+#
+# if form.getvalue("snmp"):
+#     list.append("snmp")
+#
+# if form.getvalue("udp"):
+#     list.append("udp")
+#
+# if form.getvalue("interface"):
+#     for int in dict_oid['interface']:
+#         list.append(int)
+
+
 if (form.getvalue("droplist") == "interface"):
     interface()
 else:
@@ -179,6 +197,9 @@ temp_result = []
 walker = Router(ipaddress, 'public', 2)
 temp_result.append(walker.walkthrough(mib))
 
+# for oid_spec in list:
+#     temp_result.append(walker.walkthrough(oid_spec))
+
 for item in temp_result:
     print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
     for result in item:
@@ -186,6 +207,28 @@ for item in temp_result:
         print '<tr>' \
               '<td>' + result.oid + '</td>' \
                                     '<td>' + result.value + '</td>'
+# Start thinking concept
+# temp = []
+# info = walker.walkthrough('1.3.6.1.2.1.2.1')
+# info2 = walker.walkthrough('1.3.6.1.2.1.1.1')
+#
+# temp.append(info)
+# temp.append(info2)
+#
+# print(temp)
+#
+# for i in temp:
+#     for x in i:
+#         print x.value
+
+# for item in info:
+#     print '<tr>' \
+#           '<td>'+item.oid+'</td>' \
+#                           '<td>'+item.value+'</td>'
+# for item in info2:
+#     print '<tr>' \
+#           '<td>'+item.oid+'</td>' \
+#                           '<td>'+item.value+'</td>'
 
 print '</table>'
 print '</div>'

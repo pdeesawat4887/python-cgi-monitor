@@ -88,7 +88,7 @@ def statusChange(integer):
 
 
 list_oid = ['ifDescr', 'ifType', 'ifMtu', 'ifSpeed', 'ifAdminStatus', 'ifOperStatus']
-router = Router('192.168.91.41', 'public', 2)
+router = Router('192.168.1.8', 'public', 2)
 
 result_desc = router.walkthrough('ifDescr')
 result_Type = router.walkthrough('ifType')
