@@ -36,6 +36,10 @@ class Router:
         items = self.session.walk(oid)
         return items
 
+
+def intrface():
+    pass
+
 form = cgi.FieldStorage()
 
 # Get value from textfeild
@@ -74,23 +78,30 @@ if form.getvalue("oid"):
     oid = form.getvalue('oid')
     list.append(oid)
 
+if form.getvalue("droplist"):
+    mib = form.getvalue("droplist")
+    print mib
+
 # Get value from checkbox
-if form.getvalue("system"):
-    list.append("system")
+# if form.getvalue("system"):
+#     list.append("system")
+#
+# if form.getvalue("icmp"):
+#     list.append("icmp")
+#
+# if form.getvalue("snmp"):
+#     list.append("snmp")
+#
+# if form.getvalue("udp"):
+#     list.append("udp")
+#
+# if form.getvalue("interface"):
+#     for int in dict_oid['interface']:
+#         list.append(int)
 
-if form.getvalue("icmp"):
-    list.append("icmp")
 
-if form.getvalue("snmp"):
-    list.append("snmp")
-
-if form.getvalue("udp"):
-    list.append("udp")
-
-if form.getvalue("interface"):
-    for int in dict_oid['interface']:
-        list.append(int)
-
+if (form.getvalue("droplist") == "interface"):
+    print "OK"
 
 print '''
 <br>
@@ -100,16 +111,20 @@ print '''
     <th>Description</th>
   </tr>
 '''
-walker = Router(ipaddress, 'public', 2)
+
+
 
 temp_result = []
+walker = Router(ipaddress, 'public', 2)
+temp_result.append(walker.walkthrough(mib))
 
-for oid_spec in list:
-    temp_result.append(walker.walkthrough(oid_spec))
+
+
+# for oid_spec in list:
+#     temp_result.append(walker.walkthrough(oid_spec))
 
 for item in temp_result:
-    print '<tr class="is-selected"><td><strong>' + list[
-        temp_result.index(item)].upper() + '</strong></td><td></td></tr>'
+    print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
     for result in item:
         # if result.value != '0' and result.value != '0.0.0.0':  # Condition cut-off 0 result
             print '<tr>' \

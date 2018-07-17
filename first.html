@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIT-CATMA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+
+</head>
+<nav class="navbar is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item brand-text" href="">
+                <image src="logo.png">
+            </a>
+            <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">
+                    Monitor
+                </a>
+            </div>
+        </div>
+    </nav>
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4">
+                    <h1 class="title">Hello SNMP at <span  style="color: #ff6600">CAT</span><span style="color: #55595d">MA</span></h1>
+                    <p class="subtitle">my first website with
+                        <strong>Bulma</strong>!</strong>
+                    </p>
+                    <hr class="hr" style="margin-top: 0">
+                    <form method="POST" action="test.py" target="_blank">
+                        <div class="field">
+                            <label class="label">
+                                Fill ip address of router that you want to monitor.
+                            </label>
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <input name="ipaddress" class="input is-rounded" type="text" placeholder="eg. 192.168.10.1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">
+                                Fill community string of router that you want to monitor.
+                            </label>
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <input name="community" class="input is-rounded" type="text" placeholder="eg. public"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Fill oid in MIB-II that you want to monitor.
+                            </label>
+                            <div class="control">
+                                <input name="oid" class="input is-rounded" type="text" placeholder="eg. 1.3.6.1.2.1.1.1" />
+                            </div>
+                        </div>
+                        
+                        <div class="field is-grouped is-grouped-centered">
+                            <div class="select is-link">
+                                <select name="droplist">
+                                    <option>Select dropdown</option>
+                                    <option value="system">System</option>
+                                    <option value="interface">Interface</option>
+                                    <option value="snmp">SNMP</option>
+                                    <option value="icmp">ICMP</option>
+                                    <option value="udp">UDP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="hr">
+                        <div class="field is-grouped is-grouped-centered">
+                            <p class="control">
+                                <button type="submit" class="button is-link">
+                                    Submit
+                                </button>
+                            </p>
+                            <p class="control">
+                                <a class="button is-light">
+                                    Cancel
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="column">
+                    <hr style="width: 2px; height: 100%">
+                </div>
+                <div class="column">
+                    <h1 class="title">Router</h1>
+                    <table class="table is-fullwidth is-bordered is-narrow">
+                        <thead>
+                            <tr>
+                                <th class="has-text-centered">
+                                    Hostname
+                                </th>
+                                <th class="has-text-centered">
+                                    Location
+                                </th>
+                                <th class="has-text-centered">
+                                    Uptime
+                                </th>
+                                <th class="has-text-centered">
+                                    Total Interface
+                                </th>
+                                <th class="has-text-centered">
+                                    CPU Usage
+                                </th>
+                                <th class="has-text-centered">
+                                    Memory Used
+                                </th>
+                                <th class="has-text-centered">
+                                    Power State
+                                </th>
+                                <th class="has-text-centered">
+                                    Temperature State
+                                </th>
+                                <th class="has-text-centered">
+                                    Voltage State
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="has-text-centered">td-tdto-pe-9006-1</td>
+                                <td class="has-text-centered">BKK</td>
+                                <td class="has-text-centered">1:16:40.14</td>
+                                <td class="has-text-centered">12</td>
+                                <td class="has-text-centered">3</td>
+                                <td class="has-text-centered">68 / 512</td>
+                                <td class="has-text-centered">Normal</td>
+                                <td class="has-text-centered">Normal</td>
+                                <td class="has-text-centered">Normal</td>
+                            </tr>
+                            <tr>
+                                <td class="has-text-centered">td-tdto-pe-9006-2</td>
+                                <td class="has-text-centered">BKK</td>
+                                <td class="has-text-centered">1:16:40.14</td>
+                                <td class="has-text-centered">12</td>
+                                <td class="has-text-centered">3</td>
+                                <td class="has-text-centered">68 / 256</td>
+                                <td class="has-text-centered">Normal</td>
+                                <td class="has-text-centered">Normal</td>
+                                <td class="has-text-centered">Normal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

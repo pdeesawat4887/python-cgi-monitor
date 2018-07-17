@@ -1,7 +1,8 @@
 from easysnmp import Session
 import unicodedata
 
-dict_oid = {}
+
+# dict_oid = {}
 
 class Router:
 
@@ -17,29 +18,127 @@ class Router:
         return items
 
 
+# def create_dict(dict, file):
+#     with open(file) as f:
+#         for line in f:
+#             key, value = line.strip().split()
+#             dict[key] = value
+#
+# create_dict(dict_oid, "oid_list.txt")
+def typeChange(integer):
+    type = {1: 'other', 2: 'regular1822', 3: 'hdh1822', 4: 'ddnX25', 5: 'rfc877x25', 6: 'ethernetCsmacd',
+            7: 'iso88023Csmacd', 8: 'iso88024TokenBus', 9: 'iso88025TokenRing', 10: 'iso88026Man', 11: 'starLan',
+            12: 'proteon10Mbit', 13: 'proteon80Mbit', 14: 'hyperchannel', 15: 'fddi', 16: 'lapb', 17: 'sdlc', 18: 'ds1',
+            19: 'e1', 20: 'basicISDN', 21: 'primaryISDN', 22: 'propPointToPointSerial', 23: 'ppp',
+            24: 'softwareLoopback',
+            25: 'eon', 26: 'ethernet3Mbit', 27: 'nsip', 28: 'slip', 29: 'ultra', 30: 'ds3', 31: 'sip', 32: 'frameRelay',
+            33: 'rs232', 34: 'para', 35: 'arcnet', 36: 'arcnetPlus', 37: 'atm', 38: 'miox25', 39: 'sonet', 40: 'x25ple',
+            41: 'iso88022llc', 42: 'localTalk', 43: 'smdsDxi', 44: 'frameRelayService', 45: 'v35', 46: 'hssi',
+            47: 'hippi',
+            48: 'modem', 49: 'aal5', 50: 'sonetPath', 51: 'sonetVT', 52: 'smdsIcip', 53: 'propVirtual',
+            54: 'propMultiplexor', 55: 'ieee80212', 56: 'fibreChannel', 57: 'hippiInterface',
+            58: 'frameRelayInterconnect',
+            59: 'aflane8023', 60: 'aflane8025', 61: 'cctEmul', 62: 'fastEther', 63: 'isdn', 64: 'v11', 65: 'v36',
+            66: 'g703at64k', 67: 'g703at2mb', 68: 'qllc', 69: 'fastEtherFX', 70: 'channel', 71: 'ieee80211',
+            72: 'ibm370parChan', 73: 'escon', 74: 'dlsw', 75: 'isdns', 76: 'isdnu', 77: 'lapd', 78: 'ipSwitch',
+            79: 'rsrb',
+            80: 'atmLogical', 81: 'ds0', 82: 'ds0Bundle', 83: 'bsc', 84: 'async', 85: 'cnr', 86: 'iso88025Dtr',
+            87: 'eplrs',
+            88: 'arap', 89: 'propCnls', 90: 'hostPad', 91: 'termPad', 92: 'frameRelayMPI', 93: 'x213', 94: 'adsl',
+            95: 'radsl', 96: 'sdsl', 97: 'vdsl', 98: 'iso88025CRFPInt', 99: 'myrinet', 100: 'voiceEM', 101: 'voiceFXO',
+            102: 'voiceFXS', 103: 'voiceEncap', 104: 'voiceOverIp', 105: 'atmDxi', 106: 'atmFuni', 107: 'atmIma',
+            108: 'pppMultilinkBundle', 109: 'ipOverCdlc', 110: 'ipOverClaw', 111: 'stackToStack',
+            112: 'virtualIpAddress',
+            113: 'mpc', 114: 'ipOverAtm', 115: 'iso88025Fiber', 116: 'tdlc', 117: 'gigabitEthernet', 118: 'hdlc',
+            119: 'lapf', 120: 'v37', 121: 'x25mlp', 122: 'x25huntGroup', 123: 'trasnpHdlc', 124: 'interleave',
+            125: 'fast',
+            126: 'ip', 127: 'docsCableMaclayer', 128: 'docsCableDownstream', 129: 'docsCableUpstream',
+            130: 'a12MppSwitch',
+            131: 'tunnel', 132: 'coffee', 133: 'ces', 134: 'atmSubInterface', 135: 'l2vlan', 136: 'l3ipvlan',
+            137: 'l3ipxvlan', 138: 'digitalPowerline', 139: 'mediaMailOverIp', 140: 'dtm', 141: 'dcn', 142: 'ipForward',
+            143: 'msdsl', 144: 'ieee1394', 145: 'if-gsn', 146: 'dvbRccMacLayer', 147: 'dvbRccDownstream',
+            148: 'dvbRccUpstream', 149: 'atmVirtual', 150: 'mplsTunnel', 151: 'srp', 152: 'voiceOverAtm',
+            153: 'voiceOverFrameRelay', 154: 'idsl', 155: 'compositeLink', 156: 'ss7SigLink', 157: 'propWirelessP2P',
+            158: 'frForward', 159: 'rfc1483', 160: 'usb', 161: 'ieee8023adLag', 162: 'bgppolicyaccounting',
+            163: 'frf16MfrBundle', 164: 'h323Gatekeeper', 165: 'h323Proxy', 166: 'mpls', 167: 'mfSigLink', 168: 'hdsl2',
+            169: 'shdsl', 170: 'ds1FDL', 171: 'pos', 172: 'dvbAsiIn', 173: 'dvbAsiOut', 174: 'plc', 175: 'nfas',
+            176: 'tr008', 177: 'gr303RDT', 178: 'gr303IDT', 179: 'isup', 180: 'propDocsWirelessMaclayer',
+            181: 'propDocsWirelessDownstream', 182: 'propDocsWirelessUpstream', 183: 'hiperlan2', 184: 'propBWAp2Mp',
+            185: 'sonetOverheadChannel', 186: 'digitalWrapperOverheadChannel', 187: 'aal2', 188: 'radioMAC',
+            189: 'atmRadio', 190: 'imt', 191: 'mvl', 192: 'reachDSL', 193: 'frDlciEndPt', 194: 'atmVciEndPt',
+            195: 'opticalChannel', 196: 'opticalTransport', 197: 'propAtm', 198: 'voiceOverCable', 199: 'infiniband',
+            200: 'teLink', 201: 'q2931', 202: 'virtualTg', 203: 'sipTg', 204: 'sipSig', 205: 'docsCableUpstreamChannel',
+            206: 'econet', 207: 'pon155', 208: 'pon622', 209: 'bridge', 210: 'linegroup', 211: 'voiceEMFGD',
+            212: 'voiceFGDEANA', 213: 'voiceDID', 214: 'mpegTransport', 215: 'sixToFour', 216: 'gtp',
+            217: 'pdnEtherLoop1',
+            218: 'pdnEtherLoop2', 219: 'opticalChannelGroup', 220: 'homepna', 221: 'gfp', 222: 'ciscoISLvlan',
+            223: 'actelisMetaLOOP', 224: 'fcipLink', 225: 'rpr', 226: 'qam', 227: 'lmp', 228: 'cblVectaStar',
+            229: 'docsCableMCmtsDownstream', 230: 'adsl2', 231: 'macSecControlledIF', 232: 'macSecUncontrolledIF',
+            233: 'aviciOpticalEther', 234: 'atmbond'}
+    return type[integer]
 
-def create_dict(dict, file):
-    with open(file) as f:
-        for line in f:
-            key, value = line.strip().split()
-            dict[key] = value
 
-create_dict(dict_oid, "oid_list.txt")
+def statusChange(integer):
+    case = {1: 'up', 2: 'down', 3: 'testing', 4: 'unknow', 5: 'dormant', 6: 'notPresent', 7: 'LowerLayerDown'}
+    return case[integer]
 
-router = Router('192.168.1.5', 'public', 2)
 
-aaa = router.walkthrough('ifPhysAddress')
+list_oid = ['ifDescr', 'ifType', 'ifMtu', 'ifSpeed', 'ifAdminStatus', 'ifOperStatus']
+router = Router('192.168.91.41', 'public', 2)
 
-for i in aaa:
-    print unicodedata.normalize('NFKD', i.value).encode('ascii', 'ignore')
-    # print type(i.value)
+result_desc = router.walkthrough('ifDescr')
+result_Type = router.walkthrough('ifType')
+result_Mtu = router.walkthrough('ifMtu')
+result_Speed = router.walkthrough('ifSpeed')
+result_Admin = router.walkthrough('ifAdminStatus')
+result_Opera = router.walkthrough('ifOperStatus')
 
-list = ['interface']
-info = []
+# print statusChange('1')
 
-for it in list:
-    print "it ---->", dict_oid[it]
-    info.append(router.walkthrough(dict_oid[it]))
-    # print "oid_map ---->", router.walkthrough(dict_oid[it])
-print info
-# print router.walkthrough('system')
+# print len_int
+print result_desc.__len__()
+print result_Type.__len__()
+print result_Mtu.__len__()
+print result_Speed.__len__()
+print result_Admin.__len__()
+print result_Opera.__len__()
+
+error = []
+for i in result_desc:
+    if 'dwdm' in i.value:
+        error.append(i)
+
+for xxx in error:
+    result_desc.remove(xxx)
+
+for i in range(len(result_desc)):
+    print result_desc[i].value, typeChange(int(result_Type[i].value)), result_Mtu[i].value, (
+            float(result_Speed[i].value) / 1048576), statusChange(int(result_Admin[i].value)), statusChange(
+        int(result_Opera[i].value))
+
+# for i in result_desc:
+#     print i.value
+
+# # print result_desc
+# for i in range(len_int-1):
+#     print result_desc[i].value
+
+
+# data_int = router.walkthrough()
+
+
+# aaa = router.walkthrough('ifPhysAddress')
+#
+# for i in aaa:
+#     print unicodedata.normalize('NFKD', i.value).encode('ascii', 'ignore')
+#     # print type(i.value)
+#
+# list = ['interface']
+# info = []
+#
+# for it in list:
+#     print "it ---->", dict_oid[it]
+#     info.append(router.walkthrough(dict_oid[it]))
+#     # print "oid_map ---->", router.walkthrough(dict_oid[it])
+# print info
+# # print router.walkthrough('system')

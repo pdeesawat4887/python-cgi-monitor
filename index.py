@@ -5,6 +5,7 @@ from easysnmp import Session
 from time import ctime
 
 
+list_temp = []
 first_dict = {}
 
 def create_dict(dict, file):
@@ -43,13 +44,6 @@ function check_all()
     }
 }
 
-var list_ip = [];
-function myFunction(){
-    var x = document.getElementById("ipaddress").value;
-    list_ip.push(x);
-    console.log(list_ip);
-}
-
 </script>'''
 
 print '<!DOCTYPE html>'
@@ -85,7 +79,7 @@ print '''
                                     <input id="ipaddress" name="ipaddress" class="input is-rounded" type="text" placeholder="ex. 192.168.10.1" />
                                 </div>
                                 <div class="control is-expanded">
-                                    <a class="button is-link" id="add_fields" onclick="myFunction()">Add</a>
+                                    <a class="button is-link" id="add_fields">Add</a>
                                 </div>
                             </div>
                         </div>
