@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIT-CATMA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+
+</head>
+<nav class="navbar is-dark">
+    <div class="navbar-brand">
+        <a class="navbar-item brand-text" href="">
+            <image src="logo.png">
+        </a>
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navMenu" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="index.html">
+                Monitor
+            </a>
+        </div>
+    </div>
+</nav>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4">
+                    <h1 class="title">Hello SNMP at
+                        <span style="color: #ff6600">CAT</span>
+                        <span style="color: #55595d">MA</span>
+                    </h1>
+                    <p class="subtitle">my first website with
+                        <strong>Bulma</strong>!
+                    </p>
+                    <hr class="hr" style="margin-top: 0">
+                    <form method="POST" action="test.py">
+                        <div class="field">
+                            <label class="label">
+                                Fill ip address of router that you want to monitor.
+                            </label>
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <input name="ipaddress" class="input is-rounded" type="text" placeholder="eg. 192.168.10.1" id="ipaddress" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">
+                                Fill community string of router that you want to monitor.
+                            </label>
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <input name="community" class="input is-rounded" type="text" placeholder="eg. public" id="community" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Fill oid in MIB-II that you want to monitor.
+                            </label>
+                            <div class="control">
+                                <input name="oid" class="input is-rounded" type="text" placeholder="eg. 1.3.6.1.2.1.1.1" id="oid"/>
+                            </div>
+                        </div>
+
+                        <div class="field is-grouped is-grouped-centered">
+                            <div class="select is-link">
+                                <select name="droplist" id="droplist">
+                                    <option>Select dropdown</option>
+                                    <option value="system">System</option>
+                                    <option value="interface">Interface</option>
+                                    <option value="snmp">SNMP</option>
+                                    <option value="icmp">ICMP</option>
+                                    <option value="udp">UDP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="hr">
+                        <div class="field is-grouped is-grouped-centered">
+                            <p class="control">
+                                <a class="button is-link" id="send">
+                                    Submit
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a class="button is-light">
+                                    Cancel
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="column is-1">
+                    <hr style="width: 2px; height: 100%">
+                </div>
+                <div class="column" id="table"></div>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#send").click(function () {
+            $.post("test.py"),
+                {
+                    ipaddress: $("#ipaddress").val(),
+                    oid: $("#oid").val(),
+                    droplist: $("#droplist option:selected").val()
+                },
+                function (result) {
+                    $("#table").html("test.py");
+                    console.log(result)
+                }
+        });
+    });
+</script>
+
+</html>
