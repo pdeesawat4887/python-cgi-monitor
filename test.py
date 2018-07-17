@@ -126,6 +126,11 @@ def interface():
 
 form = cgi.FieldStorage()
 
+# cgiSys = form.getvalue('cgiSys', 'None')
+
+# if cgiSys:
+#     print 'success'
+
 # Get value from textfeild
 if form.getvalue("ipaddress"):
     ipaddress = form.getvalue('ipaddress')
@@ -137,7 +142,7 @@ print '<html>'
 print '<head>'
 print '<meta charset="utf-8">'
 print '<meta name="viewport" content="width=device-width, initial-scale=1">'
-print '<title>' + ipaddress + '</title>'
+# print '<title>' + ipaddress + '</title>'
 print '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">'
 print '<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>'
 print '</head>'
