@@ -95,8 +95,8 @@ def convertListToString(str):
     return temp
 
 
-def interface():
-    router = Router(ipaddress, 'public', 2)
+def interface(ip, community):
+    router = Router(ip, community, 2)
 
     result_desc = router.walkthrough('ifDescr')
     result_Type = router.walkthrough('ifType')
@@ -142,6 +142,8 @@ form = cgi.FieldStorage()
 ipaddress = form['ipList'].value
 ipList = convertListToString(ipaddress)
 
+community = form['community'].value
+
 mib = form['droplist'].value
 
 print "Content-type: text/html\n\n"
@@ -167,6 +169,7 @@ print 'My first website with <strong>Bulma</strong>!'
 print '<p><strong>TESTING RESULT</strong>'
 print '</p>'
 print '<br><br>'
+print community
 print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
 
 # if form.getvalue("oid"):
@@ -177,7 +180,8 @@ print '<br><h1> You want to monitor router that contain ip address <strong>' + i
 #     mib = form.getvalue("droplist")
 
 if (mib == "interface"):
-    interface()
+    for ip in ipList:
+        interface(ip, community)
 else:
     print '''
     <br>
@@ -190,9 +194,7 @@ else:
 
 temp_result = []
 
-objs = [Router(ip, 'public', 2) for ip in ipList]
-for i in objs:
-    print i.host
+objs = [Router(ip, community, 2) for ip in ipList]
 
 # walker = Router(ipaddress, 'public', 2)
 for walker in objs:

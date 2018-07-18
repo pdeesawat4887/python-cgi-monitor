@@ -137,12 +137,17 @@
                 ipList.push($("#ipaddress").val());
             }
             console.log(ipList);
-            var droplist = $("#droplist").val();
+            var droplist = $("#droplist").val();        // unused
+            var community = $("#community").val();
+            if (community === ""){
+                community = "public";
+            }
             $.ajax({
                 url: 'test.py',
                 type: 'post',
                 data: {
                     'ipList': JSON.stringify(ipList),
+                    'community': community,
                     'droplist': droplist
                 },
                 success: function (response) {
