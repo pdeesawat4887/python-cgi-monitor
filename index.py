@@ -66,7 +66,7 @@ print '<p class="subtitle">'
 print 'My first website with <strong>Bulma</strong>!'
 print '</p>'
 print '<br><br>'
-print '<form method="POST" action="test.py" target="_blank">'
+print '<form method="POST" action="test-back.py" target="_blank">'
 print '''
                 <div class="columns">
                     <div class="column is-6">

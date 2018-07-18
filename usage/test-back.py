@@ -1,19 +1,8 @@
 #!/Applications/XAMPP/xamppfiles/htdocs/python/venv/bin/python
+
 import cgi
 
-def syntax():
-    print '''
-    <div class="field">
-        <p>test again</p><br>
-        <p>hello good morning</p>
-    </div>
-    '''
-
-
 print 'Content-type: text/html\n\n'
-
-
-
 print '<!DOCTYPE html>'
 print '<html>'
 print '<head>'
@@ -36,9 +25,12 @@ print 'My first website with <strong>Bulma</strong>!'
 print '</p>'
 print '<br><br>'
 
-print '''
-                <button onclick="loadDoc()">Click here</button>
-'''
+form = cgi.FieldStorage()
+
+print form['ipaddress'].value
+print form['oid'].value
+print form['droplist'].value
+
 print '<br><br>'
 print '<div class="column" id="table"> jjj </div>'
 
@@ -47,20 +39,3 @@ print '</div>'
 print '</section>'
 print '</body>'
 print '</html>'
-
-print '''
-<script>
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("table").innerHTML =
-      this.responseText;
-    }
-  };
-  xhttp.open("GET", "test-back.py", true);
-  xhttp.send();
-}
-</script>
-'''
-
