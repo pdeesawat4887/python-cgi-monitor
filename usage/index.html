@@ -132,31 +132,36 @@
 
     $(document).ready(function () {
         $("#send").on('click', function () {
-            // var ipaddress = $("#ipaddress").val();
-            if (ipList === undefined || ipList.length == 0){
-                ipList.push($("#ipaddress").val());
-            }
-            console.log(ipList);
-            var droplist = $("#droplist").val();        // unused
-            var community = $("#community").val();
-            if (community === ""){
-                community = "public";
-            }
-            $.ajax({
-                url: 'test.py',
-                type: 'post',
-                data: {
-                    'ipList': JSON.stringify(ipList),
-                    'community': community,
-                    'droplist': droplist
-                },
-                success: function (response) {
-                    console.log(ipList);
-                    $("#table").html(response);
-                }, error: function (request, ajaxOptions, thrownError) {
-                    $("#table").html(request.responseText);
+
+            setInterval(function () {
+                // var ipaddress = $("#ipaddress").val();
+                if (ipList === undefined || ipList.length == 0) {
+                    ipList.push($("#ipaddress").val());
                 }
-            });
+                console.log(ipList);
+                var droplist = $("#droplist").val();        // unused
+                var community = $("#community").val();
+                if (community === "") {
+                    community = "public";
+                }
+                $.ajax({
+                    url: 'test.py',
+                    type: 'post',
+                    data: {
+                        'ipList': JSON.stringify(ipList),
+                        'community': community,
+                        'droplist': droplist
+                    },
+                    success: function (response) {
+                        console.log(ipList);
+                        $("#table").html(response);
+                    }, error: function (request, ajaxOptions, thrownError) {
+                        $("#table").html(request.responseText);
+                    }
+                });
+
+            }, 3000);
+
         });
     });
 </script>
