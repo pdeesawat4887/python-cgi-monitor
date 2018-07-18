@@ -3,6 +3,7 @@ import cgi
 from easysnmp import Session
 # import ntplib
 from time import ctime
+import ast
 
 list = []
 info = []
@@ -88,6 +89,11 @@ def statusChange(integer):
     case = {1: 'UP', 2: 'DOWN', 3: 'Testing', 4: 'Unknow', 5: 'Dormant', 6: 'notPresent', 7: 'LowerLayerDown'}
     return case[integer]
 
+def convertListToString(str):
+    temp = ast.literal_eval(str)
+    temp = [n.strip() for n in temp]
+    return temp
+
 
 def interface():
     router = Router(ipaddress, 'public', 2)
@@ -133,7 +139,9 @@ form = cgi.FieldStorage()
 
 # Get value from textfeild
 # if form.getvalue("ipaddress"):
-ipaddress = form['ipaddress'].value
+ipaddress = form['ipList'].value
+ipList = convertListToString(ipaddress)
+
 mib = form['droplist'].value
 
 print "Content-type: text/html\n\n"
@@ -159,7 +167,6 @@ print 'My first website with <strong>Bulma</strong>!'
 print '<p><strong>TESTING RESULT</strong>'
 print '</p>'
 print '<br><br>'
-
 print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
 
 # if form.getvalue("oid"):
@@ -182,8 +189,15 @@ else:
     '''
 
 temp_result = []
-walker = Router(ipaddress, 'public', 2)
-temp_result.append(walker.walkthrough(mib))
+
+objs = [Router(ip, 'public', 2) for ip in ipList]
+for i in objs:
+    print i.host
+
+# walker = Router(ipaddress, 'public', 2)
+for walker in objs:
+    temp_result.append(walker.walkthrough(mib))
+# temp_result.append(walker.walkthrough(mib))
 
 for item in temp_result:
     print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
