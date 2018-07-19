@@ -1,108 +1,67 @@
 #!/Applications/XAMPP/xamppfiles/htdocs/python/venv/bin/python
 import cgi
 from easysnmp import Session
-# import ntplib
-from time import ctime
 import ast
-
-list = []
-info = []
-dict_oid = {}
-list_ip_py = []
+import Devices
+import Interfaces
 
 
-# c = ntplib.NTPClient()
-# response = c.request('pool.ntp.org')
+def singleOutput():
+    print '''
+        <br>
+        <table class="table is-bordered is-narrow is-fullwidth">
+          <tr>
+            <th>OID</th>
+            <th>Description</th>
+          </tr>
+        '''
+    # --------------------------------------------------------------
+    user = Devices.Devices(community, 2)
+    user.main(ipList, community, 2, mib)
 
-class Router:
+    for item in user.result:
+        print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
+        for x in range(len(item)):
+            print '<tr>' \
+                  '<td>' + item[x].oid + '</td>' \
+                                         '<td>' + item[x].value + '</td></tr>'
+    # --------------------------------------------------------------
 
-    def __init__(self, host, community, version):
-        self.host = host
-        self.community = community
-        self.version = version
-        self.session = Session(hostname=self.host,
-                               community=self.community, version=self.version)
 
-    def walkthrough(self, oid):
-        items = self.session.walk(oid)
-        return items
+def interfaceOutput():
+    CONVERT = 1048576
+    interface = Interfaces.Interface()
+    interface.loadDictionary('exchangex')
+    for ip in ipList:
+        interface.operation(ip, community, 2)
+        print '''<table class="table is-bordered is-narrow is-fullwidth">
+        <tr class="is-selected"><th></th><td><strong>''' + mib.upper() + '''</strong></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><th>#</th><td>Description</td><td>Type</td><td>MTU</td><td>Speed (Mbps)</td><td>AdminStatus</td><td>OperaStatus</td></tr>'''
+        for temp in range(len(interface.result_desc)):
+            print '''
+            <tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'''.format(
+                temp,
+                interface.result_desc[temp].value, interface.typeList[int(interface.result_Type[temp].value)],
+                interface.result_Mtu[temp].value, round(float(interface.result_Speed[temp].value)/CONVERT, 2),
+                interface.case[int(interface.result_Admin[temp].value)],
+                interface.case[int(interface.result_Opera[temp].value)])
+        interface.__del__()
+
 
 def gettime_ntp(addr='time.nist.gov'):
     import socket
     import struct
-    import sys
     import time
-    TIME1970 = 2208988800L      # Thanks to F.Lundh
-    client = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+    TIME1970 = 2208988800L  # Thanks to F.Lundh
+    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     data = '\x1b' + 47 * '\0'
-    client.sendto( data, (addr, 123))
-    data, address = client.recvfrom( 1024 )
+    client.sendto(data, (addr, 123))
+    data, address = client.recvfrom(1024)
     if data:
-        t = struct.unpack( '!12I', data )[10]
+        t = struct.unpack('!12I', data)[10]
         t -= TIME1970
         return time.ctime(t)
 
-
-def typeChange(integer):
-    type = {1: 'other', 2: 'regular1822', 3: 'hdh1822', 4: 'ddnX25', 5: 'rfc877x25', 6: 'ethernetCsmacd',
-            7: 'iso88023Csmacd', 8: 'iso88024TokenBus', 9: 'iso88025TokenRing', 10: 'iso88026Man', 11: 'starLan',
-            12: 'proteon10Mbit', 13: 'proteon80Mbit', 14: 'hyperchannel', 15: 'fddi', 16: 'lapb', 17: 'sdlc', 18: 'ds1',
-            19: 'e1', 20: 'basicISDN', 21: 'primaryISDN', 22: 'propPointToPointSerial', 23: 'ppp',
-            24: 'softwareLoopback', 25: 'eon', 26: 'ethernet3Mbit', 27: 'nsip', 28: 'slip', 29: 'ultra', 30: 'ds3',
-            31: 'sip', 32: 'frameRelay', 33: 'rs232', 34: 'para', 35: 'arcnet', 36: 'arcnetPlus', 37: 'atm',
-            38: 'miox25', 39: 'sonet', 40: 'x25ple', 41: 'iso88022llc', 42: 'localTalk', 43: 'smdsDxi',
-            44: 'frameRelayService', 45: 'v35', 46: 'hssi', 47: 'hippi', 48: 'modem', 49: 'aal5', 50: 'sonetPath',
-            51: 'sonetVT', 52: 'smdsIcip', 53: 'propVirtual', 54: 'propMultiplexor', 55: 'ieee80212',
-            56: 'fibreChannel', 57: 'hippiInterface', 58: 'frameRelayInterconnect', 59: 'aflane8023', 60: 'aflane8025',
-            61: 'cctEmul', 62: 'fastEther', 63: 'isdn', 64: 'v11', 65: 'v36', 66: 'g703at64k', 67: 'g703at2mb',
-            68: 'qllc', 69: 'fastEtherFX', 70: 'channel', 71: 'ieee80211', 72: 'ibm370parChan', 73: 'escon', 74: 'dlsw',
-            75: 'isdns', 76: 'isdnu', 77: 'lapd', 78: 'ipSwitch', 79: 'rsrb', 80: 'atmLogical', 81: 'ds0',
-            82: 'ds0Bundle', 83: 'bsc', 84: 'async', 85: 'cnr', 86: 'iso88025Dtr', 87: 'eplrs', 88: 'arap',
-            89: 'propCnls', 90: 'hostPad', 91: 'termPad', 92: 'frameRelayMPI', 93: 'x213', 94: 'adsl', 95: 'radsl',
-            96: 'sdsl', 97: 'vdsl', 98: 'iso88025CRFPInt', 99: 'myrinet', 100: 'voiceEM', 101: 'voiceFXO',
-            102: 'voiceFXS', 103: 'voiceEncap', 104: 'voiceOverIp', 105: 'atmDxi', 106: 'atmFuni', 107: 'atmIma',
-            108: 'pppMultilinkBundle', 109: 'ipOverCdlc', 110: 'ipOverClaw', 111: 'stackToStack',
-            112: 'virtualIpAddress', 113: 'mpc', 114: 'ipOverAtm', 115: 'iso88025Fiber', 116: 'tdlc',
-            117: 'gigabitEthernet', 118: 'hdlc', 119: 'lapf', 120: 'v37', 121: 'x25mlp', 122: 'x25huntGroup',
-            123: 'trasnpHdlc', 124: 'interleave', 125: 'fast', 126: 'ip', 127: 'docsCableMaclayer',
-            128: 'docsCableDownstream', 129: 'docsCableUpstream', 130: 'a12MppSwitch', 131: 'tunnel', 132: 'coffee',
-            133: 'ces', 134: 'atmSubInterface', 135: 'l2vlan', 136: 'l3ipvlan', 137: 'l3ipxvlan',
-            138: 'digitalPowerline', 139: 'mediaMailOverIp', 140: 'dtm', 141: 'dcn', 142: 'ipForward', 143: 'msdsl',
-            144: 'ieee1394', 145: 'if-gsn', 146: 'dvbRccMacLayer', 147: 'dvbRccDownstream', 148: 'dvbRccUpstream',
-            149: 'atmVirtual', 150: 'mplsTunnel', 151: 'srp', 152: 'voiceOverAtm', 153: 'voiceOverFrameRelay',
-            154: 'idsl', 155: 'compositeLink', 156: 'ss7SigLink', 157: 'propWirelessP2P', 158: 'frForward',
-            159: 'rfc1483', 160: 'usb', 161: 'ieee8023adLag', 162: 'bgppolicyaccounting', 163: 'frf16MfrBundle',
-            164: 'h323Gatekeeper', 165: 'h323Proxy', 166: 'mpls', 167: 'mfSigLink', 168: 'hdsl2', 169: 'shdsl',
-            170: 'ds1FDL', 171: 'pos', 172: 'dvbAsiIn', 173: 'dvbAsiOut', 174: 'plc', 175: 'nfas', 176: 'tr008',
-            177: 'gr303RDT', 178: 'gr303IDT', 179: 'isup', 180: 'propDocsWirelessMaclayer',
-            181: 'propDocsWirelessDownstream', 182: 'propDocsWirelessUpstream', 183: 'hiperlan2', 184: 'propBWAp2Mp',
-            185: 'sonetOverheadChannel', 186: 'digitalWrapperOverheadChannel', 187: 'aal2', 188: 'radioMAC',
-            189: 'atmRadio', 190: 'imt', 191: 'mvl', 192: 'reachDSL', 193: 'frDlciEndPt', 194: 'atmVciEndPt',
-            195: 'opticalChannel', 196: 'opticalTransport', 197: 'propAtm', 198: 'voiceOverCable', 199: 'infiniband',
-            200: 'teLink', 201: 'q2931', 202: 'virtualTg', 203: 'sipTg', 204: 'sipSig', 205: 'docsCableUpstreamChannel',
-            206: 'econet', 207: 'pon155', 208: 'pon622', 209: 'bridge', 210: 'linegroup', 211: 'voiceEMFGD',
-            212: 'voiceFGDEANA', 213: 'voiceDID', 214: 'mpegTransport', 215: 'sixToFour', 216: 'gtp',
-            217: 'pdnEtherLoop1', 218: 'pdnEtherLoop2', 219: 'opticalChannelGroup', 220: 'homepna', 221: 'gfp',
-            222: 'ciscoISLvlan', 223: 'actelisMetaLOOP', 224: 'fcipLink', 225: 'rpr', 226: 'qam', 227: 'lmp',
-            228: 'cblVectaStar', 229: 'docsCableMCmtsDownstream', 230: 'adsl2', 231: 'macSecControlledIF',
-            232: 'macSecUncontrolledIF', 233: 'aviciOpticalEther', 234: 'atmbond', 235: 'voiceFGDOS',
-            236: 'mocaVersion1', 237: 'ieee80216WMAN', 238: 'adsl2plus', 239: 'dvbRcsMacLayer', 240: 'dvbTdm',
-            241: 'dvbRcsTdma', 242: 'x86Laps', 243: 'wwanPP', 244: 'wwanPP2', 245: 'voiceEBS', 246: 'ifPwType',
-            247: 'ilan', 248: 'pip', 249: 'aluELP', 250: 'gpon', 251: 'vdsl2', 252: 'capwapDot11Profile',
-            253: 'capwapDot11Bss', 254: 'capwapWtpVirtualRadio', 255: 'bits', 256: 'docsCableUpstreamRfPort',
-            257: 'cableDownstreamRfPort', 258: 'vmwareVirtualNic', 259: 'ieee802154', 260: 'otnOdu', 261: 'otnOtu',
-            262: 'ifVfiType', 263: 'g9981', 264: 'g9982', 265: 'g9983', 266: 'aluEpon', 267: 'aluEponOnu',
-            268: 'aluEponPhysicalUni', 269: 'aluEponLogicalLink', 270: 'aluGponOnu', 271: 'aluGponPhysicalUni',
-            272: 'vmwareNicTeam', 277: 'docsOfdmDownstream', 278: 'docsOfdmaUpstream', 279: 'gfast', 280: 'sdci',
-            281: 'xboxWireless', 282: 'fastdsl', 283: 'docsCableScte55d1FwdOob', 284: 'docsCableScte55d1RetOob',
-            285: 'docsCableScte55d2DsOob', 286: 'docsCableScte55d2UsOob', 287: 'docsCableNdf', 288: 'docsCableNdr',
-            289: 'ptm', 290: 'ghn', 291: 'otnOtsi', 292: 'otnOtuc', 293: 'otnOduc', 294: 'otnOtsig'}
-    return type[integer]
-
-
-def statusChange(integer):
-    case = {1: 'UP', 2: 'DOWN', 3: 'Testing', 4: 'Unknow', 5: 'Dormant', 6: 'notPresent', 7: 'LowerLayerDown'}
-    return case[integer]
 
 def convertListToString(str):
     temp = ast.literal_eval(str)
@@ -110,52 +69,11 @@ def convertListToString(str):
     return temp
 
 
-def interface(ip, community):
-    router = Router(ip, community, 2)
-
-    result_desc = router.walkthrough('ifDescr')
-    result_Type = router.walkthrough('ifType')
-    result_Mtu = router.walkthrough('ifMtu')
-    result_Speed = router.walkthrough('ifSpeed')
-    result_Admin = router.walkthrough('ifAdminStatus')
-    result_Opera = router.walkthrough('ifOperStatus')
-
-    error = []
-    for i in result_desc:
-        if 'dwdm' in i.value:
-            error.append(i)
-
-    for xxx in error:
-        result_desc.remove(xxx)
-
-    print '''<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-  <tr>
-    <th>No.</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>MTU</th>
-    <th>Speed</th>
-    <th>AdministratorStatus</th>
-    <th>OperationStatus</th>
-  </tr>'''
-    for i in range(len(result_desc)):
-        print '<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>' \
-            .format(i + 1, result_desc[i].value, typeChange(int(result_Type[i].value)), result_Mtu[i].value,
-                    round(float(result_Speed[i].value) / 1048576, 2), statusChange(int(result_Admin[i].value)),
-                    statusChange(int(result_Opera[i].value)))
-
-
 form = cgi.FieldStorage()
 
-# cgiSys = form.getvalue('cgiSys', 'None')
+ipAddress = form['ipList'].value
 
-# if cgiSys:
-#     print 'success'
-
-# Get value from textfeild
-# if form.getvalue("ipaddress"):
-ipaddress = form['ipList'].value
-ipList = convertListToString(ipaddress)
+ipList = convertListToString(ipAddress)
 
 community = form['community'].value
 
@@ -163,69 +81,16 @@ mib = form['droplist'].value
 
 print "Content-type: text/html\n\n"
 
-print '<!DOCTYPE html>'
-print '<html>'
-print '<head>'
-print '<meta charset="utf-8">'
-print '<meta name="viewport" content="width=device-width, initial-scale=1">'
-# print '<title>' + ipaddress + '</title>'
-print '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">'
-print '<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>'
-print '</head>'
-print '<body>'
-print '<section class="section">'
-print '<div class="container">'
-print '<h1 class="title">'
-print 'Hello SNMP at CATMA'
-print '</h1>'
-
-print '<p class="subtitle">'
-print 'My first website with <strong>Bulma</strong>!'
-print '<p><strong>TESTING RESULT</strong>'
-print '</p>'
-print '<br><br>'
-print gettime_ntp()
-print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
-
-# if form.getvalue("oid"):
-#     oid = form.getvalue('oid')
-#     list.append(oid)
-#
-# if form.getvalue("droplist"):
-#     mib = form.getvalue("droplist")
+print '<h1 class="title"><strong>Testing Result!</strong></h1>'
+print gettime_ntp(), '<br>'
+print ipList, '<br>'
+print community, '<br>'
+print mib, '<br>'
+print '<p class="subtitle"> You want to monitor router that contain ip address <strong>' + ipAddress + '.</strong> Wait a min ... </p>'
 
 if (mib == "interface"):
-    for ip in ipList:
-        interface(ip, community)
+    interfaceOutput()
 else:
-    print '''
-    <br>
-    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-      <tr>
-        <th>OID</th>
-        <th>Description</th>
-      </tr>
-    '''
-
-temp_result = []
-
-objs = [Router(ip, community, 2) for ip in ipList]
-
-# walker = Router(ipaddress, 'public', 2)
-for walker in objs:
-    temp_result.append(walker.walkthrough(mib))
-# temp_result.append(walker.walkthrough(mib))
-
-for item in temp_result:
-    print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
-    for result in item:
-        # if result.value != '0' and result.value != '0.0.0.0':  # Condition cut-off 0 result
-        print '<tr>' \
-              '<td>' + result.oid + '</td>' \
-                                    '<td>' + result.value + '</td>'
+    singleOutput()
 
 print '</table>'
-print '</div>'
-print '</section>'
-print '</body>'
-print '</html>'

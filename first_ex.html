@@ -153,7 +153,7 @@
         data.append("CustomField", "This is some extra data");
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "test.py", false)
+        xhr.open("POST", "test.py", false);
         xhr.send(data);
         if (xhr.status == 200) {
             output.innerHTML += "Uploaded!<br />";

@@ -32,16 +32,12 @@
 
 <body>
 <section class="section">
-    <div class="container">
+    <div class="container is-fluid">
         <div class="columns">
             <div class="column is-4">
                 <h1 class="title">Hello SNMP at
-                    <span style="color: #ff6600">CAT</span>
-                    <span style="color: #55595d">MA</span>
+                    <span style="color: #ff6600">CAT</span><span style="color: #55595d">MA</span>
                 </h1>
-                <p class="subtitle">my first website with
-                    <strong>Bulma</strong>!</strong>
-                </p>
                 <hr class="hr" style="margin-top: 0">
                 <form method="POST" action="test-back.py">
                     <div class="field">
@@ -97,21 +93,21 @@
                     <div class="field is-grouped is-grouped-centered">
                         <p class="control">
                             <a class="button is-link" id="start">
-                                Start
+                                Submit
                             </a>
                         </p>
                         <p class="control">
                             <a class="button is-light" id="stop">
-                                Stop
+                                Cancel
                             </a>
                         </p>
                     </div>
                 </form>
             </div>
             <div class="column is-1">
-                <hr style="width: 1px; height: 80%">
+                <hr style="width: 1px; height: 80%; margin-left: 24px;">
             </div>
-            <div class="column is-8" id="table"></div>
+            <div class="column is-7" id="table"></div>
         </div>
     </div>
 </section>
@@ -146,7 +142,6 @@
         // });
     });
 </script>
-
 <script>
 
     $(function () {

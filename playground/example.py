@@ -21,3 +21,9 @@ from playground.py.Candy import SweetCandy
 donut = SweetCandy(3, 12, 'sugar')
 print donut.calculate()
 donut.info()
+
+yy = ['apple', 'banana', 'mango', 'buffalo', 'orange', 'bird']
+
+for i in range(len(yy)-1):
+    if 'b' in yy[i]:
+        yy.pop(i)
