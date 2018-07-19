@@ -40,11 +40,30 @@
 #
 #     print i.id
 
+#
+# import ast
+# list = '["192.168.1.5","192.168.1.8"]'
+# x = ast.literal_eval(list)
+# x = [n.strip() for n in x]
+#
+# for i in x:
+#     print i
 
-import ast
-list = '["192.168.1.5","192.168.1.8"]'
-x = ast.literal_eval(list)
-x = [n.strip() for n in x]
+def gettime_ntp(addr='time.nist.gov'):
+    # http://code.activestate.com/recipes/117211-simple-very-sntp-client/
+    import socket
+    import struct
+    import sys
+    import time
+    TIME1970 = 2208988800L      # Thanks to F.Lundh
+    client = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+    data = '\x1b' + 47 * '\0'
+    client.sendto( data, (addr, 123))
+    data, address = client.recvfrom( 1024 )
+    if data:
+        t = struct.unpack( '!12I', data )[10]
+        t -= TIME1970
+        return time.ctime(t)
 
-for i in x:
-    print i
+time = gettime_ntp()
+print time

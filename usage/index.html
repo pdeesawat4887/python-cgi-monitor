@@ -96,13 +96,13 @@
                     <hr class="hr">
                     <div class="field is-grouped is-grouped-centered">
                         <p class="control">
-                            <a class="button is-link" id="send">
-                                Submit
+                            <a class="button is-link" id="start">
+                                Start
                             </a>
                         </p>
                         <p class="control">
-                            <a class="button is-light">
-                                Cancel
+                            <a class="button is-light" id="stop">
+                                Stop
                             </a>
                         </p>
                     </div>
@@ -117,9 +117,15 @@
 </section>
 </body>
 <script>
+
     var ipList = [];
 
     $(document).ready(function () {
+
+        // var timer = null,
+        //     interval = 3000,
+        //     val = 0;
+
         $('#btn_AddToList').click(function () {
             var val = $('#ipaddress').val();
             ipList.push(val);
@@ -127,19 +133,35 @@
             document.getElementById("ipList").innerHTML = ipList;
             document.getElementById('ipaddress').value = '';
             // $('#txt_RegionName').val('').focus();
-        })
+        });
+
+        // $("#start").on('click', function () {
+        //     if (timer !== null) return;
+        //     timer = setInterval(myTimerFunc(), interval);
+        // });
+        //
+        // $("#pause").on('click', function () {
+        //     clearInterval(timer);
+        //     timer = null;
+        // });
     });
+</script>
 
-    $(document).ready(function () {
-        $("#send").on('click', function () {
+<script>
 
-            setInterval(function () {
-                // var ipaddress = $("#ipaddress").val();
+    $(function () {
+        var timer = null,
+            interval = 3000,
+            value = 0;
+
+        $("#start").click(function () {
+            if (timer !== null) return;
+            timer = setInterval(function () {
                 if (ipList === undefined || ipList.length == 0) {
                     ipList.push($("#ipaddress").val());
                 }
                 console.log(ipList);
-                var droplist = $("#droplist").val();        // unused
+                var droplist = $("#droplist").val();
                 var community = $("#community").val();
                 if (community === "") {
                     community = "public";
@@ -159,11 +181,15 @@
                         $("#table").html(request.responseText);
                     }
                 });
+            }, interval);
+        });
 
-            }, 3000);
-
+        $("#stop").click(function () {
+            clearInterval(timer);
+            timer = null
         });
     });
+
 </script>
 </html>
 

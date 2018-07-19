@@ -27,6 +27,21 @@ class Router:
         items = self.session.walk(oid)
         return items
 
+def gettime_ntp(addr='time.nist.gov'):
+    import socket
+    import struct
+    import sys
+    import time
+    TIME1970 = 2208988800L      # Thanks to F.Lundh
+    client = socket.socket( socket.AF_INET, socket.SOCK_DGRAM )
+    data = '\x1b' + 47 * '\0'
+    client.sendto( data, (addr, 123))
+    data, address = client.recvfrom( 1024 )
+    if data:
+        t = struct.unpack( '!12I', data )[10]
+        t -= TIME1970
+        return time.ctime(t)
+
 
 def typeChange(integer):
     type = {1: 'other', 2: 'regular1822', 3: 'hdh1822', 4: 'ddnX25', 5: 'rfc877x25', 6: 'ethernetCsmacd',
@@ -169,7 +184,7 @@ print 'My first website with <strong>Bulma</strong>!'
 print '<p><strong>TESTING RESULT</strong>'
 print '</p>'
 print '<br><br>'
-print community
+print gettime_ntp()
 print '<br><h1> You want to monitor router that contain ip address <strong>' + ipaddress + '.</strong> Wait a min ... </h1><br>'
 
 # if form.getvalue("oid"):
