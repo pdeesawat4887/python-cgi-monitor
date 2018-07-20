@@ -8,7 +8,6 @@ import Interfaces
 
 def singleOutput():
     print '''
-        <br>
         <table class="table is-bordered is-narrow is-fullwidth">
           <tr>
             <th>OID</th>
@@ -42,7 +41,7 @@ def interfaceOutput():
             <tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>'''.format(
                 temp,
                 interface.result_desc[temp].value, interface.typeList[int(interface.result_Type[temp].value)],
-                interface.result_Mtu[temp].value, round(float(interface.result_Speed[temp].value)/CONVERT, 2),
+                interface.result_Mtu[temp].value, round(float(interface.result_Speed[temp].value) / CONVERT, 2),
                 interface.case[int(interface.result_Admin[temp].value)],
                 interface.case[int(interface.result_Opera[temp].value)])
         interface.__del__()
@@ -94,3 +93,12 @@ else:
     singleOutput()
 
 print '</table>'
+
+# def manyToMany():
+#     walker = Devices.Devices(community, 2)
+#     print '''
+#             <table class="table is-bordered is-narrow is-fullwidth">
+# '''
+#     for ip in ipList:
+#         for oid in mib:
+#             temp = walker.walkthrongh(ip, oid)

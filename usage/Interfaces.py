@@ -40,7 +40,7 @@ class Interface:
         self.result_Speed = temp_walk.walkthrongh(ip, self.IFSPEED)
         self.result_Admin = temp_walk.walkthrongh(ip, self.IFADMINSTATUS)
         self.result_Opera = temp_walk.walkthrongh(ip, self.IFOPERSTATUS)
-        # self.removeDWDM()
+        self.removeDWDM()
 
     def operationUpdate(self, ip, community, version):
         temp_update = Devices.Devices(community, version)

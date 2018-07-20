@@ -33,7 +33,8 @@ class Devices:
 
     def start(self):
         for ip in self.ipList:
-            self.result.append(self.walkthrongh(ip, self.oid))
+            myResult = self.walkthrongh(ip, self.oid)
+            self.result.append(myResult)
 
     def testClass(self):
         print "Success,"
