@@ -118,20 +118,39 @@
 # #
 # # while 1:
 # #    pass
+import datetime
 
 import Devices
+#
+# oidList = ['system', 'udp']
+# result = []
+# result2 = []
+# user = Devices.Devices('public', 2)
+# for oid in oidList:
+#     result.append(user.walkthrongh('192.168.91.41', oid))
+#     result2.append(user.walkthrongh('192.168.91.46', oid))
+#
+# print result.__len__()
+# print result2.__len__()
 
-oidList = ['system', 'udp']
-result = []
-result2 = []
-user = Devices.Devices('public', 2)
-for oid in oidList:
-    result.append(user.walkthrongh('192.168.91.41', oid))
-    result2.append(user.walkthrongh('192.168.91.46', oid))
+# for i in range(len(result)):
+#     for xx in range(len(result[i])):
+#         print result[i][xx].snmp_type
+#
+ms = 1155487084
+print datetime.datetime.fromtimestamp(ms/1000.0)
 
-print result.__len__()
-print result2.__len__()
+def main():
+    millis=input("Enter time in milliseconds ")
+    millis = int(millis)
+    seconds=(millis/1000)%60
+    seconds = int(seconds)
+    minutes=(millis/(1000*60))%60
+    minutes = int(minutes)
+    hours=(millis/(1000*60*60))%24
 
-for i in range(len(result)):
-    for xx in range(len(result[i])):
-        print result[i][xx].value
+    print ("%d:%d:%d" % (hours, minutes, seconds))
+
+# main()
+d = datetime.timedelta(milliseconds=(1155487084*10))
+print d

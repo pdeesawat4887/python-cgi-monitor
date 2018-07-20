@@ -11,6 +11,8 @@ class Interface:
     result_Admin = []
     result_Opera = []
 
+    result_list = [result_desc, result_Type, result_Mtu, result_Speed, result_Admin, result_Opera]
+
     IFDESCR = '1.3.6.1.2.1.2.2.1.2'
     IFTYPE = '1.3.6.1.2.1.2.2.1.3'
     IFMTU = '1.3.6.1.2.1.2.2.1.4'

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <script src="mainSc.js"></script>
 
 </head>
 <nav class="navbar is-dark">
@@ -93,12 +94,12 @@
                     <div class="field is-grouped is-grouped-centered">
                         <p class="control">
                             <a class="button is-link" id="start">
-                                Submit
+                                Start
                             </a>
                         </p>
                         <p class="control">
-                            <a class="button is-light" id="stop">
-                                Cancel
+                            <a class="button is-danger" id="stop">
+                                stop
                             </a>
                         </p>
                     </div>
@@ -112,79 +113,5 @@
     </div>
 </section>
 </body>
-<script>
-
-    var ipList = [];
-
-    $(document).ready(function () {
-
-        // var timer = null,
-        //     interval = 3000,
-        //     val = 0;
-
-        $('#btn_AddToList').click(function () {
-            var val = $('#ipaddress').val();
-            ipList.push(val);
-            // $('#ipList').html(list);
-            document.getElementById("ipList").innerHTML = ipList;
-            document.getElementById('ipaddress').value = '';
-            // $('#txt_RegionName').val('').focus();
-        });
-
-        // $("#start").on('click', function () {
-        //     if (timer !== null) return;
-        //     timer = setInterval(myTimerFunc(), interval);
-        // });
-        //
-        // $("#pause").on('click', function () {
-        //     clearInterval(timer);
-        //     timer = null;
-        // });
-    });
-</script>
-<script>
-
-    $(function () {
-        var timer = null,
-            interval = 3000,
-            value = 0;
-
-        $("#start").click(function () {
-            if (timer !== null) return;
-            timer = setInterval(function () {
-                if (ipList === undefined || ipList.length == 0) {
-                    ipList.push($("#ipaddress").val());
-                }
-                console.log(ipList);
-                var droplist = $("#droplist").val();
-                var community = $("#community").val();
-                if (community === "") {
-                    community = "public";
-                }
-                $.ajax({
-                    url: 'test.py',
-                    type: 'post',
-                    data: {
-                        'ipList': JSON.stringify(ipList),
-                        'community': community,
-                        'droplist': droplist
-                    },
-                    success: function (response) {
-                        console.log(ipList);
-                        $("#table").html(response);
-                    }, error: function (request, ajaxOptions, thrownError) {
-                        $("#table").html(request.responseText);
-                    }
-                });
-            }, interval);
-        });
-
-        $("#stop").click(function () {
-            clearInterval(timer);
-            timer = null
-        });
-    });
-
-</script>
 </html>
 

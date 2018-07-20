@@ -4,6 +4,8 @@ from easysnmp import Session
 import ast
 import Devices
 import Interfaces
+import Utillity
+import time
 
 
 def singleOutput():
@@ -21,9 +23,12 @@ def singleOutput():
     for item in user.result:
         print '<tr class="is-selected"><td><strong>' + mib.upper() + '</strong></td><td></td></tr>'
         for x in range(len(item)):
-            print '<tr>' \
-                  '<td>' + item[x].oid + '</td>' \
-                                         '<td>' + item[x].value + '</td></tr>'
+            if item[x].value != '':
+                if (item[x].snmp_type).upper() == 'TICKS':
+                    t_item = tools.humanize(int(item[x].value))
+                else:
+                    t_item = item[x].value
+                print '<tr><td>' + item[x].oid + '</td><td>' + t_item + '</td></tr>'
     # --------------------------------------------------------------
 
 
@@ -47,21 +52,6 @@ def interfaceOutput():
         interface.__del__()
 
 
-def gettime_ntp(addr='time.nist.gov'):
-    import socket
-    import struct
-    import time
-    TIME1970 = 2208988800L  # Thanks to F.Lundh
-    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    data = '\x1b' + 47 * '\0'
-    client.sendto(data, (addr, 123))
-    data, address = client.recvfrom(1024)
-    if data:
-        t = struct.unpack('!12I', data)[10]
-        t -= TIME1970
-        return time.ctime(t)
-
-
 def convertListToString(str):
     temp = ast.literal_eval(str)
     temp = [n.strip() for n in temp]
@@ -69,10 +59,11 @@ def convertListToString(str):
 
 
 form = cgi.FieldStorage()
+tools = Utillity.Utilities()
 
 ipAddress = form['ipList'].value
 
-ipList = convertListToString(ipAddress)
+ipList = tools.convertStringToList(ipAddress)
 
 community = form['community'].value
 
@@ -81,11 +72,11 @@ mib = form['droplist'].value
 print "Content-type: text/html\n\n"
 
 print '<h1 class="title"><strong>Testing Result!</strong></h1>'
-print gettime_ntp(), '<br>'
+print '<strong>Last Update on:</strong>', tools.gettime_ntp(), '<br>'
 print ipList, '<br>'
 print community, '<br>'
-print mib, '<br>'
-print '<p class="subtitle"> You want to monitor router that contain ip address <strong>' + ipAddress + '.</strong> Wait a min ... </p>'
+print mib, '<br><br>'
+# print '<p class="subtitle"> You want to monitor router that contain ip address <strong>' + ipAddress + '.</strong> Wait a min ... </p>'
 
 if (mib == "interface"):
     interfaceOutput()
