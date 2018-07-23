@@ -1,4 +1,4 @@
-#!/Applications/XAMPP/xamppfiles/htdocs/python/venv/bin/python
+#!/usr/bin/env python
 import cgi
 from easysnmp import Session
 import ast
