@@ -1,6 +1,6 @@
 import speedtest
 
-servers = [3147]
+servers = []
 # If you want to test against a specific server
 # servers = [1234]
 s = speedtest.Speedtest()
