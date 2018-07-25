@@ -1,0 +1,10 @@
+node=ChangMai
+location=Bangkok
+contact=0873637684
+server_Singapore=3914
+server_HongKong=19036
+server_CAT=4347
+test=CATMA-AIT
+temp=hello
+MOD=hi
+test=leonado davinchi
