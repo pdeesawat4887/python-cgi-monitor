@@ -82,16 +82,36 @@ def read(file='hosts.txt'):
 #
 # print word[0]
 
-import requests
-protocol = ''
-url = 'linkedin.com'
-print protocol+url
+# import requests
+# protocol = ''
+# url = 'linkedin.com'
+# print protocol+url
+#
+# headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
+# res_https = requests.get(protocol + url, headers=headers)
+# status = res_https.status_code
+# reason = res_https.reason
+# res_https.close()
+#
+# print status
+# print reason
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
-res_https = requests.get(protocol + url, headers=headers)
-status = res_https.status_code
-reason = res_https.reason
-res_https.close()
+import httplib
+import urllib
 
-print status
-print reason
+response = urllib.urlopen('http://www.linkedin.com')
+print 'RESPONSE:', response.getcode()
+# print 'REASON: ', httplib.responses[response.getcode()]
+# print 'URL     :', response.geturl()
+#
+# headers = response.info()
+# print 'DATE    :', headers['date']
+# print 'HEADERS :'
+# print '---------'
+# print headers
+
+data = response.read()
+print 'LENGTH  :', len(data)
+print 'DATA    :'
+print '---------'
+# print data

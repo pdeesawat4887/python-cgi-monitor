@@ -164,6 +164,8 @@ def main():
 import socket
 import os
 import requests
+import httplib
+import urllib
 
 
 class WebService:
@@ -171,8 +173,6 @@ class WebService:
     protocols = {'HTTP': 'http://', 'HTTPS': 'https://'}
 
     def __init__(self):
-        self.header = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
         self.read_url()
 
     def read_url(self, file='hosts.txt'):
@@ -195,9 +195,9 @@ class WebService:
 
     def check_status(self, protocol, url):
         try:
-            res_https = requests.get(protocol + url, headers=self.header)
-            status = res_https.status_code
-            reason = res_https.reason
+            res_https = urllib.urlopen(protocol + url)
+            status = res_https.getcode()
+            reason = httplib.responses[status]
             res_https.close()
         except Exception as ex:
             status = 'Could not connect to page.'
@@ -206,7 +206,7 @@ class WebService:
 
 
 def main2():
-    node = 'ChangRai'
+    node = 'KhoneKean'
     data_dict = {}
     f_database = FirebaseDatabase()
     web = WebService()
