@@ -1,4 +1,4 @@
-node=ChangMai
+node=chiangmai
 location=Bangkok
 contact=0873637684
 server_Singapore=3914
@@ -8,3 +8,4 @@ test=CATMA-AIT
 temp=hello
 MOD=hi
 test=leonado davinchi
+interval=300

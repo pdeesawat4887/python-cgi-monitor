@@ -1,9 +1,11 @@
 import speedtest
 import time
-import socket
 import struct
 from firebase import firebase
-import sched
+import socket
+import os
+import httplib
+import urllib
 
 
 class Tools:
@@ -111,63 +113,6 @@ class SpeedTestPy:
                     self.setting[key] = value
 
 
-def main():
-    tool = Tools()
-    print "tools success"
-    micro = SpeedTestPy()
-    print "SpeedtestPy success"
-    node = micro.setting['node']
-    print "node query success"
-    f_database = FirebaseDatabase()
-    print "firebase success"
-    test_time = micro.server_list
-    print "num of server success"
-
-    # Speedtest Function
-    for i in range(len(test_time)):
-        print "in for success"
-        name, d, u, p, execTime = micro.test(test_time[i])
-        print "test success"
-        d, du = tool.convert(d)
-        print "convert dw success"
-        u, uu = tool.convert(u)
-        print "convert ul success"
-        st_time = time.ctime(time.time())  # change to ntp time
-        print "convert ntp success"
-        data = {'download': (d, du), 'upload': (u, uu), 'ping': p, 'execTime': execTime, 'time': st_time}
-        print "convert data success"
-        # f_database.put_data('speedtest', node + '/' + name, data)
-        f_database.post_data(node + '/speedtest/' + name, data)
-        print "convert post firebase success"
-
-        # Show output
-        print 'Time Start Speedtest: {}'.format(st_time)
-        # print 'Test #{}'.format(i + 1)
-        # print 'Download: {:.2f} {}'.format(d, du)
-        # print 'Upload: {:.2f} {}'.format(u, uu)
-        # print 'Ping: {}'.format(p)
-        # print 'Execute Time: {}'.format(execTime)
-    # End of Speedtest Function
-
-
-# if __name__ == '__main__':
-#     try:
-#         while True:
-#             main()
-#             time.sleep(300)
-#     except KeyboardInterrupt:
-#         print 'Manual break by user'
-
-# interval 5 mins.
-# usage 1.5 kb firebase
-
-import socket
-import os
-import requests
-import httplib
-import urllib
-
-
 class WebService:
     host_list = []
     protocols = {'HTTP': 'http://', 'HTTPS': 'https://'}
@@ -205,34 +150,122 @@ class WebService:
         return status, reason
 
 
-def main2():
-    node = 'KhoneKean'
-    data_dict = {}
-    f_database = FirebaseDatabase()
-    web = WebService()
-    # for protocol in web.protocols:
-    #     for url in web.host_list:
-    #         status, reason = web.check_status(web.protocols[protocol], url)
-    #         ping = web.ping_ip_address(url)
-    #         url = url.split('.')
-    #         data_dict[url[0]] = [status, reason, ping]
-    #     f_database.put_data(node, 'webService/' + protocol, data_dict)
-    #     data_dict = {}
+class Service:
 
-    temp_data_status = {}
-    temp_data_reason = {}
-    temp_data_ping = {}
-    for protocol in web.protocols:
-        for url in web.host_list:
-            status, reason = web.check_status(web.protocols[protocol], url)
-            ping = web.ping_ip_address(url)
-            temp_url = url.split('.')
-            temp_data_status[temp_url[0]] = status
-            temp_data_reason[temp_url[0]] = reason
-            temp_data_ping[temp_url[0]] = ping
-        f_database.put_data(node, 'webService/' + protocol + '/status', temp_data_status)
-        f_database.put_data(node, 'webService/' + protocol + '/reason', temp_data_reason)
-        f_database.put_data(node, 'webService/' + protocol + '/ping', temp_data_ping)
+    def __init__(self):
+        self.tool = Tools()
+        self.speed = SpeedTestPy()
+        self.node = self.speed.setting['node']
+        self.f_database = FirebaseDatabase()
+
+    def speedtest(self):
+        # tool = Tools()
+        # print "tools success"
+        # micro = SpeedTestPy()
+        # print "SpeedtestPy success"
+        # node = self.speed.setting['node']
+        # print "node query success"
+        # f_database = FirebaseDatabase()
+        # print "firebase success"
+        test_time = self.speed.server_list
+        # print "num of server success"
+
+        # Speedtest Function
+        for i in range(len(test_time)):
+            # print "in for success"
+            name, d, u, p, execTime = self.speed.test(test_time[i])
+            # print "test success"
+            d, du = self.tool.convert(d)
+            # print "convert dw success"
+            u, uu = self.tool.convert(u)
+            # print "convert ul success"
+            st_time = time.ctime(time.time())  # change to ntp time
+            # print "convert ntp success"
+            data = {'download': (d, du), 'upload': (u, uu), 'ping': p, 'execTime': execTime, 'time': st_time}
+            # print "convert data success"
+            # f_database.put_data('speedtest', node + '/' + name, data)
+            self.f_database.post_data(self.node + '/speedtest/' + name, data)
+            # print "convert post firebase success"
+
+            # Show output
+            # print 'Time Start Speedtest: {}'.format(st_time)
+            # print 'Test #{}'.format(i + 1)
+            # print 'Download: {:.2f} {}'.format(d, du)
+            # print 'Upload: {:.2f} {}'.format(u, uu)
+            # print 'Ping: {}'.format(p)
+            # print 'Execute Time: {}'.format(execTime)
+        # End of Speedtest Function
+        print " ----> SpeedTest Complete. <------", time.ctime(time.time())
+
+    def web_service(self):
+        temp_data_status = {}
+        temp_data_reason = {}
+        temp_data_ping = {}
+        web = WebService()
+        for protocol in web.protocols:
+            for url in web.host_list:
+                print url
+                status, reason = web.check_status(web.protocols[protocol], url)
+                print "complete url"
+                ping = web.ping_ip_address(url)
+                temp_url = url.split('.')
+                temp_data_status[temp_url[0]] = status
+                temp_data_reason[temp_url[0]] = reason
+                temp_data_ping[temp_url[0]] = ping
+            self.f_database.put_data(self.node, 'webService/' + protocol + '/status', temp_data_status)
+            self.f_database.put_data(self.node, 'webService/' + protocol + '/reason', temp_data_reason)
+            self.f_database.put_data(self.node, 'webService/' + protocol + '/ping', temp_data_ping)
+        print " ----> WebTest Complete. <------", time.ctime(time.time())
 
 
-main2()
+def main():
+    device = Service()
+    device.speedtest()
+    device.web_service()
+    # End of Speedtest Function
+
+
+if __name__ == '__main__':
+    try:
+        while True:
+            main()
+            time.sleep(300)
+    except KeyboardInterrupt:
+        print 'Manual break by user'
+
+
+# interval 5 mins.
+# usage 1.5 kb firebase
+
+
+# def main2():
+#     node = 'KhoneKean'
+#     data_dict = {}
+#     f_database = FirebaseDatabase()
+#     web = WebService()
+#     # for protocol in web.protocols:
+#     #     for url in web.host_list:
+#     #         status, reason = web.check_status(web.protocols[protocol], url)
+#     #         ping = web.ping_ip_address(url)
+#     #         url = url.split('.')
+#     #         data_dict[url[0]] = [status, reason, ping]
+#     #     f_database.put_data(node, 'webService/' + protocol, data_dict)
+#     #     data_dict = {}
+#
+#     temp_data_status = {}
+#     temp_data_reason = {}
+#     temp_data_ping = {}
+#     for protocol in web.protocols:
+#         for url in web.host_list:
+#             status, reason = web.check_status(web.protocols[protocol], url)
+#             ping = web.ping_ip_address(url)
+#             temp_url = url.split('.')
+#             temp_data_status[temp_url[0]] = status
+#             temp_data_reason[temp_url[0]] = reason
+#             temp_data_ping[temp_url[0]] = ping
+#         f_database.put_data(node, 'webService/' + protocol + '/status', temp_data_status)
+#         f_database.put_data(node, 'webService/' + protocol + '/reason', temp_data_reason)
+#         f_database.put_data(node, 'webService/' + protocol + '/ping', temp_data_ping)
+#
+#
+# main2()

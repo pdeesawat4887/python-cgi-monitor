@@ -156,7 +156,6 @@ class Service:
         self.tool = Tools()
         self.speed = SpeedTestPy()
         self.node = self.speed.setting['node']
-        self.f_database = FirebaseDatabase()
 
     def speedtest(self):
         # tool = Tools()
@@ -165,7 +164,7 @@ class Service:
         # print "SpeedtestPy success"
         # node = self.speed.setting['node']
         # print "node query success"
-        # f_database = FirebaseDatabase()
+        f_database = FirebaseDatabase()
         # print "firebase success"
         test_time = self.speed.server_list
         # print "num of server success"
@@ -184,7 +183,7 @@ class Service:
             data = {'download': (d, du), 'upload': (u, uu), 'ping': p, 'execTime': execTime, 'time': st_time}
             # print "convert data success"
             # f_database.put_data('speedtest', node + '/' + name, data)
-            self.f_database.post_data(self.node + '/speedtest/' + name, data)
+            f_database.post_data(self.node + '/speedtest/' + name, data)
             # print "convert post firebase success"
 
             # Show output
@@ -195,33 +194,11 @@ class Service:
             # print 'Ping: {}'.format(p)
             # print 'Execute Time: {}'.format(execTime)
         # End of Speedtest Function
-        print " ----> SpeedTest Complete. <------", time.ctime(time.time())
-
-    def web_service(self):
-        temp_data_status = {}
-        temp_data_reason = {}
-        temp_data_ping = {}
-        web = WebService()
-        for protocol in web.protocols:
-            for url in web.host_list:
-                print url
-                status, reason = web.check_status(web.protocols[protocol], url)
-                print "complete url"
-                ping = web.ping_ip_address(url)
-                temp_url = url.split('.')
-                temp_data_status[temp_url[0]] = status
-                temp_data_reason[temp_url[0]] = reason
-                temp_data_ping[temp_url[0]] = ping
-            self.f_database.put_data(self.node, 'webService/' + protocol + '/status', temp_data_status)
-            self.f_database.put_data(self.node, 'webService/' + protocol + '/reason', temp_data_reason)
-            self.f_database.put_data(self.node, 'webService/' + protocol + '/ping', temp_data_ping)
-        print " ----> WebTest Complete. <------", time.ctime(time.time())
 
 
 def main():
-    device = Service()
-    device.speedtest()
-    device.web_service()
+    speed = Service()
+    speed.speedtest()
     # End of Speedtest Function
 
 
@@ -238,34 +215,34 @@ if __name__ == '__main__':
 # usage 1.5 kb firebase
 
 
-# def main2():
-#     node = 'KhoneKean'
-#     data_dict = {}
-#     f_database = FirebaseDatabase()
-#     web = WebService()
-#     # for protocol in web.protocols:
-#     #     for url in web.host_list:
-#     #         status, reason = web.check_status(web.protocols[protocol], url)
-#     #         ping = web.ping_ip_address(url)
-#     #         url = url.split('.')
-#     #         data_dict[url[0]] = [status, reason, ping]
-#     #     f_database.put_data(node, 'webService/' + protocol, data_dict)
-#     #     data_dict = {}
-#
-#     temp_data_status = {}
-#     temp_data_reason = {}
-#     temp_data_ping = {}
-#     for protocol in web.protocols:
-#         for url in web.host_list:
-#             status, reason = web.check_status(web.protocols[protocol], url)
-#             ping = web.ping_ip_address(url)
-#             temp_url = url.split('.')
-#             temp_data_status[temp_url[0]] = status
-#             temp_data_reason[temp_url[0]] = reason
-#             temp_data_ping[temp_url[0]] = ping
-#         f_database.put_data(node, 'webService/' + protocol + '/status', temp_data_status)
-#         f_database.put_data(node, 'webService/' + protocol + '/reason', temp_data_reason)
-#         f_database.put_data(node, 'webService/' + protocol + '/ping', temp_data_ping)
-#
-#
-# main2()
+def main2():
+    node = 'KhoneKean'
+    data_dict = {}
+    f_database = FirebaseDatabase()
+    web = WebService()
+    # for protocol in web.protocols:
+    #     for url in web.host_list:
+    #         status, reason = web.check_status(web.protocols[protocol], url)
+    #         ping = web.ping_ip_address(url)
+    #         url = url.split('.')
+    #         data_dict[url[0]] = [status, reason, ping]
+    #     f_database.put_data(node, 'webService/' + protocol, data_dict)
+    #     data_dict = {}
+
+    temp_data_status = {}
+    temp_data_reason = {}
+    temp_data_ping = {}
+    for protocol in web.protocols:
+        for url in web.host_list:
+            status, reason = web.check_status(web.protocols[protocol], url)
+            ping = web.ping_ip_address(url)
+            temp_url = url.split('.')
+            temp_data_status[temp_url[0]] = status
+            temp_data_reason[temp_url[0]] = reason
+            temp_data_ping[temp_url[0]] = ping
+        f_database.put_data(node, 'webService/' + protocol + '/status', temp_data_status)
+        f_database.put_data(node, 'webService/' + protocol + '/reason', temp_data_reason)
+        f_database.put_data(node, 'webService/' + protocol + '/ping', temp_data_ping)
+
+
+main2()

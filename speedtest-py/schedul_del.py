@@ -97,21 +97,64 @@ def read(file='hosts.txt'):
 # print reason
 
 import httplib
-import urllib
-
-response = urllib.urlopen('http://www.linkedin.com')
-print 'RESPONSE:', response.getcode()
-# print 'REASON: ', httplib.responses[response.getcode()]
-# print 'URL     :', response.geturl()
+# import urllib
 #
-# headers = response.info()
-# print 'DATE    :', headers['date']
-# print 'HEADERS :'
+# response = urllib.urlopen('http://www.linkedin.com')
+# print 'RESPONSE:', response.getcode()
+# # print 'REASON: ', httplib.responses[response.getcode()]
+# # print 'URL     :', response.geturl()
+# #
+# # headers = response.info()
+# # print 'DATE    :', headers['date']
+# # print 'HEADERS :'
+# # print '---------'
+# # print headers
+#
+# data = response.read()
+# print 'LENGTH  :', len(data)
+# print 'DATA    :'
 # print '---------'
-# print headers
+# # print data
 
-data = response.read()
-print 'LENGTH  :', len(data)
-print 'DATA    :'
-print '---------'
-# print data
+import smtplib
+
+receivers = []
+email = {}
+
+with open('email.txt') as f:
+    for line in f:
+        key, value = line.strip().split('=')
+        if 'receiver' in key:
+            receivers.append(value)
+        else:
+            email[key] = value
+
+
+gmail_user = email['sender']
+print gmail_user
+gmail_password = email['sender_pass']
+print gmail_password
+
+# from_address = gmail_user
+dest_address = ['ipacharapol@gmail.com']
+subject = 'Good Morning Teacher ?'
+body = 'How are you today ? What Happend to Monday ?'
+
+email_text = ''''From: {}\nTo: {}\nSubject: {}'''.format(gmail_user, dest_address, gmail_password, body)
+# To: %s
+# Subject: %s
+#
+# %s
+# """ % (from_address, ", ".join(dest_address), subject, body)
+
+try:
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    # server = smtplib.SMTP_SSL('smtp-mail.outlook.com', '587')
+    server.ehlo()
+    server.login(gmail_user, gmail_password)
+    server.sendmail(gmail_user, dest_address, email_text)
+    server.quit()
+
+    print 'Email sent!'
+except:
+    print 'Something went wrong...'
