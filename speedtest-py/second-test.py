@@ -3,10 +3,8 @@
 import speedtest
 import time
 from firebase import firebase
-import threading
 import Utillity
-import mysql_python
-
+from playground import mysql_python
 
 connect_mysql = mysql_python.MysqlPython('localhost', 'root', 'root', 'test-catma')
 

@@ -1,0 +1,4 @@
+smtp.gmail.com:587
+smtp.live.com:587
+smtp.hughes.net:587
+smtp-mail.outlook.com:587

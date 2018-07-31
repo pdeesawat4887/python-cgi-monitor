@@ -56,6 +56,7 @@ def read(file='hosts.txt'):
         temp_file.close()
     return host_list
 
+
 # print read()
 
 # import socket
@@ -116,45 +117,140 @@ import httplib
 # print '---------'
 # # print data
 
-import smtplib
-
-receivers = []
-email = {}
-
-with open('email.txt') as f:
-    for line in f:
-        key, value = line.strip().split('=')
-        if 'receiver' in key:
-            receivers.append(value)
-        else:
-            email[key] = value
-
-
-gmail_user = email['sender']
-print gmail_user
-gmail_password = email['sender_pass']
-print gmail_password
-
-# from_address = gmail_user
-dest_address = ['ipacharapol@gmail.com']
-subject = 'Good Morning Teacher ?'
-body = 'How are you today ? What Happend to Monday ?'
-
-email_text = ''''From: {}\nTo: {}\nSubject: {}'''.format(gmail_user, dest_address, gmail_password, body)
-# To: %s
-# Subject: %s
+# import smtplib
 #
-# %s
-# """ % (from_address, ", ".join(dest_address), subject, body)
+# receivers = []
+# email = {}
+#
+# with open('email.txt') as f:
+#     for line in f:
+#         key, value = line.strip().split('=')
+#         if 'receiver' in key:
+#             receivers.append(value)
+#         else:
+#             email[key] = value
+#
+#
+# gmail_user = email['sender']
+# print gmail_user
+# gmail_password = email['sender_pass']
+# print gmail_password
+#
+# # from_address = gmail_user
+# dest_address = ['ipacharapol@gmail.com']
+# subject = 'Good Morning Teacher ?'
+# body = 'How are you today ? What Happend to Monday ?'
+#
+# email_text = ''''From: {}\nTo: {}\nSubject: {}'''.format(gmail_user, dest_address, gmail_password, body)
+# # To: %s
+# # Subject: %s
+# #
+# # %s
+# # """ % (from_address, ", ".join(dest_address), subject, body)
+#
+# try:
+#     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+#     # server = smtplib.SMTP_SSL('smtp-mail.outlook.com', '587')
+#     server.ehlo()
+#     server.login(gmail_user, gmail_password)
+#     server.sendmail(gmail_user, dest_address, email_text)
+#     server.quit()
+#
+#     print 'Email sent!'
+# except:
+#     print 'Something went wrong...'
 
-try:
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    # server = smtplib.SMTP_SSL('smtp-mail.outlook.com', '587')
-    server.ehlo()
-    server.login(gmail_user, gmail_password)
-    server.sendmail(gmail_user, dest_address, email_text)
-    server.quit()
 
-    print 'Email sent!'
-except:
-    print 'Something went wrong...'
+import re
+import smtplib
+import dns.resolver
+
+# Address used for SMTP MAIL FROM command
+fromAddress = 'corn@bt.com'
+
+# Simple Regex for syntax checking
+regex = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$'
+
+# Email address to verify
+inputAddress = raw_input('Please enter the emailAddress to verify:')
+addressToVerify = str(inputAddress)
+
+# Syntax check
+match = re.match(regex, addressToVerify)
+if match == None:
+    print('Bad Syntax')
+    raise ValueError('Bad Syntax')
+
+# Get domain for DNS lookup
+splitAddress = addressToVerify.split('@')
+domain = str(splitAddress[1])
+print('Domain:', domain)
+
+# MX record lookup
+records = dns.resolver.query(domain, 'MX')
+mxRecord = records[0].exchange
+mxRecord = str(mxRecord)
+print 'mxRecord :', mxRecord
+
+# SMTP lib setup (use debug level for full output)
+server = smtplib.SMTP()
+server.set_debuglevel(0)
+
+# SMTP Conversation
+server.connect(mxRecord)
+server.helo(server.local_hostname)  ### server.local_hostname(Get local server hostname)
+server.mail(fromAddress)
+code, message = server.rcpt(str(addressToVerify))
+server.quit()
+
+# print(code)
+# print(message)
+
+# Assume SMTP response 250 is success
+if code == 250:
+    print('Success')
+else:
+    print('Bad')
+
+# """The first step is to create an SMTP object, each object is used for connection
+# with one server."""
+#
+# import smtplib
+# server = smtplib.SMTP('smtp-mail.outlook.com', 587)
+# server2 = smtplib.SMTP('smtp-mail.outlook.com', 587)
+#
+# #Next, log in to the server
+# code = server.helo('Pacharapol')
+# server.close()
+# server.quit()
+#
+# code2 = int(server2.helo()[0])
+# server2.close()
+#
+# # if code == 250:
+# #     print 'Success'
+# #     print code
+# # else:
+# #     print 'Bad'
+# print code
+#
+# if code2 == 250:
+#     print 'Success'
+#     print code2
+# else:
+#     print 'Bad'
+
+# server.login("ipacharapol@gmail.com", "T")
+#
+# #Send the mail
+# msg = "Hello!" # The /n separates the message from the headers
+# server.sendmail("ipacharapol@gmail.com", "dololess72@gmail.com", msg)
+
+
+import socket
+def hostname_resolves(hostname):
+    try:
+        socket.gethostbyname(hostname)
+        return 1
+    except socket.error:
+        return 0

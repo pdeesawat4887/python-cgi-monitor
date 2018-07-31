@@ -1,4 +1,4 @@
-node=chiangmai
+node=testing
 location=Bangkok
 contact=0873637684
 server_Singapore=3914

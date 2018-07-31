@@ -1,7 +1,0 @@
-sender=dololess72@gmail.com
-sender_pass=pacharapol
-receiver=pdeesawat@hotmail.com
-receiver=ipacharapol@gmail.com
-receiver=dololess71@gmail.com
-receiver=pdeesawat@yahoo.com
-receiver=pacharapold@iamofficed.com

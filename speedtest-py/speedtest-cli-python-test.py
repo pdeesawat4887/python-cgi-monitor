@@ -6,6 +6,7 @@ import socket
 import os
 import httplib
 import urllib
+import smtplib
 
 
 class Tools:
@@ -150,6 +151,39 @@ class WebService:
         return status, reason
 
 
+class SmtpService:
+    mail_server = {}
+    emails = []
+
+    def __init__(self):
+        self.server = smtplib.SMTP()
+
+    def read_server(self):
+        with open('email.txt') as f:
+            for line in f:
+                try:
+                    key, value = line.strip().split(':')
+                    self.mail_server[key] = value
+                except:
+                    email = line.strip()
+                    self.emails.append(email)
+
+    def connect_smtp_server(self, hostServer, port):
+        self.server.connect(hostServer, port)
+
+    def get_smtp_hello(self):
+        self.code = self.server.helo()
+
+    def get_smtp_code(self):
+        if int(self.code[0]) == 250:
+            self.code = 'Working'
+        else:
+            self.code = 'Not Working'
+
+    def quit_smtp_connection(self):
+        self.server.quit()
+
+
 class Service:
 
     def __init__(self):
@@ -232,7 +266,6 @@ if __name__ == '__main__':
             time.sleep(300)
     except KeyboardInterrupt:
         print 'Manual break by user'
-
 
 # interval 5 mins.
 # usage 1.5 kb firebase
