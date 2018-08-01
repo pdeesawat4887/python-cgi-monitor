@@ -1,0 +1,5 @@
+FTP is working. Don't worry.
+
+gs://pythonwithfirebase-catma.appspot.com/ftp_talent.txt
+
+https://firebasestorage.googleapis.com/v0/b/pythonwithfirebase-catma.appspot.com/o/ftp_talent.txt?alt=media&token=becbbd00-6492-426a-b964-1be4d1ce7336

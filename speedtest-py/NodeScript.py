@@ -229,33 +229,35 @@ class EmailService:
 
         return status
 
-    def quit_smtp_connection(self):
-        self.server.quit()
+    # def quit_smtp_connection(self):
+    #     self.server.quit()
+    #
+    # def quit_pop_connection(self):
+    #     self.server.quit()
+    #
+    # def quit_imap_connection(self):
+    #     self.server.close()
 
-    def quit_pop_connection(self):
-        self.server.quit()
-
-    def quit_imap_connection(self):
-        self.server.close()
-
-    def connect_both(self, hostServer, port):
-        self.connect_smtp_server(hostServer, port)
-        self.connect_pop_server(hostServer)
-        self.connect_imap_server(hostServer, port)
-
-    def quit_both(self):
-        self.quit_smtp_connection()
-        self.quit_pop_connection()
-        self.quit_imap_connection()
+    # def connect_both(self, hostServer, port):
+    #     self.connect_smtp_server(hostServer, port)
+    #     self.connect_pop_server(hostServer)
+    #     self.connect_imap_server(hostServer, port)
+    #
+    # def quit_both(self):
+    #     self.quit_smtp_connection()
+    #     self.quit_pop_connection()
+    #     self.quit_imap_connection()
 
     ################## Special Function ######################
 
     def choice_connection(self, func, hostServer, port):
         connect_dict = {'smtp': self.connect_smtp_server, 'imap': self.connect_imap_server,
                         'pop3': self.connect_pop_server}
+
         get_data = {'smtp': self.get_smtp_status, 'imap': self.get_imap_status, 'pop3': self.get_pop_status}
 
         connect_dict[func](hostServer, port)
+
         data = get_data[func]()
 
         return data
@@ -273,7 +275,8 @@ class Service:
         self.tool = Tools()
         self.speed = SpeedTestPy()
         self.node = self.speed.setting['node']
-        self.f_database = FirebaseDatabase(url='https://pythontestcode.firebaseio.com/')
+        # self.f_database = FirebaseDatabase(url='https://pythontestcode.firebaseio.com/')
+        self.f_database = FirebaseDatabase()
 
     def speedtest(self):
         # tool = Tools()
@@ -393,8 +396,8 @@ class Service:
 
 def main():
     device = Service()
-    # device.speedtest()
-    # device.web_service()
+    device.speedtest()
+    device.web_service()
     device.mail_service()
     # End of Speedtest Function
 

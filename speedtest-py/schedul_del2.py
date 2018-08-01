@@ -394,142 +394,150 @@
 #
 # for i in mail_server:
 #     print i
-import imaplib
-import poplib
-import smtplib
 
 
-class EmailService:
-    mail_server = {}
-    emails = []
+# import imaplib
+# import poplib
+# import smtplib
+#
+#
+# class EmailService:
+#     mail_server = {}
+#     emails = []
+#
+#     # def __init__(self):
+#     #     self.read_server()
+#
+#     def read_server(self, file="conf/email.txt"):
+#         with open(file) as f:
+#             for line in f:
+#                 if not '#' in line:
+#                     try:
+#                         key, smtp, imap, pop3 = line.strip().split(':')
+#                         self.mail_server[key] = [smtp, imap, pop3]
+#                     except:
+#                         if not '#' or ' ' in line:
+#                             print "Please check configure file at line", line
+#
+#     def connect_smtp_server(self, hostServer, port):
+#         try:
+#             self.server = smtplib.SMTP()
+#             self.server.connect(hostServer, port)
+#             self.code = self.server.helo()
+#         except Exception as e:
+#             print e
+#             print "\nCouldn't connect."
+#
+#     # def get_smtp_hello(self):
+#     #     self.code = self.server.helo()
+#
+#     def get_smtp_status(self):
+#
+#         check = int(self.code[0])
+#
+#         if (200 <= check <= 299):
+#             status = 'Working'
+#         else:
+#             status = 'Not Working'
+#
+#         return status
+#
+#     def connect_imap_server(self, hostServer, port):
+#         try:
+#             self.server = imaplib.IMAP4_SSL(hostServer, port)
+#         except Exception as e:
+#             self.server = imaplib.IMAP4(hostServer, port)
+#
+#     def get_imap_status(self):
+#
+#         check = self.server.welcome
+#
+#         if 'OK' in check:
+#             status = 'Working'
+#         else:
+#             status = 'Not Working'
+#
+#         return status
+#
+#     def connect_pop_server(self, hostServer, port):
+#         try:
+#             self.server = poplib.POP3_SSL(hostServer)
+#         except Exception as e:
+#             self.server = poplib.POP3(hostServer)
+#
+#     def get_pop_status(self):
+#
+#         check = self.server.getwelcome()
+#         self.server.quit()
+#
+#         if 'OK' in check:
+#             status = 'Working'
+#         else:
+#             status = 'Not Working'
+#
+#         return status
+#
+#     def quit_smtp_connection(self):
+#         self.server.quit()
+#
+#     def quit_pop_connection(self):
+#         self.server.quit()
+#
+#     def quit_imap_connection(self):
+#         self.server.close()
+#
+#     def connect_both(self, hostServer, port):
+#         self.connect_smtp_server(hostServer, port)
+#         self.connect_pop_server(hostServer)
+#         self.connect_imap_server(hostServer, port)
+#
+#     def quit_both(self):
+#         self.quit_smtp_connection()
+#         self.quit_pop_connection()
+#         self.quit_imap_connection()
+#
+#     ################## Special Function ######################
+#
+#     def choice_connection(self, func, hostServer, port):
+#         connect_dict = {'smtp': self.connect_smtp_server, 'imap': self.connect_imap_server,
+#                         'pop3': self.connect_pop_server}
+#         get_data = {'smtp': self.get_smtp_status, 'imap': self.get_imap_status, 'pop3': self.get_pop_status}
+#
+#         connect_dict[func](hostServer, port)
+#         data = get_data[func]()
+#
+#         return data
+#
+#     def choice_close(self, func):
+#         close_dict = {'smtp': self.quit_smtp_connection, 'imap': self.quit_imap_connection,
+#                       'pop3': self.quit_pop_connection}
+#
+#         close_dict[func]()
+#
+#
+# import NodeScript
+#
+# firebase_con = NodeScript.FirebaseDatabase(url='https://pythontestcode.firebaseio.com/')
+#
+# mail_server = {'smtp.airmail.net': ['587', '143', ''], 'smtp-mail.outlook.com': ['587', '993', '995'],
+#                'smtp.live.com': ['587', '993', '995'], 'smtp.hughes.net': ['587', '993', '110'],
+#                'smtp.gmail.com': ['587', '993', '995']}
+#
+# protocols = ['smtp', 'imap', 'pop3']
+#
+# mail = EmailService()
+#
+# data = {}
+#
+# for i in range(len(protocols)):
+#     for server in mail_server:
+#         temp_server = str(server).replace('.', '-')
+#         data[temp_server] = mail.choice_connection(protocols[i], server, mail_server[server][i])
+#     firebase_con.put_data('test', 'mailServer/' + protocols[i], data)
+#     data = {}
 
-    # def __init__(self):
-    #     self.read_server()
 
-    def read_server(self, file="conf/email.txt"):
-        with open(file) as f:
-            for line in f:
-                if not '#' in line:
-                    try:
-                        key, smtp, imap, pop3 = line.strip().split(':')
-                        self.mail_server[key] = [smtp, imap, pop3]
-                    except:
-                        if not '#' or ' ' in line:
-                            print "Please check configure file at line", line
-
-    def connect_smtp_server(self, hostServer, port):
-        try:
-            self.server = smtplib.SMTP()
-            self.server.connect(hostServer, port)
-            self.code = self.server.helo()
-        except Exception as e:
-            print e
-            print "\nCouldn't connect."
-
-    # def get_smtp_hello(self):
-    #     self.code = self.server.helo()
-
-    def get_smtp_status(self):
-
-        check = int(self.code[0])
-
-        if (200 <= check <= 299):
-            status = 'Working'
-        else:
-            status = 'Not Working'
-
-        return status
-
-    def connect_imap_server(self, hostServer, port):
-        try:
-            self.server = imaplib.IMAP4_SSL(hostServer, port)
-        except Exception as e:
-            self.server = imaplib.IMAP4(hostServer, port)
-
-    def get_imap_status(self):
-
-        check = self.server.welcome
-
-        if 'OK' in check:
-            status = 'Working'
-        else:
-            status = 'Not Working'
-
-        return status
-
-    def connect_pop_server(self, hostServer, port):
-        try:
-            self.server = poplib.POP3_SSL(hostServer)
-        except Exception as e:
-            self.server = poplib.POP3(hostServer)
-
-    def get_pop_status(self):
-
-        check = self.server.getwelcome()
-        self.server.quit()
-
-        if 'OK' in check:
-            status = 'Working'
-        else:
-            status = 'Not Working'
-
-        return status
-
-    def quit_smtp_connection(self):
-        self.server.quit()
-
-    def quit_pop_connection(self):
-        self.server.quit()
-
-    def quit_imap_connection(self):
-        self.server.close()
-
-    def connect_both(self, hostServer, port):
-        self.connect_smtp_server(hostServer, port)
-        self.connect_pop_server(hostServer)
-        self.connect_imap_server(hostServer, port)
-
-    def quit_both(self):
-        self.quit_smtp_connection()
-        self.quit_pop_connection()
-        self.quit_imap_connection()
-
-    ################## Special Function ######################
-
-    def choice_connection(self, func, hostServer, port):
-        connect_dict = {'smtp': self.connect_smtp_server, 'imap': self.connect_imap_server,
-                        'pop3': self.connect_pop_server}
-        get_data = {'smtp': self.get_smtp_status, 'imap': self.get_imap_status, 'pop3': self.get_pop_status}
-
-        connect_dict[func](hostServer, port)
-        data = get_data[func]()
-
-        return data
-
-    def choice_close(self, func):
-        close_dict = {'smtp': self.quit_smtp_connection, 'imap': self.quit_imap_connection,
-                      'pop3': self.quit_pop_connection}
-
-        close_dict[func]()
-
-
-import NodeScript
-
-firebase_con = NodeScript.FirebaseDatabase(url='https://pythontestcode.firebaseio.com/')
-
-mail_server = {'smtp.airmail.net': ['587', '143', ''], 'smtp-mail.outlook.com': ['587', '993', '995'],
-               'smtp.live.com': ['587', '993', '995'], 'smtp.hughes.net': ['587', '993', '110'],
-               'smtp.gmail.com': ['587', '993', '995']}
-
-protocols = ['smtp', 'imap', 'pop3']
-
-mail = EmailService()
-
-data = {}
-
-for i in range(len(protocols)):
-    for server in mail_server:
-        temp_server = str(server).replace('.', '-')
-        data[temp_server] = mail.choice_connection(protocols[i], server, mail_server[server][i])
-    firebase_con.put_data('test', 'mailServer/' + protocols[i], data)
-    data = {}
+#### get file
+import urllib2
+response = urllib2.urlopen('https://firebasestorage.googleapis.com/v0/b/pythonwithfirebase-catma.appspot.com/o/ftp_talent.txt?alt=media&token=becbbd00-6492-426a-b964-1be4d1ce7336')
+html = response.read()
