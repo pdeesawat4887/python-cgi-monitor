@@ -18,25 +18,26 @@ import rfc822
 
 mail_server = {}
 emails = []
-with open("email.txt") as f:
+with open("conf/email_conf.txt") as f:
     for line in f:
-        try:
-            key, value = line.strip().split(':')
-            mail_server[key] = value
-        except:
-            email = line.strip()
-            emails.append(email)
+        if not '#' in line:
+            try:
+                key, smtp, imap, pop3 = line.strip().split(':')
+                mail_server[key] = [smtp, imap, pop3]
+            except:
+                if not '#' or ' ' in line:
+                    print "Please check configure file at line", line
 
 print mail_server
 
 for i in mail_server:
     try:
-        server = poplib.POP3_SSL(i)
+        server = poplib.POP3_SSL(i, mail_server[i][1])
     except Exception as e:
-        server = poplib.POP3(i)
+        server = poplib.POP3(i, mail_server[i][1])
     check = server.getwelcome()
 
-    if '+OK' in check:
+    if 'OK' in check:
         status = 'OK'
     else:
         status = 'Cannot connect'

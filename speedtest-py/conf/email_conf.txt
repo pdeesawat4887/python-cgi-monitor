@@ -1,0 +1,9 @@
+# hostServer:SMTP_Port:IMAP_Port:POP3_Port
+
+smtp.gmail.com:587:993:995
+smtp.live.com:587:993:995
+smtp.hughes.net:587:993:110
+smtp-mail.outlook.com:587:993:995
+
+
+# Make sure that hostServer and Protocol Port are correct check more: https://www.apple.com/support/mail-settings-lookup/

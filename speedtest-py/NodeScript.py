@@ -8,6 +8,7 @@ import httplib
 import urllib
 import smtplib
 import poplib
+import imaplib
 
 
 class Tools:
@@ -158,20 +159,21 @@ class EmailService:
 
     def __init__(self):
         self.read_server()
-        self.server = smtplib.SMTP()
 
-    def read_server(self, file="conf/email.txt"):
+    def read_server(self, file="conf/email_conf.txt"):
         with open(file) as f:
             for line in f:
-                try:
-                    key, value = line.strip().split(':')
-                    self.mail_server[key] = value
-                except:
-                    email = line.strip()
-                    self.emails.append(email)
+                if not '#' in line:
+                    try:
+                        key, smtp, imap, pop3 = line.strip().split(':')
+                        self.mail_server[key] = [smtp, imap, pop3]
+                    except:
+                        if not '#' or ' ' in line:
+                            print "Please check configure file at line", line
 
     def connect_smtp_server(self, hostServer, port):
         try:
+            self.server = smtplib.SMTP()
             self.server.connect(hostServer, port)
             self.code = self.server.helo()
         except Exception as e:
@@ -192,17 +194,35 @@ class EmailService:
 
         return status
 
-    def connect_pop_server(self, hostServer):
+    def connect_imap_server(self, hostServer, port):
         try:
-            self.server_pop = poplib.POP3_SSL(hostServer)
+            self.server = imaplib.IMAP4_SSL(hostServer, port)
         except Exception as e:
-            self.server_pop = poplib.POP3(hostServer)
+            self.server = imaplib.IMAP4(hostServer, port)
+
+    def get_imap_status(self):
+
+        check = self.server.welcome
+
+        if 'OK' in check:
+            status = 'Working'
+        else:
+            status = 'Not Working'
+
+        return status
+
+    def connect_pop_server(self, hostServer, port):
+        try:
+            self.server = poplib.POP3_SSL(hostServer)
+        except Exception as e:
+            self.server = poplib.POP3(hostServer)
 
     def get_pop_status(self):
 
-        check = self.server_pop.getwelcome()
+        check = self.server.getwelcome()
+        self.server.quit()
 
-        if '+OK' in check:
+        if 'OK' in check:
             status = 'Working'
         else:
             status = 'Not Working'
@@ -213,15 +233,38 @@ class EmailService:
         self.server.quit()
 
     def quit_pop_connection(self):
-        self.server_pop.quit()
+        self.server.quit()
+
+    def quit_imap_connection(self):
+        self.server.close()
 
     def connect_both(self, hostServer, port):
         self.connect_smtp_server(hostServer, port)
         self.connect_pop_server(hostServer)
+        self.connect_imap_server(hostServer, port)
 
     def quit_both(self):
         self.quit_smtp_connection()
         self.quit_pop_connection()
+        self.quit_imap_connection()
+
+    ################## Special Function ######################
+
+    def choice_connection(self, func, hostServer, port):
+        connect_dict = {'smtp': self.connect_smtp_server, 'imap': self.connect_imap_server,
+                        'pop3': self.connect_pop_server}
+        get_data = {'smtp': self.get_smtp_status, 'imap': self.get_imap_status, 'pop3': self.get_pop_status}
+
+        connect_dict[func](hostServer, port)
+        data = get_data[func]()
+
+        return data
+
+    # def choice_close(self, func):
+    #     close_dict = {'smtp': self.quit_smtp_connection, 'imap': self.quit_imap_connection,
+    #                   'pop3': self.quit_pop_connection}
+    #
+    #     close_dict[func]()
 
 
 class Service:
@@ -230,7 +273,7 @@ class Service:
         self.tool = Tools()
         self.speed = SpeedTestPy()
         self.node = self.speed.setting['node']
-        self.f_database = FirebaseDatabase()
+        self.f_database = FirebaseDatabase(url='https://pythontestcode.firebaseio.com/')
 
     def speedtest(self):
         # tool = Tools()
@@ -292,45 +335,60 @@ class Service:
         print " ----> WebTest Complete. <------", time.ctime(time.time())
 
     def mail_service(self):
-        temp_smtp = {}
-        temp_pop = {}
+
+        protocols = ['smtp', 'imap', 'pop3']
         mail = EmailService()
-        print self.node
-        for server in mail.mail_server:
-            temp_server = str(server).replace('.', '-')
-            port = mail.mail_server[server]
-            print "Server: {}\nPort: {}".format(temp_server, port)
-            mail.connect_both(server, port)
-            print 'connect both success'
-            smtp_status = mail.get_smtp_status()
-            temp_smtp[temp_server] = smtp_status
-            print 'SMTP both success'
-            pop_status = mail.get_pop_status()
-            temp_pop[temp_server] = pop_status
-            print 'POP3 both success'
-            mail.quit_both()
-            print '-----------------------------/----------------------/-----------------'
-            # try:
-            #     # mail.connect_smtp_server(server, port)
-            #     mail.connect_both(server, port)
-            #     snmp_status = mail.get_smtp_status()
-            #     pop_status = mail.get_pop_status()
-            #     temp_smtp[temp_server] = snmp_status
-            #     temp_pop[temp_server] = pop_status
-            #     # mail.quit_smtp_connection()
-            #     # mail.quit_both()
-            #     # print server, mail.status, mail.code
-            #     self.f_database.put_data(self.node, 'mailService/' + temp_server, mail.status)
-            #     # self.f_database.put_data('testObj','master1', mail)
-            # except Exception as e:
-            #     print e
-            #     print "\nCouldn't connect."
-            #     self.f_database.put_data(self.node, 'mailService/' + temp_server, 'Cannot connect to server.')
-        print 'FOR Finish'
-        self.f_database.put_data(self.node, 'mailService/SMTP', temp_smtp)
-        print 'temp_smtp success'
-        self.f_database.put_data(self.node, 'mailService/POP3', temp_pop)
-        print 'temp_smtp pop'
+        data = {}
+
+        for protocol in range(len(protocols)):
+            for server in mail.mail_server:
+                temp_server = str(server).replace('.', '-')
+                data[temp_server] = mail.choice_connection(protocols[protocol], server,
+                                                           mail.mail_server[server][protocol])
+            self.f_database.put_data(self.node, 'mailServer/' + protocols[protocol], data)
+            data = {}
+
+    # def mail_service(self):
+    #     temp_smtp = {}
+    #     temp_pop = {}
+    #     temp_imap = {}
+    #     mail = EmailService()
+    #     print self.node
+    #     for server in mail.mail_server:
+    #         temp_server = str(server).replace('.', '-')
+    #         port = mail.mail_server[server]
+    #         print "Server: {}\nPort: {}".format(temp_server, port)
+    #         mail.connect_both(server, port)
+    #         print 'connect both success'
+    #         smtp_status = mail.get_smtp_status()
+    #         temp_smtp[temp_server] = smtp_status
+    #         print 'SMTP both success'
+    #         pop_status = mail.get_pop_status()
+    #         temp_pop[temp_server] = pop_status
+    #         print 'POP3 both success'
+    #         mail.quit_both()
+    #         print '-----------------------------/----------------------/-----------------'
+    #         # try:
+    #         #     # mail.connect_smtp_server(server, port)
+    #         #     mail.connect_both(server, port)
+    #         #     snmp_status = mail.get_smtp_status()
+    #         #     pop_status = mail.get_pop_status()
+    #         #     temp_smtp[temp_server] = snmp_status
+    #         #     temp_pop[temp_server] = pop_status
+    #         #     # mail.quit_smtp_connection()
+    #         #     # mail.quit_both()
+    #         #     # print server, mail.status, mail.code
+    #         #     self.f_database.put_data(self.node, 'mailService/' + temp_server, mail.status)
+    #         #     # self.f_database.put_data('testObj','master1', mail)
+    #         # except Exception as e:
+    #         #     print e
+    #         #     print "\nCouldn't connect."
+    #         #     self.f_database.put_data(self.node, 'mailService/' + temp_server, 'Cannot connect to server.')
+    #     print 'FOR Finish'
+    #     self.f_database.put_data(self.node, 'mailService/SMTP', temp_smtp)
+    #     print 'temp_smtp success'
+    #     self.f_database.put_data(self.node, 'mailService/POP3', temp_pop)
+    #     print 'temp_smtp pop'
 
 
 def main():
