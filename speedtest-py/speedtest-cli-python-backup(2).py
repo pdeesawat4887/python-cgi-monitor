@@ -10,7 +10,6 @@ import smtplib
 import poplib
 import imaplib
 import sys
-import subprocess
 
 
 class Tools:
@@ -58,10 +57,10 @@ class Tools:
 
     def get_platform(self):
         platforms = {
-            'linux1': '-c ',
-            'linux2': '-c ',
-            'darwin': '-c ',
-            'win32': '-n '
+            'linux1': 'Linux',
+            'linux2': 'Linux',
+            'darwin': 'OS X',
+            'win32': 'Windows'
         }
         if sys.platform not in platforms:
             return sys.platform
@@ -143,10 +142,10 @@ class WebService:
             self.host_list = text.split()
             temp_file.close()
 
-    def ping_ip_address(self, url, command):
+    def ping_ip_address(self, url):
         try:
             ip_address = socket.gethostbyname(url)
-            ping_value = os.system("ping " + command + "1 " + ip_address)
+            ping_value = os.system("ping -c 1 -i 0.1 " + ip_address)
             if ping_value == 0:
                 ping_status = 'Active'
             else:
@@ -283,53 +282,6 @@ class EmailService:
     #     close_dict[func]()
 
 
-class DNSService:
-    target = []
-
-    def __init__(self):
-        self.__get_target__()
-
-    def __get_target__(self, file='conf/dns_server_conf.txt'):
-        with open(file, 'r') as temp_file:
-            text = temp_file.read()
-            self.target = text.split()
-            temp_file.close()
-
-    def __nslookup__(self, host, dns_server):
-        try:
-            result = (subprocess.check_output(['nslookup', '-ty=SOA', host, dns_server]))
-        except subprocess.CalledProcessError as err:
-            result = err
-        return result
-
-    def __check_nslookup_result__(self, result):
-        if 'origin' in result:
-            status = 'Working'
-        else:
-            status = 'Not Working'
-        return status
-
-    def __get_nslookup_result__(self, platform, host, dns_server):
-        result = self.__nslookup__(host, dns_server)
-        return self.__check_nslookup_result__(result)
-
-    def __ping__(self, platform, host, dns_server):
-        try:
-            ping = os.system("ping " + platform + "1 " + dns_server)
-            if ping == 0:
-                ping_status = 'Active'
-            else:
-                ping_status = 'Check server first'
-        except Exception as ex:
-            ping_status = 'Cannot ping to destination'
-        return ping_status
-
-    def __select_function__(self, func, platform, host, dns_server):
-        operation = {'ping': self.__ping__, 'status': self.__get_nslookup_result__}
-        temp = operation[func](platform, host, dns_server)
-        return temp
-
-
 class Service:
 
     def __init__(self):
@@ -383,13 +335,12 @@ class Service:
         temp_data_reason = {}
         temp_data_ping = {}
         web = WebService()
-        platform = self.tool.get_platform()
         for protocol in web.protocols:
             for url in web.host_list:
                 print url
                 status, reason = web.check_status(web.protocols[protocol], url)
                 print "complete url"
-                ping = web.ping_ip_address(url, platform)
+                ping = web.ping_ip_address(url)
                 temp_url = url.split('.')
                 temp_data_status[temp_url[0]] = status
                 temp_data_reason[temp_url[0]] = reason
@@ -410,7 +361,7 @@ class Service:
                 temp_server = str(server).replace('.', '-')
                 data[temp_server] = mail.choice_connection(protocols[protocol], server,
                                                            mail.mail_server[server][protocol])
-            self.f_database.put_data(self.node, 'mailService/' + protocols[protocol], data)
+            self.f_database.put_data(self.node, 'mailServer/' + protocols[protocol], data)
             data = {}
 
     # def mail_service(self):
@@ -455,31 +406,12 @@ class Service:
     #     self.f_database.put_data(self.node, 'mailService/POP3', temp_pop)
     #     print 'temp_smtp pop'
 
-    def dns_service(self):
-        operation = ['ping', 'status']
-        data = {}
-        platform = self.tool.get_platform()
-        dns_checker = DNSService()
-
-        for operate in range(len(operation)):
-            print operation[operate]
-            for dns in dns_checker.target:
-                print dns
-                temp_dns = str(dns).replace('.', '-')
-                data[temp_dns] = dns_checker.__select_function__(func=operation[operate], platform=platform,
-                                                                 host='google.com',
-                                                                 dns_server=dns)
-            print data
-            self.f_database.put_data(self.node, 'DNSService/' + operation[operate], data)
-            data = {}
-
 
 def main():
     device = Service()
     device.speedtest()
     device.web_service()
     device.mail_service()
-    device.dns_service()
     # End of Speedtest Function
 
 

@@ -538,6 +538,113 @@
 
 
 #### get file
-import urllib2
-response = urllib2.urlopen('https://firebasestorage.googleapis.com/v0/b/pythonwithfirebase-catma.appspot.com/o/ftp_talent.txt?alt=media&token=becbbd00-6492-426a-b964-1be4d1ce7336')
-html = response.read()
+# import urllib2
+# response = urllib2.urlopen('https://firebasestorage.googleapis.com/v0/b/pythonwithfirebase-catma.appspot.com/o/ftp_talent.txt?alt=media&token=becbbd00-6492-426a-b964-1be4d1ce7336')
+# html = response.read()
+
+# import platform
+# import sys
+#
+#
+# def linux_distribution():
+#     try:
+#         return platform.linux_distribution()
+#     except:
+#         return "N/A"
+#
+#
+# print("""Python version: %s
+# dist: %s
+# linux_distribution: %s
+# system: %s
+# machine: %s
+# platform: %s
+# uname: %s
+# version: %s
+# mac_ver: %s
+# """ % (
+#     sys.version.split('\n'),
+#     str(platform.dist()),
+#     linux_distribution(),
+#     platform.system(),
+#     platform.machine(),
+#     platform.platform(),
+#     platform.uname(),
+#     platform.version(),
+#     platform.mac_ver(),
+# ))
+
+# import sys
+# #
+# #
+# # def get_platform():
+# #     platforms = {
+# #         'linux1': 'Linux',
+# #         'linux2': 'Linux',
+# #         'darwin': 'OS X',
+# #         'win32': 'Windows'
+# #     }
+# #     if sys.platform not in platforms:
+# #         return sys.platform
+# #
+# #     return platforms[sys.platform]
+# #
+# # print get_platform()
+
+# import dns.name
+#
+# n = dns.name.from_text('www.dnspython.org')
+# o = dns.name.from_text('dnspython.org')
+# print n.is_subdomain(o)         # True
+# print n.is_superdomain(o)       # False
+# print n > o                     # True
+# rel = n.relativize(o)           # rel is the relative name 'www'
+# n2 = rel + o
+# print n2 == n                   # True
+# print n.labels                  # ('www', 'dnspython', 'org', '')
+
+# import socket
+# print socket.gethostbyname('localhost')
+# print socket.gethostbyname('google.com')
+#
+# import subprocess
+# try:
+#     proc = (subprocess.check_output(['nslookup', 'google.com', '115.178.58.28']))
+# except subprocess.CalledProcessError as err:
+#     print(err)
+#
+# if 'google' in proc:
+#     print('Yes')
+# elif 'timed out' in proc:
+#     print "Timeout"
+#
+# print proc
+#
+# ans = 'google.com'
+# temp = ans.split('.')
+# print temp[1]
+
+import os
+import time
+
+# while True:
+#     os.system('nslookup -ty=SOA google.com 110.78.191.20')
+#     print '---------------------------------------------------------------------'
+#     time.sleep(1)
+
+# import time
+# import subprocess
+#
+# while True:
+#     try:
+#         result = (subprocess.check_output(['nslookup', '-ty=SOA', 'google.com', '1.1.1.1']))
+#     except subprocess.CalledProcessError as err:
+#         result = err
+#     print result
+#     time.sleep(5)
+
+dict = {'win': {'a': 1234, 'b': 234}, 'loss': {'a': 'alpha', 'b': 'beta'}}
+
+for i in dict:
+    temp = dict[i]
+    print temp['a']
