@@ -156,7 +156,7 @@ class WebService:
             self.host_list = text.split()
             temp_file.close()
 
-    def ping_ip_address(self, platform, protocol, url):
+    def ping_ip_address(self, platform, url):
         try:
             ip_address = socket.gethostbyname(url)
             ping_value = os.system("ping " + platform + "1 " + ip_address)
@@ -168,7 +168,19 @@ class WebService:
             ping_status = 'Cannot ping to destination'
         return ping_status
 
-    def check_status(self, platform, protocol, url):
+    # def ping_ip_address(self, platform, protocol, url):
+    #     try:
+    #         ip_address = socket.gethostbyname(url)
+    #         ping_value = os.system("ping " + platform + "1 " + ip_address)
+    #         if ping_value == 0:
+    #             ping_status = 'Active'
+    #         else:
+    #             ping_status = 'Check server first'
+    #     except Exception as ex:
+    #         ping_status = 'Cannot ping to destination'
+    #     return ping_status
+
+    def check_status(self, protocol, url):
         try:
             res_https = urllib.urlopen(protocol + url)
             code = res_https.getcode()
@@ -181,6 +193,19 @@ class WebService:
             status = 'Could not connect to page. at webService Class'
         return status
 
+    # def check_status(self, platform, protocol, url):
+    #     try:
+    #         res_https = urllib.urlopen(protocol + url)
+    #         code = res_https.getcode()
+    #         # reason = httplib.responses[status]
+    #         res_https.close()
+    #
+    #         status = self.tool.check_code(code)
+    #
+    #     except Exception as ex:
+    #         status = 'Could not connect to page. at webService Class'
+    #     return status
+
     # def check_reason(self, status):
     #     try:
     #         reason = httplib.responses[status]
@@ -188,10 +213,10 @@ class WebService:
     #         reason = 'Could not connect to page.'
     #     return reason
 
-    def choice_operation(self, func, platform, protocol, url):
-        operation = {'ping': self.ping_ip_address, 'status': self.check_status}
-        data = operation[func](platform, protocol, url)
-        return data
+    # def choice_operation(self, func, platform, protocol, url):
+    #     operation = {'ping': self.ping_ip_address, 'status': self.check_status}
+    #     data = operation[func](platform, protocol, url)
+    #     return data
 
 
 class EmailService:
@@ -264,6 +289,51 @@ class EmailService:
 
         return status
 
+    def check_response(self, msg):
+
+        if 'OK' in msg:
+            status = 'Working'
+        else:
+            status = 'Not Working'
+
+        return status
+
+    def connect_all(self, hostServer, port_smtp, port_imap):
+        try:
+            self.connect_smtp = smtplib.SMTP()
+            self.connect_smtp.connect(hostServer, port_smtp)
+            self.connect_pop3 = poplib.POP3_SSL(hostServer)
+        except Exception as error:
+            print error
+
+        try:
+            self.connect_imap = imaplib.IMAP4_SSL(hostServer, port_imap)
+        except Exception as error:
+            self.connect_imap = imaplib.IMAP4(hostServer, port_imap)
+            print error
+
+        try:
+            self.connect_pop3 = poplib.POP3_SSL(hostServer)
+        except Exception as error:
+            self.connect_pop3 = poplib.POP3(hostServer)
+            print error
+
+    def status_all(self):
+        smtp = int(self.connect_smtp.helo()[0])
+        imap = self.connect_imap.welcome
+        pop3 = self.connect_pop3.getwelcome()
+
+        status_smtp = self.tool.check_code(smtp)
+        status_imap = self.check_response(imap)
+        status_pop3 = self.check_response(pop3)
+
+        return status_smtp, status_imap, status_pop3
+
+    def terminate_all(self):
+        self.connect_smtp.close()
+        self.connect_imap.close()
+        self.connect_pop3.quit()
+
     # def quit_smtp_connection(self):
     #     self.server.quit()
     #
@@ -296,7 +366,6 @@ class EmailService:
         data = get_data[func]()
 
         return data
-
     # def choice_close(self, func):
     #     close_dict = {'smtp': self.quit_smtp_connection, 'imap': self.quit_imap_connection,
     #                   'pop3': self.quit_pop_connection}
@@ -365,13 +434,16 @@ class MySQLDatabase:
 
     def insert_many_data_dns_mail(self, table, list_data):
         sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
-        self.mycursor.executemany(list_data)
+        self.mycursor.executemany(sql_syntax, list_data)
         self.connection.commit()
 
     def insert_data_speedtest(self, table, list_data):
         sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)".format(table)
         self.mycursor.executemany(sql_syntax, list_data)
         self.connection.commit()
+
+    def close_connection(self):
+        self.connection.close()
 
 
 class Service:
@@ -388,10 +460,10 @@ class Service:
 
         temp_list = self.speed.server_list
         data = []
+        current_time = time.strftime('%H:%M:%S')
+        current_date = time.strftime('%Y-%m-%d')
 
         for dest_server in temp_list:
-            current_time = time.strftime('%H:%M:%S')
-            current_date = time.strftime('%Y-%m-%d')
             dest_name, downL, upL, ping = self.speed.test(dest_server)
 
             print dest_name, ":", time.ctime(time.time())
@@ -444,42 +516,66 @@ class Service:
         # End of Speedtest Function
         print " ----> SpeedTest Complete. <------", time.ctime(time.time())
 
-    def web_service(self):
-        # temp_data_status = {}
-        # temp_data_reason = {}
-        # temp_data_ping = {}
-        # web = WebService()
-        # platform = self.tool.get_platform()
-        # for protocol in web.protocols:
-        #     for url in web.host_list:
-        #         print url
-        #         status = web.check_status(web.protocols[protocol], url)
-        #         reason = web.check_reason(status)
-        #         print "complete url"
-        #         ping = web.ping_ip_address(url, platform)
-        #         temp_url = url.split('.')
-        #         temp_data_status[temp_url[0]] = status
-        #         temp_data_reason[temp_url[0]] = reason
-        #         temp_data_ping[temp_url[0]] = ping
-        #     self.f_database.put_data(self.node, 'webService/' + protocol + '/status', temp_data_status)
-        #     self.f_database.put_data(self.node, 'webService/' + protocol + '/reason', temp_data_reason)
-        #     self.f_database.put_data(self.node, 'webService/' + protocol + '/ping', temp_data_ping)
+    # def web_service(self):
+    #     # temp_data_status = {}
+    #     # temp_data_reason = {}
+    #     # temp_data_ping = {}
+    #     # web = WebService()
+    #     # platform = self.tool.get_platform()
+    #     # for protocol in web.protocols:
+    #     #     for url in web.host_list:
+    #     #         print url
+    #     #         status = web.check_status(web.protocols[protocol], url)
+    #     #         reason = web.check_reason(status)
+    #     #         print "complete url"
+    #     #         ping = web.ping_ip_address(url, platform)
+    #     #         temp_url = url.split('.')
+    #     #         temp_data_status[temp_url[0]] = status
+    #     #         temp_data_reason[temp_url[0]] = reason
+    #     #         temp_data_ping[temp_url[0]] = ping
+    #     #     self.f_database.put_data(self.node, 'webService/' + protocol + '/status', temp_data_status)
+    #     #     self.f_database.put_data(self.node, 'webService/' + protocol + '/reason', temp_data_reason)
+    #     #     self.f_database.put_data(self.node, 'webService/' + protocol + '/ping', temp_data_ping)
+    #
+    #     web = WebService()
+    #     data = {}
+    #     # print web.check_status('https://', 'google.com')
+    #     platform = self.tool.get_platform()
+    #     operation = ['ping', 'status']
+    #     for protocol in web.protocols:
+    #         for operate in operation:
+    #             for url in web.host_list:
+    #                 temp_url = url.split('.')
+    #                 data[temp_url[0]] = web.choice_operation(func=operate, platform=platform,
+    #                                                          protocol=web.protocols[protocol], url=url)
+    #             self.f_database.put_data(self.node, 'webService/' + protocol + '/' + operate, data)
+    #             data = {}
+    #
+    #     print " ----> WebTest Complete. <------", time.ctime(time.time())
+
+    def web_service_new(self):
 
         web = WebService()
-        data = {}
-        # print web.check_status('https://', 'google.com')
+        data = []
         platform = self.tool.get_platform()
-        operation = ['ping', 'status']
-        for protocol in web.protocols:
-            for operate in operation:
-                for url in web.host_list:
-                    temp_url = url.split('.')
-                    data[temp_url[0]] = web.choice_operation(func=operate, platform=platform,
-                                                             protocol=web.protocols[protocol], url=url)
-                self.f_database.put_data(self.node, 'webService/' + protocol + '/' + operate, data)
-                data = {}
+        protocols = web.protocols
+        www_list = web.host_list
 
-        print " ----> WebTest Complete. <------", time.ctime(time.time())
+        current_time = time.strftime('%H:%M:%S')
+        current_date = time.strftime('%Y-%m-%d')
+
+        for protocol in protocols:
+            for www in www_list:
+                temp_www = www.split('.')
+                ping = web.ping_ip_address(platform=platform, url=www)
+                status = web.check_status(protocol=protocols[protocol], url=www)
+                temp_data = (self.node, temp_www[0], protocol, ping, status, current_date, current_time)
+                data.append(temp_data)
+            self.localDatabase.insert_data_speedtest(table='webService', list_data=data)
+            data = []
+
+            print data
+            print "success INSERT DATABASE"
 
     def mail_service(self):
         protocols = ['smtp', 'imap', 'pop3']
@@ -493,6 +589,25 @@ class Service:
                                                            mail.mail_server[server][protocol])
             self.f_database.put_data(self.node, 'mailService/' + protocols[protocol], data)
             data = {}
+
+    def mail_service_new(self):
+        # protocols = ['smtp', 'imap', 'pop3']
+        mail = EmailService()
+        data = []
+        mail_server = mail.mail_server
+        current_time = time.strftime('%H:%M:%S')
+        current_date = time.strftime('%Y-%m-%d')
+
+        for server in mail_server:
+            mail.connect_all(hostServer=server, port_smtp=mail_server[server][0], port_imap=mail_server[server][1])
+            smtp, imap, pop3 = mail.status_all()
+            mail.terminate_all()
+            temp_data = (self.node, server, 'smtp', smtp, current_date, current_time), \
+                        (self.node, server, 'imap', imap, current_date, current_time), \
+                        (self.node, server, 'pop3', pop3, current_date, current_time)
+            data.extend(temp_data)
+        self.localDatabase.insert_many_data_dns_mail(table='mailService', list_data=data)
+        print 'INSERT MAIL SUCCESSFULLY'
 
     # def mail_service(self):
     #     temp_smtp = {}
@@ -565,9 +680,11 @@ def main():
     try:
         while True:
             print time.ctime(time.time())
-            device.new_speedtest()
+            # device.new_speedtest()
+            # device.web_service_new()
+            device.mail_service_new()
             print time.ctime(time.time())
-            time.sleep(60)
+            time.sleep(100)
     except KeyboardInterrupt:
         print 'Manual Break by User.'
 
@@ -591,6 +708,10 @@ if __name__ == '__main__':
     # print time.ctime(time.time())
 # interval 5 mins.
 # usage 1.5 kb firebaseR
+
+# mail = EmailService()
+#
+# print mail.mail_server
 
 
 # def main2():

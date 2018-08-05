@@ -740,7 +740,7 @@ insert('applee', 'banana')
 insert('aaae', 'bbb')
 insert('leoe', 'tiger')
 
-print value
+# print value
 
 def helper(list):
     sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
@@ -773,9 +773,23 @@ class MySQLDatabase:
         self.mycursor.executemany(sql_syntax, list_data)
         self.connection.commit()
 
+#
+# sqlDatabase = MySQLDatabase()
+# time_cu = time.strftime('%H:%M:%S')
+# date_cu = time.strftime('%Y-%m-%d')
+# sqlDatabase.insert_data_dns_mail('dnsService', 'BKK_test', '127.0.0.1', '99.99', 'Working', date_cu, time_cu)
+# sqlDatabase.insert_data_dns_mail('mailService', 'BKK_test', '127.0.0.1', 'pop3', 'Working', date_cu, time_cu)
 
-sqlDatabase = MySQLDatabase()
-time_cu = time.strftime('%H:%M:%S')
-date_cu = time.strftime('%Y-%m-%d')
-sqlDatabase.insert_data_dns_mail('dnsService', 'BKK_test', '127.0.0.1', '99.99', 'Working', date_cu, time_cu)
-sqlDatabase.insert_data_dns_mail('mailService', 'BKK_test', '127.0.0.1', 'pop3', 'Working', date_cu, time_cu)
+# dee = ('hello', 'gohome'), ('banana')
+# list= []
+#
+# list.extend(dee)
+#
+# print list
+
+fff = []
+with open('NodeScript.py') as f:
+    for line in f:
+        if not '#' in line:
+            fff.append(line)
+print fff.__len__()
