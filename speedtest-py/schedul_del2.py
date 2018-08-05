@@ -643,8 +643,139 @@ import time
 #     print result
 #     time.sleep(5)
 
-dict = {'win': {'a': 1234, 'b': 234}, 'loss': {'a': 'alpha', 'b': 'beta'}}
+# dict = {'win': {'a': 1234, 'b': 234}, 'loss': {'a': 'alpha', 'b': 'beta'}}
+#
+# for i in dict:
+#     temp = dict[i]
+#     print temp['a']
 
-for i in dict:
-    temp = dict[i]
-    print temp['a']
+import firebase
+
+# url='https://pythontestcode.firebaseio.com'
+# connection = firebase.FirebaseApplication(url)
+# connection.put('coding', '/', 'python')
+
+# import urllib
+# import httplib
+# import socket
+# import sys
+# import struct
+# import time
+# import datetime
+#
+# now = datetime.datetime()
+# print now
+
+import time
+
+time_cu = time.strftime('%H:%M:%S')
+date_cu = time.strftime('%Y-%m-%d')
+# print "Now:", now
+# print "Time:", timee
+
+# try:
+#     con = MySQLdb.connect('hostname', 'username', 'userpass', \
+#                           'tablename')
+#     cur = con.cursor()
+#     cur.execute("INSERT INTO foo (foo_name, foo_date) \
+# 		VALUES (%s, %s)", (name_string, date_string))
+#     cur.commit()
+
+import mysql.connector
+
+# sql = "INSERT INTO speedtestService VALUES (NULL, '"+node+"', '"+estination+"', '"+download+"', '"+upload+"', '"+ping+"', '"+date+"', '"+time"');'
+
+try:
+    connection = mysql.connector.connect(user='catma', password='root', host='localhost', database='service_db')
+    mycursor = connection.cursor()
+except Exception as error:
+    print 'Error:', error
+
+
+def __insert_data(node, destination, download, upload, ping, date, time):
+    sql = "INSERT INTO speedtestService VALUES (NULL, '" + node + "', '" + destination + "', '" + download + "', '" + upload + "', '" + ping + "', '" + date + "', '" + time + "');"
+    mycursor.execute(sql)
+    connection.commit()
+    print(mycursor.rowcount, "record inserted.")
+
+def __close_connection():
+    connection.close()
+
+def __sensor():
+    sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+    val = [
+        ('Peter', 'Lowstreet 4'),
+        ('Amy', 'Apple st 652'),
+        ('Hannah', 'Mountain 21'),
+        ('Michael', 'Valley 345'),
+        ('Sandy', 'Ocean blvd 2'),
+        ('Betty', 'Green Grass 1'),
+        ('Richard', 'Sky st 331'),
+        ('Susan', 'One way 98'),
+        ('Vicky', 'Yellow Garden 2'),
+        ('Ben', 'Park Lane 38'),
+        ('William', 'Central st 954'),
+        ('Chuck', 'Main Road 989'),
+        ('Viola', 'Sideway 1633')
+    ]
+
+    mycursor.executemany(sql, val)
+
+    connection.commit()
+
+    print(mycursor.rowcount, "was inserted.")
+
+
+# __insert_data('BKK', 'BKK', '999.99', '0.9999', '99.909', date_cu, time_cu)
+# __sensor()
+
+value = []
+
+def insert(host, address):
+    data = (host, address)
+    value.append(data)
+
+insert('helloe', 'welcome')
+insert('applee', 'banana')
+insert('aaae', 'bbb')
+insert('leoe', 'tiger')
+
+print value
+
+def helper(list):
+    sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+    mycursor.executemany(sql, list)
+    connection.commit()
+
+# helper(value)
+
+
+class MySQLDatabase:
+
+    def __init__(self):
+        self.create_connection()
+
+    def create_connection(self, user='catma', passwd='root', host='localhost', database='service_db'):
+        try:
+            self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
+            self.mycursor = self.connection.cursor()
+        except Exception as error:
+            print 'Error:', error
+
+    def insert_data_dns_mail(self, table, node, destination, pp, status, date, time):
+        sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
+        data = (node, destination, pp, status, date, time)
+        self.mycursor.execute(sql_syntax, data)
+        self.connection.commit()
+
+    def insert_data_speedtest(self, table, list_data):
+        sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)".format(table)
+        self.mycursor.executemany(sql_syntax, list_data)
+        self.connection.commit()
+
+
+sqlDatabase = MySQLDatabase()
+time_cu = time.strftime('%H:%M:%S')
+date_cu = time.strftime('%Y-%m-%d')
+sqlDatabase.insert_data_dns_mail('dnsService', 'BKK_test', '127.0.0.1', '99.99', 'Working', date_cu, time_cu)
+sqlDatabase.insert_data_dns_mail('mailService', 'BKK_test', '127.0.0.1', 'pop3', 'Working', date_cu, time_cu)
