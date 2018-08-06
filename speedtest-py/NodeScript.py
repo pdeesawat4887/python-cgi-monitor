@@ -4,7 +4,6 @@ import struct
 from firebase import firebase
 import socket
 import os
-import httplib
 import urllib
 import smtplib
 import poplib
@@ -399,11 +398,26 @@ class DNSService:
             status = 'Not Working'
         return status
 
-    def __get_nslookup_result__(self, platform, host, dns_server):
+    # def __get_nslookup_result__(self, platform, host, dns_server):
+    #     result = self.__nslookup__(host, dns_server)
+    #     return self.__check_nslookup_result__(result)
+    #
+    # def __ping__(self, platform, host, dns_server):
+    #     try:
+    #         ping = os.system("ping " + platform + "1 " + dns_server)
+    #         if ping == 0:
+    #             ping_status = 'Active'
+    #         else:
+    #             ping_status = 'Check server first'
+    #     except Exception as ex:
+    #         ping_status = 'Cannot ping to destination'
+    #     return ping_status
+
+    def __get_nslookup_result__(self, host, dns_server):
         result = self.__nslookup__(host, dns_server)
         return self.__check_nslookup_result__(result)
 
-    def __ping__(self, platform, host, dns_server):
+    def __ping__(self, platform, dns_server):
         try:
             ping = os.system("ping " + platform + "1 " + dns_server)
             if ping == 0:
@@ -414,10 +428,10 @@ class DNSService:
             ping_status = 'Cannot ping to destination'
         return ping_status
 
-    def __select_function__(self, func, platform, host, dns_server):
-        operation = {'ping': self.__ping__, 'status': self.__get_nslookup_result__}
-        temp = operation[func](platform, host, dns_server)
-        return temp
+    # def __select_function__(self, func, platform, host, dns_server):
+    #     operation = {'ping': self.__ping__, 'status': self.__get_nslookup_result__}
+    #     temp = operation[func](platform, host, dns_server)
+    #     return temp
 
 
 class MySQLDatabase:
@@ -474,47 +488,48 @@ class Service:
             data.append(temp_data)
         self.localDatabase.insert_data_speedtest('speedtestService', data)
         data = []
+        print ' ----------------> INSERT SPEEDTEST SUCCESSFULLY <------------------'
 
-    def speedtest(self):
-        # tool = Tools()
-        # print "tools success"
-        # micro = SpeedTestPy()
-        # print "SpeedtestPy success"
-        # node = self.speed.setting['node']
-        # print "node query success"
-        # f_database = FirebaseDatabase()
-        # print "firebase success"
-        test_time = self.speed.server_list
-        # print "num of server success"
-
-        # Speedtest Function
-        current_date = time.strftime('%Y-%m-%d')
-        current_time = time.strftime('%H:%M:%S')
-        for i in range(len(test_time)):
-            # print "in for success"
-            name, d, u, p = self.speed.test(test_time[i])
-            # print "test success"
-            d, du = self.tool.convert(d)
-            # print "convert dw success"
-            u, uu = self.tool.convert(u)
-            # print "convert ul success"
-            st_time = time.ctime(time.time())  # change to ntp time
-            # print "convert ntp success"
-            data = {'download': (d, du), 'upload': (u, uu), 'ping': p, 'execTime': execTime, 'time': st_time}
-            # print "convert data success"
-            # f_database.put_data('speedtest', node + '/' + name, data)
-            self.f_database.post_data(self.node + '/speedtest/' + name, data)
-            # print "convert post firebase success"
-
-            # Show output
-            # print 'Time Start Speedtest: {}'.format(st_time)
-            # print 'Test #{}'.format(i + 1)
-            # print 'Download: {:.2f} {}'.format(d, du)
-            # print 'Upload: {:.2f} {}'.format(u, uu)
-            # print 'Ping: {}'.format(p)
-            # print 'Execute Time: {}'.format(execTime)
-        # End of Speedtest Function
-        print " ----> SpeedTest Complete. <------", time.ctime(time.time())
+    # def speedtest(self):
+    #     # tool = Tools()
+    #     # print "tools success"
+    #     # micro = SpeedTestPy()
+    #     # print "SpeedtestPy success"
+    #     # node = self.speed.setting['node']
+    #     # print "node query success"
+    #     # f_database = FirebaseDatabase()
+    #     # print "firebase success"
+    #     test_time = self.speed.server_list
+    #     # print "num of server success"
+    #
+    #     # Speedtest Function
+    #     current_date = time.strftime('%Y-%m-%d')
+    #     current_time = time.strftime('%H:%M:%S')
+    #     for i in range(len(test_time)):
+    #         # print "in for success"
+    #         name, d, u, p = self.speed.test(test_time[i])
+    #         # print "test success"
+    #         d, du = self.tool.convert(d)
+    #         # print "convert dw success"
+    #         u, uu = self.tool.convert(u)
+    #         # print "convert ul success"
+    #         st_time = time.ctime(time.time())  # change to ntp time
+    #         # print "convert ntp success"
+    #         data = {'download': (d, du), 'upload': (u, uu), 'ping': p, 'execTime': execTime, 'time': st_time}
+    #         # print "convert data success"
+    #         # f_database.put_data('speedtest', node + '/' + name, data)
+    #         self.f_database.post_data(self.node + '/speedtest/' + name, data)
+    #         # print "convert post firebase success"
+    #
+    #         # Show output
+    #         # print 'Time Start Speedtest: {}'.format(st_time)
+    #         # print 'Test #{}'.format(i + 1)
+    #         # print 'Download: {:.2f} {}'.format(d, du)
+    #         # print 'Upload: {:.2f} {}'.format(u, uu)
+    #         # print 'Ping: {}'.format(p)
+    #         # print 'Execute Time: {}'.format(execTime)
+    #     # End of Speedtest Function
+    #     print " ----> SpeedTest Complete. <------", time.ctime(time.time())
 
     # def web_service(self):
     #     # temp_data_status = {}
@@ -573,22 +588,20 @@ class Service:
                 data.append(temp_data)
             self.localDatabase.insert_data_speedtest(table='webService', list_data=data)
             data = []
+        print ' ----------------> INSERT WEB SUCCESSFULLY <------------------'
 
-            print data
-            print "success INSERT DATABASE"
-
-    def mail_service(self):
-        protocols = ['smtp', 'imap', 'pop3']
-        mail = EmailService()
-        data = {}
-
-        for protocol in range(len(protocols)):
-            for server in mail.mail_server:
-                temp_server = str(server).replace('.', '-')
-                data[temp_server] = mail.choice_connection(protocols[protocol], server,
-                                                           mail.mail_server[server][protocol])
-            self.f_database.put_data(self.node, 'mailService/' + protocols[protocol], data)
-            data = {}
+    # def mail_service(self):
+    #     protocols = ['smtp', 'imap', 'pop3']
+    #     mail = EmailService()
+    #     data = {}
+    #
+    #     for protocol in range(len(protocols)):
+    #         for server in mail.mail_server:
+    #             temp_server = str(server).replace('.', '-')
+    #             data[temp_server] = mail.choice_connection(protocols[protocol], server,
+    #                                                        mail.mail_server[server][protocol])
+    #         self.f_database.put_data(self.node, 'mailService/' + protocols[protocol], data)
+    #         data = {}
 
     def mail_service_new(self):
         # protocols = ['smtp', 'imap', 'pop3']
@@ -601,13 +614,14 @@ class Service:
         for server in mail_server:
             mail.connect_all(hostServer=server, port_smtp=mail_server[server][0], port_imap=mail_server[server][1])
             smtp, imap, pop3 = mail.status_all()
-            mail.terminate_all()
+            # mail.terminate_all()
             temp_data = (self.node, server, 'smtp', smtp, current_date, current_time), \
                         (self.node, server, 'imap', imap, current_date, current_time), \
                         (self.node, server, 'pop3', pop3, current_date, current_time)
             data.extend(temp_data)
         self.localDatabase.insert_many_data_dns_mail(table='mailService', list_data=data)
-        print 'INSERT MAIL SUCCESSFULLY'
+        # mail.terminate_all()
+        print ' ----------------> INSERT MAIL SUCCESSFULLY <------------------'
 
     # def mail_service(self):
     #     temp_smtp = {}
@@ -651,23 +665,40 @@ class Service:
     #     self.f_database.put_data(self.node, 'mailService/POP3', temp_pop)
     #     print 'temp_smtp pop'
 
-    def dns_service(self):
-        operation = ['ping', 'status']
-        data = {}
-        platform = self.tool.get_platform()
-        dns_checker = DNSService()
+    # def dns_service(self):
+    #     operation = ['ping', 'status']
+    #     data = {}
+    #     platform = self.tool.get_platform()
+    #     dns_checker = DNSService()
+    #
+    #     for operate in range(len(operation)):
+    #         print operation[operate]
+    #         for dns in dns_checker.target:
+    #             print dns
+    #             temp_dns = str(dns).replace('.', '-')
+    #             data[temp_dns] = dns_checker.__select_function__(func=operation[operate], platform=platform,
+    #                                                              host='google.com',
+    #                                                              dns_server=dns)
+    #         print data
+    #         self.f_database.put_data(self.node, 'DNSService/' + operation[operate], data)
+    #         data = {}
 
-        for operate in range(len(operation)):
-            print operation[operate]
-            for dns in dns_checker.target:
-                print dns
-                temp_dns = str(dns).replace('.', '-')
-                data[temp_dns] = dns_checker.__select_function__(func=operation[operate], platform=platform,
-                                                                 host='google.com',
-                                                                 dns_server=dns)
-            print data
-            self.f_database.put_data(self.node, 'DNSService/' + operation[operate], data)
-            data = {}
+    def dns_service_new(self):
+
+        dns = DNSService()
+        data = []
+        platform = self.tool.get_platform()
+        dns_server = dns.target
+        current_time = time.strftime('%H:%M:%S')
+        current_date = time.strftime('%Y-%m-%d')
+
+        for server in dns_server:
+            ping = dns.__ping__(platform, server)
+            status = dns.__get_nslookup_result__('google.com', server)
+            temp_data = (self.node, server, ping, status, current_date, current_time)
+            data.append(temp_data)
+        self.localDatabase.insert_many_data_dns_mail('dnsService', data)
+        print ' ----------------> INSERT DNS SUCCESSFULLY <------------------'
 
 
 def main():
@@ -677,19 +708,26 @@ def main():
     # device.mail_service()
     # device.dns_service()
 
-    try:
-        while True:
-            print time.ctime(time.time())
-            # device.new_speedtest()
-            # device.web_service_new()
-            device.mail_service_new()
-            print time.ctime(time.time())
-            time.sleep(100)
-    except KeyboardInterrupt:
-        print 'Manual Break by User.'
-
     device.new_speedtest()
+    device.web_service_new()
+    device.mail_service_new()
+    device.dns_service_new()
 
+    # try:
+    #     while True:
+    #         print time.ctime(time.time())
+    #
+    #         device.new_speedtest()
+    #         device.web_service_new()
+    #         device.mail_service_new()
+    #         device.dns_service_new()
+    #
+    #         print time.ctime(time.time())
+    #         time.sleep(100)
+    # except KeyboardInterrupt:
+    #     print 'Manual Break by User.'
+
+    # device.new_speedtest()
     # End of Speedtest Function
 
 

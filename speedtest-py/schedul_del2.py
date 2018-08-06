@@ -698,8 +698,10 @@ def __insert_data(node, destination, download, upload, ping, date, time):
     connection.commit()
     print(mycursor.rowcount, "record inserted.")
 
+
 def __close_connection():
     connection.close()
+
 
 def __sensor():
     sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
@@ -731,14 +733,17 @@ def __sensor():
 
 value = []
 
+
 def insert(host, address):
     data = (host, address)
     value.append(data)
+
 
 insert('helloe', 'welcome')
 insert('applee', 'banana')
 insert('aaae', 'bbb')
 insert('leoe', 'tiger')
+
 
 # print value
 
@@ -746,6 +751,7 @@ def helper(list):
     sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
     mycursor.executemany(sql, list)
     connection.commit()
+
 
 # helper(value)
 
@@ -773,6 +779,7 @@ class MySQLDatabase:
         self.mycursor.executemany(sql_syntax, list_data)
         self.connection.commit()
 
+
 #
 # sqlDatabase = MySQLDatabase()
 # time_cu = time.strftime('%H:%M:%S')
@@ -787,9 +794,27 @@ class MySQLDatabase:
 #
 # print list
 
-fff = []
-with open('NodeScript.py') as f:
-    for line in f:
-        if not '#' in line:
-            fff.append(line)
-print fff.__len__()
+# fff = []
+# with open('NodeScript.py') as f:
+#     for line in f:
+#         if not '#' in line:
+#             fff.append(line)
+# print fff.__len__()
+
+# fight = 'a:a:a b:b:b'
+# fight = fight.split()
+# print fight[0]
+import requests
+
+
+def checkStatusHTTPS(self, url):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
+    try:
+        res_https = requests.get(url, headers=headers)
+        self.status = res_https.status_code
+        self.reason = res_https.reason
+        res_https.close()
+    except Exception as ex:
+        self.status = 'Could not connect to page.'
+        self.reason = 'Could not connect to page.'

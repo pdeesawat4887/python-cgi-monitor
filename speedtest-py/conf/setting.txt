@@ -1,4 +1,4 @@
-node=Chachoengsao2
+node=AmnatCharoen
 location=Bangkok
 contact=0873637684
 server_Singapore=3914
