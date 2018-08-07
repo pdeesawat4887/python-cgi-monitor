@@ -20,8 +20,17 @@ from contextlib import contextmanager
 from pip._vendor.colorama import Fore, Style
 
 
+### return 0: active, working
+### return 1: Inactive, Not working
+### return 2: Error
+### return 3: Unknow
+
+
 class Service:
     setting = {}
+
+    def __init__(self):
+        self.configure_setting()
 
     def configure_setting(self, file='conf/setting.txt'):
         infile = open(file, "r")
@@ -83,7 +92,7 @@ class Service:
                 result = 1
         except Exception as error:
             result = 2
-            print 'Error: ', Fore.RED, error, Style.RESET_ALL
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL  #########
         return result
 
     def ping_once(self, destination):
@@ -125,6 +134,7 @@ class Speedtest(Service):
     server = []
 
     def __init__(self):
+        Service.__init__()
         self.temp_server = self.read_file('conf/speedtest_list_re.txt')
         self.get_server()
 
@@ -147,9 +157,58 @@ class Website(Service):
     host = []
 
     def __init__(self):
+        Service.__init__(self)
         self.get_host()
 
     def get_host(self):
-        temp_host = self.read_file(file='conf/website_conf.txt')
-        for host in temp_host:
+        origin_host = self.read_file(file='conf/website_conf.txt')
+        for host in origin_host:
             self.host.append(self.identify_url(host))
+
+    def get_website_status_whois(self, url):
+        temp_url = url.replace('www.', '')
+        result_whois = pythonwhois.get_whois(temp_url)
+
+        try:
+            checker = result_whois['status'][0].lower()
+            if 'active' in checker:
+                result_status = 0
+            elif 'prohibited' in checker:
+                result_status = 3
+            else:
+                result_status = 2
+        except Exception as error:
+            result_status = 2
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL
+
+        return result_status
+
+    def get_website_request(self, url):
+        header = {'User-Agent': self.setting['User-Agent']}
+        try:
+            res_http = requests.get(url, headers=header)
+            checker = res_http.status_code
+            res_http.close()
+            return self.check_response_code(checker)
+        except Exception as error:
+            print 'Error: ', Fore.GREEN, error, Style.RESET_ALL
+            return 2
+
+    def main(self):
+        for url in self.host:
+            print '-------------> ', url.netloc
+
+            ping = self.ping_once(url.netloc)
+            status_whois = self.get_website_status_whois(url.netloc)
+            status_req = self.get_website_request(url.scheme + '://' + url.netloc)
+
+            print ping
+            print status_whois
+            print status_req
+
+
+test = Website()
+# test.get_website_request('https://shopee.co.th')
+# print test.host
+test.main()
+# test.get_website_request()

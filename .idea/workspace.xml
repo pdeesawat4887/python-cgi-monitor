@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-backup(2).py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/conf/speedtest_conf.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/conf/speedtest_list.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/NodeScript.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/NodeScript.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/speedtest-py/conf/setting.txt" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/conf/setting.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/conf/shopping_conf.txt" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/conf/shopping_conf.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/shopping-py.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/shopping-py.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,7 +29,7 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP.coverage" NAME="IMAP Coverage Results" MODIFIED="1533050301769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Candy.coverage" NAME="Candy Coverage Results" MODIFIED="1533055402620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/playground/py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1533635681833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1533640155922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1533643136950" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
   </component>
   <component name="FileEditorManager">
@@ -48,8 +39,8 @@
           <file leaf-file-name="NodeScript.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="214">
-                  <caret line="149" column="56" lean-forward="true" selection-start-line="149" selection-start-column="56" selection-end-line="149" selection-end-column="56" />
+                <state relative-caret-position="625">
+                  <caret line="209" column="21" lean-forward="true" selection-start-line="209" selection-start-column="21" selection-end-line="209" selection-end-column="21" />
                   <folding>
                     <element signature="e#0#16#0" expanded="true" />
                   </folding>
@@ -57,11 +48,20 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="website_conf.txt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="195">
+                  <caret line="13" column="22" lean-forward="true" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="setting.txt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+                <state relative-caret-position="330">
+                  <caret line="22" column="149" selection-start-line="22" selection-start-column="149" selection-end-line="22" selection-end-column="149" />
                 </state>
               </provider>
             </entry>
@@ -69,7 +69,7 @@
           <file leaf-file-name="schedul_del2.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="539">
+                <state relative-caret-position="12615">
                   <caret line="883" column="19" selection-start-line="883" selection-start-column="19" selection-end-line="883" selection-end-column="19" />
                   <folding>
                     <element signature="e#16323#16332#0" expanded="true" />
@@ -81,7 +81,7 @@
           <file leaf-file-name="speedtest_list_re.txt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-44337">
+                <state relative-caret-position="240">
                   <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
                 </state>
               </provider>
@@ -124,8 +124,8 @@
           <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="598">
-                  <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+                <state relative-caret-position="613">
+                  <caret line="213" column="11" lean-forward="true" selection-start-line="213" selection-start-column="11" selection-end-line="213" selection-end-column="11" />
                   <folding>
                     <element signature="e#0#16#0" expanded="true" />
                   </folding>
@@ -170,6 +170,7 @@
       <find>#</find>
       <find>19036</find>
       <find>4347</find>
+      <find>whois</find>
     </findStrings>
     <replaceStrings>
       <replace>load_setting</replace>
@@ -213,13 +214,13 @@
         <option value="$PROJECT_DIR$/speedtest-py/shopping-py.py" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript-backup(2).py" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript.py" />
-        <option value="$PROJECT_DIR$/speedtest-py/conf/setting.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_conf.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_conf_list.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_list.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/schedul_del2.py" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" />
+        <option value="$PROJECT_DIR$/speedtest-py/conf/setting.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" />
       </list>
     </option>
@@ -233,7 +234,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="36" />
     <option name="y" value="23" />
     <option name="width" value="1680" />
@@ -491,12 +492,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533550849137</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Inheritance Class in NodeScript-dev.py ver 0.0.0.1">
+      <created>1533640199131</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1533640199132</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="36" y="23" width="1680" height="987" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1680" height="987" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
@@ -508,7 +515,6 @@
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.104166664" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -519,6 +525,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -539,11 +546,12 @@
     <MESSAGE value="NodeScript - version 1 for 3 service test.&#10;Next step to refactor code." />
     <MESSAGE value="Local Database&#10;- speedtestService&#10;- mailService&#10;- webService&#10;remain dnsService" />
     <MESSAGE value="Add Shopping Class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Shopping Class" />
+    <MESSAGE value="Inheritance Class in NodeScript-dev.py ver 0.0.0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inheritance Class in NodeScript-dev.py ver 0.0.0.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -685,9 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -716,9 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="673">
           <caret line="890" lean-forward="true" selection-start-line="890" selection-end-line="890" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -760,20 +762,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_conf_list.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="21644" column="42" lean-forward="true" selection-start-line="21644" selection-start-column="42" selection-end-line="21644" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_conf_list.txt" />
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105570">
@@ -783,7 +772,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
+        <state relative-caret-position="12615">
           <caret line="883" column="19" selection-start-line="883" selection-start-column="19" selection-end-line="883" selection-end-column="19" />
           <folding>
             <element signature="e#16323#16332#0" expanded="true" />
@@ -793,18 +782,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44337">
+        <state relative-caret-position="240">
           <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -829,10 +808,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="149" selection-start-line="22" selection-start-column="149" selection-end-line="22" selection-end-column="149" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+        <state relative-caret-position="613">
+          <caret line="213" column="11" lean-forward="true" selection-start-line="213" selection-start-column="11" selection-end-line="213" selection-end-column="11" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
