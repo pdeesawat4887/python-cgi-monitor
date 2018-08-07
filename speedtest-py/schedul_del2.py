@@ -730,20 +730,20 @@ def __sensor():
 
 # __insert_data('BKK', 'BKK', '999.99', '0.9999', '99.909', date_cu, time_cu)
 # __sensor()
-
-value = []
-
-
-def insert(host, address):
-    data = (host, address)
-    value.append(data)
-
-
-insert('helloe', 'welcome')
-insert('applee', 'banana')
-insert('aaae', 'bbb')
-insert('leoe', 'tiger')
-
+#
+# value = []
+#
+#
+# def insert(host, address):
+#     data = (host, address)
+#     value.append(data)
+#
+#
+# insert('helloe', 'welcome')
+# insert('applee', 'banana')
+# insert('aaae', 'bbb')
+# insert('leoe', 'tiger')
+#
 
 # print value
 
@@ -804,17 +804,85 @@ class MySQLDatabase:
 # fight = 'a:a:a b:b:b'
 # fight = fight.split()
 # print fight[0]
-import requests
+# import requests
 
 
-def checkStatusHTTPS(self, url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
-    try:
-        res_https = requests.get(url, headers=headers)
-        self.status = res_https.status_code
-        self.reason = res_https.reason
-        res_https.close()
-    except Exception as ex:
-        self.status = 'Could not connect to page.'
-        self.reason = 'Could not connect to page.'
+# def checkStatusHTTPS(self, url):
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99'}
+#     try:
+#         res_https = requests.get(url, headers=headers)
+#         self.status = res_https.status_code
+#         self.reason = res_https.reason
+#         res_https.close()
+#     except Exception as ex:
+#         self.status = 'Could not connect to page.'
+#         self.reason = 'Could not connect to page.'
+
+# from contextlib import contextmanager
+# import sys, os
+#
+#
+# @contextmanager
+# def suppress_stdout():
+#     with open(os.devnull, "w") as devnull:
+#         old_stdout = sys.stdout
+#         sys.stdout = devnull
+#         try:
+#             yield
+#         finally:
+#             sys.stdout = old_stdout
+#
+#
+# print "You can see this"
+# with suppress_stdout():
+#     print "You cannot see this"
+# print "And you can see this again"
+
+
+# import os
+# import subprocess
+#
+# with open(os.devnull, 'w') as DEVNULL:
+#     try:
+#         subprocess.check_call(
+#             ['ping', '-c', '4', '192.168.91.41'],
+#             stdout=DEVNULL,  # suppress output
+#             stderr=DEVNULL
+#         )
+#         is_up = True
+#     except subprocess.CalledProcessError:
+#         is_up = False
+#
+# print is_up
+# data = {}
+#
+# infile = open("conf/setting.txt", "r+")
+#
+# for line in infile:
+#     if not line.strip():
+#         continue
+#     else:
+#         key, value = line.strip().split('=')
+#         data[key] = value
+#
+# infile.close()
+#
+# for num, i in enumerate(data):
+#     print num,':', i , ':', data[i]
+# line = "My name is Robin."
+# with open('conf/speedtest_list.txt', 'r+') as f:
+    # file_data = f.read()
+    # for line in file_data:
+    #     f.write('#'+ line)
+
+infile = open("conf/speedtest_list.txt", 'r') # open file for reading
+outfile = open("conf/speedtest_list_re.txt","a") # open file for appending
+
+line = infile.readline()    # Invokes readline() method on file
+while line:
+   outfile.write("#"+line),    # trailing ',' omits newline character
+   line = infile.readline()
+
+infile.close()
+outfile.close()
