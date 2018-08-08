@@ -25,6 +25,33 @@ from pip._vendor.colorama import Fore, Style
 ### return 2: Error
 ### return 3: Unknow
 
+class MySQLDatabase:
+
+    def __init__(self):
+        self.create_connection()
+
+    def create_connection(self, user='catma', passwd='root', host='localhost', database='service_db'):
+        try:
+            self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
+            self.mycursor = self.connection.cursor()
+        except Exception as error:
+            print 'Error database: ', Fore.RED, error, Style.RESET_ALL
+
+    def insert_speedtest(self, list_data):
+        sql = "INSERT INTO speedtestService VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
+        self.mycursor.executemany(sql, list_data)
+        self.connection.commit()
+
+    def insert_webtest(self, list_data):
+        sql = "INSERT INTO webService VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s)"
+        self.mycursor.executemany(sql, list_data)
+        self.connection.commit()
+
+    def insert_mail_dns(self, table, list_data):
+        sql = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
+        self.mycursor.executemany(sql, list_data)
+        self.connection.commit()
+
 
 class Service:
     setting = {}
@@ -92,7 +119,18 @@ class Service:
                 result = 1
         except Exception as error:
             result = 2
-            print 'Error: ', Fore.RED, error, Style.RESET_ALL  #########
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL  ########################################
+        return result
+
+    def check_respone_text(self, response_txt):
+        try:
+            if 'OK' or 'ready' in response_txt:
+                result = 0
+            else:
+                result = 1
+        except Exception as error:
+            result = 2
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL  ########################################
         return result
 
     def ping_once(self, destination):
@@ -134,7 +172,7 @@ class Speedtest(Service):
     server = []
 
     def __init__(self):
-        Service.__init__()
+        Service.__init__(self)
         self.temp_server = self.read_file('conf/speedtest_list_re.txt')
         self.get_server()
 
@@ -180,7 +218,6 @@ class Website(Service):
         except Exception as error:
             result_status = 2
             print 'Error: ', Fore.RED, error, Style.RESET_ALL
-
         return result_status
 
     def get_website_request(self, url):
@@ -207,8 +244,190 @@ class Website(Service):
             print status_req
 
 
-test = Website()
-# test.get_website_request('https://shopee.co.th')
-# print test.host
-test.main()
-# test.get_website_request()
+class Email(Service):
+    mail_server = {}
+
+    def __init__(self):
+        Service.__init__(self)
+        self.get_mail_server()
+
+    def get_mail_server(self, file='conf/email_conf.txt'):
+        temp_server = self.read_file(file=file)
+        for server in temp_server:
+            host, smtp, imap, pop3 = server.split(':')
+            self.mail_server[host] = [smtp, imap, pop3]
+
+    def connect_smtp(self, server, port):
+        try:
+            self.connection_smtp = smtplib.SMTP()
+            self.connection_smtp.connect(server, port)
+        except Exception as error:
+            print 'Error create mail : smtp : ', Fore.RED, error, Style.RESET_ALL
+
+    def connect_imap(self, server, port):
+        try:
+            self.connection_imap = imaplib.IMAP4_SSL(server, port)
+        except Exception as error:
+            self.connection_imap = imaplib.IMAP4(server, port)
+            print 'Connected IMAP without SSL'
+
+    def connect_pop3(self, server):
+        try:
+            self.connection_pop3 = poplib.POP3_SSL(server)
+        except Exception as error:
+            self.connection_pop3 = poplib.POP3(server)
+            print 'Connected POP3 without SSL'
+
+    def get_smtp_status(self):
+        res_code = self.connection_smtp.helo()[0]
+        return self.check_response_code(res_code)
+
+    def get_imap_status(self):
+        res_txt = self.connection_imap.welcome
+        return self.check_respone_text(res_txt)
+
+    def get_pop3_status(self):
+        res_txt = self.connection_pop3.welcome
+        return self.check_respone_text(res_txt)
+
+    def terminate_smtp_connection(self):
+        self.connection_smtp.quit()
+        self.connection_smtp.close()
+
+    def terminate_imap_connection(self):
+        # self.connection_imap.close()
+        # self.connection_imap.close()
+        # self.connection_imap.close()
+        pass
+
+    def terminate_pop3_connection(self):
+        self.connection_pop3.quit()
+
+    def connect_all_once(self, server, port_smtp, port_imap):
+        self.connect_smtp(server=server, port=port_smtp)
+        self.connect_imap(server=server, port=port_imap)
+        self.connect_pop3(server=server)
+
+    def get_all_status(self):
+        smtp = self.get_smtp_status()
+        imap = self.get_imap_status()
+        pop3 = self.get_pop3_status()
+        return smtp, imap, pop3
+
+    def terminate_all(self):
+        self.terminate_smtp_connection()
+        self.terminate_imap_connection()
+        self.terminate_pop3_connection()
+
+    def main(self):
+        email = Email()
+        server = email.mail_server
+
+        for host in server:
+            print host
+            email.connect_all_once(server=host, port_smtp=server[host][0], port_imap=server[host][1])
+            smtp_status, imap_status, pop3_status = email.get_all_status()
+            email.terminate_all()
+            print 'SMTP: ', smtp_status
+            print 'IMAP: ', imap_status
+            print 'POP3: ', pop3_status
+
+
+class DomainNameServer(Service):
+    dns_server = []
+
+    def __init__(self):
+        Service.__init__(self)
+        self.get_dns_server()
+
+    def get_dns_server(self, file='conf/dns_conf.txt'):
+        self.dns_server = self.read_file(file)
+
+    def nslookup_soa(self, server):
+        try:
+            result = subprocess.check_output(['nslookup', '-ty=SOA', 'google.com', server])
+        except Exception as error:
+            result = error
+            print 'Error: ', Fore.GREEN, error, Style.RESET_ALL
+
+        if 'origin' in result:
+            status = 0
+        else:
+            status = 1
+        return status
+
+    def main(self):
+        dns_test = DomainNameServer()
+        for server in dns_test.dns_server:
+            ping = dns_test.ping_once(server)
+            status = dns_test.nslookup_soa(server=server)
+
+
+class Monitor(Service):
+
+    def __init__(self):
+        Service.__init__(self)
+        self.create_database_connection()
+        self.node = self.setting['node']
+        self.current_date, self.current_time = self.current_date_time()
+
+    def create_database_connection(self):
+        self.database = MySQLDatabase()
+
+    def test_speedtest(self):
+        data = []
+        test = Speedtest()
+        for server in test.server:
+            name, download, upload, ping = test.test_speed(server)
+            download = test.convert_byte(download)
+            upload = test.convert_byte(upload)
+            temp_data = (self.node, name, self.current_date, self.current_time, download, upload, ping)
+            data.append(temp_data)
+        self.database.insert_speedtest(data)
+        print '----------- INSERT SPEEDTEST SUCCESS ---------'
+
+    def test_website(self):
+        data = []
+        website_test = Website()
+        for url in website_test.host:
+            ping = website_test.ping_once(url.netloc)
+            status_whois = website_test.get_website_status_whois(url.netloc)
+            status_req = website_test.get_website_request(url.scheme + '://' + url.netloc)
+            temp_data = (
+                self.node, url.netloc, self.current_date, self.current_time, url.scheme, ping, status_whois, status_req)
+            data.append(temp_data)
+        self.database.insert_webtest(data)
+        print '----------- INSERT WEBSITE SUCCESS ---------'
+
+    def test_mail(self):
+        data = []
+        mail_test = Email()
+        server = mail_test.mail_server
+        for host in server:
+            mail_test.connect_all_once(server=host, port_smtp=server[host][0], port_imap=server[host][1])
+            smtp_status, imap_status, pop3_status = mail_test.get_all_status()
+            mail_test.terminate_all()
+            temp_data = (self.node, host, self.current_date, self.current_time, 'smtp', smtp_status), \
+                        (self.node, host, self.current_date, self.current_time, 'imap', imap_status), \
+                        (self.node, host, self.current_date, self.current_time, 'pop3', pop3_status)
+            data.extend(temp_data)
+        self.database.insert_mail_dns('mailService', data)
+        print '----------- INSERT MAIL SUCCESS ---------'
+
+    def test_dns(self):
+        data = []
+        dns_test = DomainNameServer()
+        for server in dns_test.dns_server:
+            ping = dns_test.ping_once(server)
+            status = dns_test.nslookup_soa(server=server)
+            temp_data = (self.node, server, self.current_date, self.current_time, ping, status)
+            data.append(temp_data)
+        self.database.insert_mail_dns('dnsService', data)
+        print '----------- INSERT DNS SUCCESS ---------'
+
+
+monitor = Monitor()
+monitor.test_speedtest()
+monitor.test_website()
+monitor.test_mail()
+monitor.test_dns()

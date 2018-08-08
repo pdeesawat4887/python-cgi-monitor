@@ -1,24 +1,12 @@
-node=BuengKan
-
-
-
-
+node=Kalasin
 location=Bangkok
 contact=0873637684
 server_Singapore=3914
 server_HongKong=19036
-
-
-
-
 server_CAT=4347
-
-
-
 test=CATMA-AIT
 temp=hello
 MOD=hi
 test=leonado davinchi
 interval=300
 User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99
-

@@ -812,10 +812,10 @@ def main():
     # device.mail_service()
     # device.dns_service()
 
-    # device.new_speedtest()
+    device.new_speedtest()
     device.web_service_new()
-    # device.mail_service_new()
-    # device.dns_service_new()
+    device.mail_service_new()
+    device.dns_service_new()
     # device.shopping_service_new()
 
     # try:
