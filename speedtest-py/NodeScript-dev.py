@@ -14,7 +14,6 @@ import mysql.connector
 import pythonwhois
 import urlparse
 import requests
-from contextlib import contextmanager
 
 # Extra for Exception
 from pip._vendor.colorama import Fore, Style
@@ -231,18 +230,6 @@ class Website(Service):
             print 'Error: ', Fore.GREEN, error, Style.RESET_ALL
             return 2
 
-    def main(self):
-        for url in self.host:
-            print '-------------> ', url.netloc
-
-            ping = self.ping_once(url.netloc)
-            status_whois = self.get_website_status_whois(url.netloc)
-            status_req = self.get_website_request(url.scheme + '://' + url.netloc)
-
-            print ping
-            print status_whois
-            print status_req
-
 
 class Email(Service):
     mail_server = {}
@@ -319,18 +306,6 @@ class Email(Service):
         self.terminate_imap_connection()
         self.terminate_pop3_connection()
 
-    def main(self):
-        email = Email()
-        server = email.mail_server
-
-        for host in server:
-            print host
-            email.connect_all_once(server=host, port_smtp=server[host][0], port_imap=server[host][1])
-            smtp_status, imap_status, pop3_status = email.get_all_status()
-            email.terminate_all()
-            print 'SMTP: ', smtp_status
-            print 'IMAP: ', imap_status
-            print 'POP3: ', pop3_status
 
 
 class DomainNameServer(Service):
@@ -355,12 +330,6 @@ class DomainNameServer(Service):
         else:
             status = 1
         return status
-
-    def main(self):
-        dns_test = DomainNameServer()
-        for server in dns_test.dns_server:
-            ping = dns_test.ping_once(server)
-            status = dns_test.nslookup_soa(server=server)
 
 
 class Monitor(Service):
