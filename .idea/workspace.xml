@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" afterDir="false" />
     </list>
@@ -55,15 +55,28 @@
       <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="135">
+              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -146,6 +159,7 @@
         <option value="$PROJECT_DIR$/speedtest-py/conf/dns_conf.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/setting.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -255,7 +269,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="NodeScript-dev" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="NodeScript-dev" type="PythonConfigurationType" factoryName="Python">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -332,15 +346,14 @@
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
+      <item itemvalue="Python.NodeScript-dev" />
       <item itemvalue="Python.schedul_del2" />
       <item itemvalue="Python.NodeScript" />
       <item itemvalue="Python.DNS-py" />
       <item itemvalue="Python.shopping-py" />
-      <item itemvalue="Python.NodeScript-dev" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.NodeScript-dev" />
         <item itemvalue="Python.NodeScript" />
         <item itemvalue="Python.schedul_del2" />
         <item itemvalue="Python.shopping-py" />
@@ -436,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533721597779</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="(Lab) create setup.py for install module.">
+      <created>1533784356093</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1533784356093</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -447,10 +467,10 @@
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3592552" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32968238" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31325302" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16190477" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24047619" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -487,7 +507,8 @@
     <MESSAGE value="Inheritance Class in NodeScript-dev.py ver 0.0.0.1" />
     <MESSAGE value="Inheritance Class in NodeScript-dev.py ver 0.0.0.2" />
     <MESSAGE value="Inheritance Class in NodeScript-dev.py ver 0.0.0.3&#10;completed&#10;- Speedtest&#10;- Website&#10;- Mail&#10;- Dns" />
-    <option name="LAST_COMMIT_MESSAGE" value="Inheritance Class in NodeScript-dev.py ver 0.0.0.3&#10;completed&#10;- Speedtest&#10;- Website&#10;- Mail&#10;- Dns" />
+    <MESSAGE value="(Lab) create setup.py for install module." />
+    <option name="LAST_COMMIT_MESSAGE" value="(Lab) create setup.py for install module." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -495,9 +516,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/playground/example.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/playground/__init__.py" />
     <entry file="file://$PROJECT_DIR$/speedtest-py/first-test.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -764,15 +782,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
+    <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state relative-caret-position="630">
+          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

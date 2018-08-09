@@ -1,10 +1,6 @@
 import speedtest
 import time
-import struct
-from firebase import firebase
-import socket
 import os
-import urllib
 import smtplib
 import poplib
 import imaplib
