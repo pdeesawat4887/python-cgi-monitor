@@ -1,4 +1,4 @@
-node=Trat
+node=Yasothon
 location=Bangkok
 contact=0873637684
 server_Singapore=3914
