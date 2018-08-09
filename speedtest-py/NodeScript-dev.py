@@ -25,7 +25,7 @@ class MySQLDatabase:
     def __init__(self):
         self.create_connection()
 
-    def create_connection(self, user='catma', passwd='root', host='localhost', database='service_db'):
+    def create_connection(self, user='centos', passwd='root', host='192.168.51.102', database='service_db'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
@@ -33,17 +33,17 @@ class MySQLDatabase:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
 
     def insert_speedtest(self, list_data):
-        sql = "INSERT INTO speedtestService VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO speedtestService VALUES (NULL, %s, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(sql, list_data)
         self.connection.commit()
 
     def insert_webtest(self, list_data):
-        sql = "INSERT INTO webService VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO webService VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(sql, list_data)
         self.connection.commit()
 
     def insert_mail_dns(self, table, list_data):
-        sql = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
+        sql = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s)".format(table)
         self.mycursor.executemany(sql, list_data)
         self.connection.commit()
 
@@ -146,9 +146,8 @@ class Service:
         return urlparse.urlparse(url)
 
     def current_date_time(self):
-        current_date = time.strftime('%Y-%m-%d')
-        current_time = time.strftime('%H:%M:%S')
-        return current_date, current_time
+        current_date_time = time.strftime('%Y-%m-%d %H:%M:%S')
+        return current_date_time
 
     def read_file(self, file='conf/speedtest_list_re.txt'):
         file_read = []
@@ -164,9 +163,9 @@ class Service:
 
 
 class Speedtest(Service):
-    server = []
 
     def __init__(self):
+        self.server = []
         Service.__init__(self)
         self.temp_server = self.read_file('conf/speedtest_list_re.txt')
         self.get_server()
@@ -187,9 +186,9 @@ class Speedtest(Service):
 
 
 class Website(Service):
-    host = []
 
     def __init__(self):
+        self.host = []
         Service.__init__(self)
         self.get_host()
 
@@ -228,9 +227,10 @@ class Website(Service):
 
 
 class Email(Service):
-    mail_server = {}
+
 
     def __init__(self):
+        self.mail_server = {}
         Service.__init__(self)
         self.get_mail_server()
 
@@ -303,11 +303,11 @@ class Email(Service):
         self.terminate_pop3_connection()
 
 
-
 class DomainNameServer(Service):
-    dns_server = []
+
 
     def __init__(self):
+        self.dns_server = []
         Service.__init__(self)
         self.get_dns_server()
 
@@ -334,7 +334,7 @@ class Monitor(Service):
         Service.__init__(self)
         self.create_database_connection()
         self.node = self.setting['node']
-        self.current_date, self.current_time = self.current_date_time()
+        self.current_date_time = self.current_date_time()
 
     def create_database_connection(self):
         self.database = MySQLDatabase()
@@ -346,7 +346,7 @@ class Monitor(Service):
             name, download, upload, ping = test.test_speed(server)
             download = test.convert_byte(download)
             upload = test.convert_byte(upload)
-            temp_data = (self.node, name, self.current_date, self.current_time, download, upload, ping)
+            temp_data = (self.node, name, self.current_date_time, download, upload, ping)
             data.append(temp_data)
         self.database.insert_speedtest(data)
         print '----------- INSERT SPEEDTEST SUCCESS ---------'
@@ -359,7 +359,7 @@ class Monitor(Service):
             status_whois = website_test.get_website_status_whois(url.netloc)
             status_req = website_test.get_website_request(url.scheme + '://' + url.netloc)
             temp_data = (
-                self.node, url.netloc, self.current_date, self.current_time, url.scheme, ping, status_whois, status_req)
+                self.node, url.netloc, self.current_date_time, url.scheme, ping, status_whois, status_req)
             data.append(temp_data)
         self.database.insert_webtest(data)
         print '----------- INSERT WEBSITE SUCCESS ---------'
@@ -372,9 +372,9 @@ class Monitor(Service):
             mail_test.connect_all_once(server=host, port_smtp=server[host][0], port_imap=server[host][1])
             smtp_status, imap_status, pop3_status = mail_test.get_all_status()
             mail_test.terminate_all()
-            temp_data = (self.node, host, self.current_date, self.current_time, 'smtp', smtp_status), \
-                        (self.node, host, self.current_date, self.current_time, 'imap', imap_status), \
-                        (self.node, host, self.current_date, self.current_time, 'pop3', pop3_status)
+            temp_data = (self.node, host, self.current_date_time, 'smtp', smtp_status), \
+                        (self.node, host, self.current_date_time, 'imap', imap_status), \
+                        (self.node, host, self.current_date_time, 'pop3', pop3_status)
             data.extend(temp_data)
         self.database.insert_mail_dns('mailService', data)
         print '----------- INSERT MAIL SUCCESS ---------'
@@ -385,14 +385,32 @@ class Monitor(Service):
         for server in dns_test.dns_server:
             ping = dns_test.ping_once(server)
             status = dns_test.nslookup_soa(server=server)
-            temp_data = (self.node, server, self.current_date, self.current_time, ping, status)
+            temp_data = (self.node, server, self.current_date_time, ping, status)
             data.append(temp_data)
         self.database.insert_mail_dns('dnsService', data)
         print '----------- INSERT DNS SUCCESS ---------'
 
 
-monitor = Monitor()
-monitor.test_speedtest()
-monitor.test_website()
-monitor.test_mail()
-monitor.test_dns()
+# service = Service()
+# print service.current_date_time()
+
+# monitor = Monitor()
+# monitor.test_speedtest()
+# monitor.test_website()
+# monitor.test_mail()
+# monitor.test_dns()
+
+try:
+    while True:
+        print time.ctime(time.time())
+
+        monitor = Monitor()
+        monitor.test_speedtest()
+        monitor.test_website()
+        monitor.test_mail()
+        monitor.test_dns()
+
+        print time.ctime(time.time())
+        # time.sleep(10)
+except KeyboardInterrupt:
+    print 'Manual Break by User.'
