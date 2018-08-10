@@ -29,6 +29,7 @@ class MySQLDatabase:
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
+            self.connection.disconnect()
         except Exception as error:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
 
@@ -92,7 +93,7 @@ class Service:
         precision = 1
         number_of_bytes = round(number_of_bytes, precision)
 
-        return number_of_bytes
+        return number_of_bytes, unit
 
     def my_platform(self):
         platforms = {
@@ -344,9 +345,11 @@ class Monitor(Service):
         test = Speedtest()
         for server in test.server:
             name, download, upload, ping = test.test_speed(server)
-            download = test.convert_byte(download)
-            upload = test.convert_byte(upload)
+            download, unitDW = test.convert_byte(download)
+            upload, unitUP = test.convert_byte(upload)
             temp_data = (self.node, name, self.current_date_time, download, upload, ping)
+            print '-----> DOWN ', unitDW
+            print '-------> UP ', unitUP
             data.append(temp_data)
         self.database.insert_speedtest(data)
         print '----------- INSERT SPEEDTEST SUCCESS ---------'
