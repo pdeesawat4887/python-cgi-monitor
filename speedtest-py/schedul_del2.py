@@ -876,13 +876,18 @@ class MySQLDatabase:
     # for line in file_data:
     #     f.write('#'+ line)
 
-infile = open("conf/speedtest_list.txt", 'r') # open file for reading
-outfile = open("conf/speedtest_list_re.txt","a") # open file for appending
+# infile = open("conf/speedtest_list.txt", 'r') # open file for reading
+# outfile = open("conf/speedtest_list_re.txt","a") # open file for appending
+#
+# line = infile.readline()    # Invokes readline() method on file
+# while line:
+#    outfile.write("#"+line),    # trailing ',' omits newline character
+#    line = infile.readline()
+#
+# infile.close()
+# outfile.close()
 
-line = infile.readline()    # Invokes readline() method on file
-while line:
-   outfile.write("#"+line),    # trailing ',' omits newline character
-   line = infile.readline()
+import socket
 
-infile.close()
-outfile.close()
+ip_add = socket.gethostbyname("www.aliexpress.com")
+print ip_add

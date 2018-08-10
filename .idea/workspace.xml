@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/speedtest-py/conf/setting.txt" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/conf/setting.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,8 +29,8 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP4_py.coverage" NAME="IMAP4-py Coverage Results" MODIFIED="1533096850153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP.coverage" NAME="IMAP Coverage Results" MODIFIED="1533050301769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Candy.coverage" NAME="Candy Coverage Results" MODIFIED="1533055402620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/playground/py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1533635681833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1533802291355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1533867247972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1533869194433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
   </component>
   <component name="FileEditorManager">
@@ -38,7 +39,34 @@
         <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="9" selection-start-column="9" selection-end-column="9" />
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="speedtest_list_re.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="website_conf.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schedul_del2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="892" column="12" lean-forward="true" selection-start-line="892" selection-start-column="12" selection-end-line="892" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -46,8 +74,8 @@
       <file leaf-file-name="provinces" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/speedtest-py/conf/provinces">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="70" selection-start-line="70" selection-end-line="70" selection-end-column="4" />
+            <state relative-caret-position="377">
+              <caret line="67" selection-start-line="67" selection-end-line="67" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -55,8 +83,8 @@
       <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
+            <state relative-caret-position="294">
+              <caret line="27" column="54" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -67,7 +95,7 @@
       <file leaf-file-name="NodeScript.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
+            <state relative-caret-position="12060">
               <caret line="820" selection-start-line="820" selection-end-line="832" selection-end-column="39" />
             </state>
           </provider>
@@ -151,14 +179,14 @@
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_conf.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_conf_list.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_list.txt" />
-        <option value="$PROJECT_DIR$/speedtest-py/schedul_del2.py" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript.py" />
-        <option value="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/dns_conf.txt" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/speedtest-py/conf/setting.txt" />
         <option value="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" />
+        <option value="$PROJECT_DIR$/speedtest-py/conf/website_conf.txt" />
+        <option value="$PROJECT_DIR$/speedtest-py/schedul_del2.py" />
+        <option value="$PROJECT_DIR$/speedtest-py/conf/setting.txt" />
       </list>
     </option>
   </component>
@@ -184,6 +212,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,7 +246,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,8 +381,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.NodeScript" />
         <item itemvalue="Python.schedul_del2" />
+        <item itemvalue="Python.NodeScript" />
         <item itemvalue="Python.shopping-py" />
         <item itemvalue="Python.DNS-py" />
       </list>
@@ -462,7 +490,21 @@
       <option name="project" value="LOCAL" />
       <updated>1533787697259</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Update user for MySql to remote with ip address.">
+      <created>1533804138477</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1533804138477</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Update user for MySql to remote with ip address. (2)">
+      <created>1533805304911</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1533805304911</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -515,7 +557,9 @@
     <MESSAGE value="Inheritance Class in NodeScript-dev.py ver 0.0.0.3&#10;completed&#10;- Speedtest&#10;- Website&#10;- Mail&#10;- Dns" />
     <MESSAGE value="(Lab) create setup.py for install module." />
     <MESSAGE value="Add requirements.txt to test lab install module." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add requirements.txt to test lab install module." />
+    <MESSAGE value="Update user for MySql to remote with ip address." />
+    <MESSAGE value="Update user for MySql to remote with ip address. (2)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update user for MySql to remote with ip address. (2)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -698,20 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12615">
-          <caret line="883" column="19" selection-start-line="883" selection-start-column="19" selection-end-line="883" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/shopping_conf.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -761,13 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
@@ -780,29 +803,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
+        <state relative-caret-position="12060">
           <caret line="820" selection-start-line="820" selection-end-line="832" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="892" column="12" lean-forward="true" selection-start-line="892" selection-start-column="12" selection-end-line="892" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/provinces">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="70" selection-start-line="70" selection-end-line="70" selection-end-column="4" />
+        <state relative-caret-position="377">
+          <caret line="67" selection-start-line="67" selection-end-line="67" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="27" column="82" selection-start-line="27" selection-start-column="82" selection-end-line="27" selection-end-column="82" />
+        <state relative-caret-position="294">
+          <caret line="27" column="54" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
