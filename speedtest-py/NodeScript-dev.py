@@ -29,7 +29,6 @@ class MySQLDatabase:
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
-            self.connection.disconnect()
         except Exception as error:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
 
