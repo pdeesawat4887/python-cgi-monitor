@@ -685,47 +685,47 @@ import mysql.connector
 
 # sql = "INSERT INTO speedtestService VALUES (NULL, '"+node+"', '"+estination+"', '"+download+"', '"+upload+"', '"+ping+"', '"+date+"', '"+time"');'
 
-try:
-    connection = mysql.connector.connect(user='catma', password='root', host='localhost', database='service_db')
-    mycursor = connection.cursor()
-except Exception as error:
-    print 'Error:', error
-
-
-def __insert_data(node, destination, download, upload, ping, date, time):
-    sql = "INSERT INTO speedtestService VALUES (NULL, '" + node + "', '" + destination + "', '" + download + "', '" + upload + "', '" + ping + "', '" + date + "', '" + time + "');"
-    mycursor.execute(sql)
-    connection.commit()
-    print(mycursor.rowcount, "record inserted.")
-
-
-def __close_connection():
-    connection.close()
-
-
-def __sensor():
-    sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-    val = [
-        ('Peter', 'Lowstreet 4'),
-        ('Amy', 'Apple st 652'),
-        ('Hannah', 'Mountain 21'),
-        ('Michael', 'Valley 345'),
-        ('Sandy', 'Ocean blvd 2'),
-        ('Betty', 'Green Grass 1'),
-        ('Richard', 'Sky st 331'),
-        ('Susan', 'One way 98'),
-        ('Vicky', 'Yellow Garden 2'),
-        ('Ben', 'Park Lane 38'),
-        ('William', 'Central st 954'),
-        ('Chuck', 'Main Road 989'),
-        ('Viola', 'Sideway 1633')
-    ]
-
-    mycursor.executemany(sql, val)
-
-    connection.commit()
-
-    print(mycursor.rowcount, "was inserted.")
+# try:
+#     connection = mysql.connector.connect(user='catma', password='root', host='localhost', database='service_db')
+#     mycursor = connection.cursor()
+# except Exception as error:
+#     print 'Error:', error
+#
+#
+# def __insert_data(node, destination, download, upload, ping, date, time):
+#     sql = "INSERT INTO speedtestService VALUES (NULL, '" + node + "', '" + destination + "', '" + download + "', '" + upload + "', '" + ping + "', '" + date + "', '" + time + "');"
+#     mycursor.execute(sql)
+#     connection.commit()
+#     print(mycursor.rowcount, "record inserted.")
+#
+#
+# def __close_connection():
+#     connection.close()
+#
+#
+# def __sensor():
+#     sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+#     val = [
+#         ('Peter', 'Lowstreet 4'),
+#         ('Amy', 'Apple st 652'),
+#         ('Hannah', 'Mountain 21'),
+#         ('Michael', 'Valley 345'),
+#         ('Sandy', 'Ocean blvd 2'),
+#         ('Betty', 'Green Grass 1'),
+#         ('Richard', 'Sky st 331'),
+#         ('Susan', 'One way 98'),
+#         ('Vicky', 'Yellow Garden 2'),
+#         ('Ben', 'Park Lane 38'),
+#         ('William', 'Central st 954'),
+#         ('Chuck', 'Main Road 989'),
+#         ('Viola', 'Sideway 1633')
+#     ]
+#
+#     mycursor.executemany(sql, val)
+#
+#     connection.commit()
+#
+#     print(mycursor.rowcount, "was inserted.")
 
 
 # __insert_data('BKK', 'BKK', '999.99', '0.9999', '99.909', date_cu, time_cu)
@@ -747,37 +747,37 @@ def __sensor():
 
 # print value
 
-def helper(list):
-    sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-    mycursor.executemany(sql, list)
-    connection.commit()
-
-
-# helper(value)
-
-
-class MySQLDatabase:
-
-    def __init__(self):
-        self.create_connection()
-
-    def create_connection(self, user='catma', passwd='root', host='localhost', database='service_db'):
-        try:
-            self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
-            self.mycursor = self.connection.cursor()
-        except Exception as error:
-            print 'Error:', error
-
-    def insert_data_dns_mail(self, table, node, destination, pp, status, date, time):
-        sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
-        data = (node, destination, pp, status, date, time)
-        self.mycursor.execute(sql_syntax, data)
-        self.connection.commit()
-
-    def insert_data_speedtest(self, table, list_data):
-        sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)".format(table)
-        self.mycursor.executemany(sql_syntax, list_data)
-        self.connection.commit()
+# def helper(list):
+#     sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+#     mycursor.executemany(sql, list)
+#     connection.commit()
+#
+#
+# # helper(value)
+#
+#
+# class MySQLDatabase:
+#
+#     def __init__(self):
+#         self.create_connection()
+#
+#     def create_connection(self, user='catma', passwd='root', host='localhost', database='service_db'):
+#         try:
+#             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
+#             self.mycursor = self.connection.cursor()
+#         except Exception as error:
+#             print 'Error:', error
+#
+#     def insert_data_dns_mail(self, table, node, destination, pp, status, date, time):
+#         sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s)".format(table)
+#         data = (node, destination, pp, status, date, time)
+#         self.mycursor.execute(sql_syntax, data)
+#         self.connection.commit()
+#
+#     def insert_data_speedtest(self, table, list_data):
+#         sql_syntax = "INSERT INTO {} VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)".format(table)
+#         self.mycursor.executemany(sql_syntax, list_data)
+#         self.connection.commit()
 
 
 #
@@ -872,9 +872,9 @@ class MySQLDatabase:
 #     print num,':', i , ':', data[i]
 # line = "My name is Robin."
 # with open('conf/speedtest_list.txt', 'r+') as f:
-    # file_data = f.read()
-    # for line in file_data:
-    #     f.write('#'+ line)
+# file_data = f.read()
+# for line in file_data:
+#     f.write('#'+ line)
 
 # infile = open("conf/speedtest_list.txt", 'r') # open file for reading
 # outfile = open("conf/speedtest_list_re.txt","a") # open file for appending
@@ -887,7 +887,76 @@ class MySQLDatabase:
 # infile.close()
 # outfile.close()
 
-import socket
+# import socket
+#
+# ip_add = socket.gethostbyname("www.aliexpress.com")
+# print ip_add
 
-ip_add = socket.gethostbyname("www.aliexpress.com")
-print ip_add
+# import socket
+# s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# s.connect(("8.8.8.8", 80))
+# print(s.getsockname()[0])
+# s.close()
+
+### get ip address
+
+# import socket
+# s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# s.connect(("8.8.8.8", 80))
+# print(s.getsockname()[0])
+# s.close()
+
+# import subprocess
+# subprocess.call(['./example1.sh'])
+import os
+import time
+from uuid import getnode as get_mac
+import re
+
+# import re, uuid
+# mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
+# # new_mac = mac.replace(':', '')
+# eui64 = mac[0:6] + 'fffe' + mac[6:]
+# print eui64
+# eui64 = hex(int(eui64[0:2], 16) ^ 2)[2:].zfill(2) + eui64[2:]
+# print eui64
+
+import urlparse
+import sys
+import subprocess
+
+
+def my_platform():
+    platforms = {
+        'linux1': '-c',
+        'linux2': '-c',
+        'darwin': '-c',
+        'win32': '-n'
+    }
+    timeout = {
+        'linux1': '-t',
+        'linux2': '-t',
+        'darwin': '-t',
+        'win32': '-w'
+    }
+    if sys.platform not in platforms:
+        return sys.platform
+
+    return platforms[sys.platform], timeout[sys.platform]
+
+
+platform, timeout = my_platform()
+dest = 'google.com'
+
+with open(os.devnull, 'w') as DEVNULL:
+    try:
+        subprocess.check_call(
+            ['ping', platform, '1', timeout, '1',  dest],
+            # stdout=DEVNULL,
+            # stderr=DEVNULL
+        )
+        is_up = 0
+    except subprocess.CalledProcessError:
+        is_up = 1
+
+print is_up

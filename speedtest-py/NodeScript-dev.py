@@ -114,7 +114,7 @@ class Service:
                 result = 1
         except Exception as error:
             result = 2
-            print 'Error: ', Fore.RED, error, Style.RESET_ALL  ########################################
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL
         return result
 
     def check_respone_text(self, response_txt):
@@ -125,7 +125,7 @@ class Service:
                 result = 1
         except Exception as error:
             result = 2
-            print 'Error: ', Fore.RED, error, Style.RESET_ALL  ########################################
+            print 'Error: ', Fore.RED, error, Style.RESET_ALL
         return result
 
     def ping_once(self, destination):
@@ -228,7 +228,6 @@ class Website(Service):
 
 class Email(Service):
 
-
     def __init__(self):
         self.mail_server = {}
         Service.__init__(self)
@@ -304,7 +303,6 @@ class Email(Service):
 
 
 class DomainNameServer(Service):
-
 
     def __init__(self):
         self.dns_server = []
