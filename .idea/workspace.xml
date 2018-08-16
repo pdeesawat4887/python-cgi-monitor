@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/service-py/conf/configure" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-py/file/Script.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-py/file/runScript.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-py/playground/hello.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-py/playground/runProcess.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/speedtest-py/example1.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/NodeScript-dev.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/conf/speedtest_list_re.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-py/file/Script.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/Script.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -117,8 +109,8 @@
           <file leaf-file-name="Script.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="296">
-                  <caret line="225" lean-forward="true" selection-start-line="225" selection-end-line="225" />
+                <state relative-caret-position="270">
+                  <caret line="18" column="82" selection-start-line="18" selection-start-column="82" selection-end-line="18" selection-end-column="82" />
                   <folding>
                     <element signature="e#402#415#0" expanded="true" />
                   </folding>
@@ -586,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533887032712</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Re-Design use at service-py">
+      <created>1534438455474</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1534438455474</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -645,7 +644,8 @@
     <MESSAGE value="Update user for MySql to remote with ip address. (3)" />
     <MESSAGE value="Update user for MySql to remote with ip address. (4)" />
     <MESSAGE value="Update user for MySql to remote with ip address. (5)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update user for MySql to remote with ip address. (5)" />
+    <MESSAGE value="Re-Design use at service-py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Re-Design use at service-py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -960,8 +960,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="225" lean-forward="true" selection-start-line="225" selection-end-line="225" />
+        <state relative-caret-position="270">
+          <caret line="18" column="82" selection-start-line="18" selection-start-column="82" selection-end-line="18" selection-end-column="82" />
           <folding>
             <element signature="e#402#415#0" expanded="true" />
           </folding>
