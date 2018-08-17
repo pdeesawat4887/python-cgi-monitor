@@ -8,6 +8,7 @@ import os
 import sys
 import subprocess
 import urlparse
+import requests
 from pip._vendor.colorama import Fore, Style
 
 
@@ -121,23 +122,27 @@ class Service(Probe):
     def get_response_time(self, start, end):
         return (end - start) * 1000
 
-    def get_platform(self):
-        platforms = {
-            'linux1': '-c',
-            'linux2': '-c',
-            'darwin': '-c',
-            'win32': '-n'
-        }
-        timeout = {
-            'linux1': '-t',
-            'linux2': '-t',
-            'darwin': '-t',
-            'win32': '-w'
-        }
-        if sys.platform not in platforms:
-            return sys.platform
+    def round_time(self, time):
+        return round(float(time), 2)
 
-        return platforms[sys.platform], timeout[sys.platform]
+    # def get_platform(self):
+    #     platforms = {
+    #         'linux1': '-c',
+    #         'linux2': '-c',
+    #         'darwin': '-c',
+    #         'win32': '-n'
+    #     }
+    #     # timeout = {
+    #     #     'linux1': '-t',
+    #     #     'linux2': '-t',
+    #     #     'darwin': '-t',
+    #     #     'win32': '-w'
+    #     # }
+    #     if sys.platform not in platforms:
+    #         return sys.platform
+    #
+    #     # return platforms[sys.platform], timeout[sys.platform]
+    #     return platforms[sys.platform]
 
     def identify_url(self, url):
         return urlparse.urlparse(url)
@@ -179,19 +184,31 @@ class Service(Probe):
 
     def availability_service(self, service_id):
         self.query_data(service_id)
+
         time_start = self.get_time_format()
+
         for counter in self.result:
             counter = list(counter)
             destination = self.reformat_counter(counter[2])
-            start_t = self.get_time()
-            status = self.get_status(destination, counter[3])
-            end_t = self.get_time()
-            response = self.get_response_time(start_t, end_t)
+
+            status, response = self.get_status(destination, counter[3])
+
+            response = self.round_time(response)
+
             temp = (self.id, counter[0], status, response, time_start)
             self.data_forDB.append(temp)
+
         self.insert_availability_service(self.data_forDB)
         print "SUCCESS INSERT DATA"
+
         self.data_forDB = []
+
+    # def test_output(self, service_id):
+    #     self.query_data(service_id)
+    #     for i in self.result:
+    #         i = list(i)
+    #         dest = self.reformat_counter(i[2])
+    #         self.get_status(dest, i[3])
 
     def get_status(self, destination, port):
         pass
@@ -207,19 +224,24 @@ class ICMPService(Service):
         # self.main()
 
     def get_status(self, destination, port):
-        platform, timeout = self.get_platform()
-        with open(os.devnull, 'w') as DEVNULL:
-            print destination
-            try:
-                subprocess.check_call(
-                    ['ping', platform, '1', timeout, '1', destination],
-                    stdout=DEVNULL,
-                    stderr=DEVNULL
-                )
-                is_up = 0
-            except subprocess.CalledProcessError:
-                is_up = 1
-        return is_up
+
+        param = '-n' if sys.platform.lower() == 'windows' else '-c'
+        command = ['ping', param, '1', '-t', '1', destination]
+        status = 1
+        response = 0
+
+        try:
+            output = subprocess.check_output(command).split()
+            for element in output:
+                if 'time' in element.lower():
+                    status = 0
+                    response = element.split('=')[1]
+
+        except:
+            status = 2
+            response = 0
+
+        return status, response
 
     def reformat_counter(self, destination):
         return urlparse.urlparse(destination).netloc
@@ -231,29 +253,54 @@ class DNSService(Service):
         Service.__init__(self)
 
     def get_status(self, destination, port):
-        pass
+
+        command = ['dig', '@' + destination, 'www.google.com']
+        status = 1
+        response = 0
+
+        try:
+            output = subprocess.check_output(command).split('\n')
+            for element in output:
+                if 'query time' in element.lower():
+                    status = 0
+                    response = element.split()[3]
+        except:
+            status = 2
+            response = 0
+
+        return status, response
 
     def reformat_counter(self, destination):
-        pass
+        return destination
 
 
-# class ICMPService(Service):
+class WebService(Service):
 
-# def get_status(self, list_destination):
-#     platform = self.get_platform()
-#     with open(os.devnull, 'w') as DEVNULL:
-#         try:
-#             subprocess.check_call(
-#                 ['ping', platform, '1', destination],
-#                 stdout=DEVNULL,
-#                 stderr=DEVNULL
-#             )
-#             is_up = 0
-#         except subprocess.CalledProcessError:
-#             is_up = 1
-#     return is_up
+    def __init__(self):
+        Service.__init__(self)
+
+    def get_status(self, destination, port):
+        header = {'User-Agent': self.setting['User-Agent']}
+        try:
+            res_http = requests.get(destination, headers=header)
+            status_code = res_http.status_code
+            timer = res_http.elapsed.total_seconds()*1000
+            res_http.close()
+            status = self.check_response_code(status_code)
+            return status, timer
+        except:
+            return 2, 0
+
+    def reformat_counter(self, destination):
+        return destination
+
 
 example = ICMPService()
+hello = DNSService()
+world = WebService()
 while True:
-    example.availability_service('1')
+    # example.test_output('1')
+    # example.availability_service('1')
+    # hello.availability_service('2')
+    world.availability_service('4')
     time.sleep(60)

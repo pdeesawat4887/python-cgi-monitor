@@ -925,38 +925,115 @@ import urlparse
 import sys
 import subprocess
 
+# def my_platform():
+#     platforms = {
+#         'linux1': '-c',
+#         'linux2': '-c',
+#         'darwin': '-c',
+#         'win32': '-n'
+#     }
+#     timeout = {
+#         'linux1': '-t',
+#         'linux2': '-t',
+#         'darwin': '-t',
+#         'win32': '-w'
+#     }
+#     if sys.platform not in platforms:
+#         return sys.platform
+#
+#     return platforms[sys.platform], timeout[sys.platform]
+#
+#
+# platform, timeout = my_platform()
+# dest = 'google.com'
+#
+# with open(os.devnull, 'w') as DEVNULL:
+#     try:
+#         subprocess.check_call(
+#             ['ping', platform, '1', timeout, '1',  dest],
+#             # stdout=DEVNULL,
+#             # stderr=DEVNULL
+#         )
+#         is_up = 0
+#     except subprocess.CalledProcessError:
+#         is_up = 1
+#
+# print is_up
 
-def my_platform():
-    platforms = {
-        'linux1': '-c',
-        'linux2': '-c',
-        'darwin': '-c',
-        'win32': '-n'
-    }
-    timeout = {
-        'linux1': '-t',
-        'linux2': '-t',
-        'darwin': '-t',
-        'win32': '-w'
-    }
-    if sys.platform not in platforms:
-        return sys.platform
+# import subprocess
+# import time
+#
+# uuu = '1.1.1.1'
+#
+# start = time.time()
+# temp = ["ping", '-c', '1', 'google.com']
+# # out = subprocess.check_output(temp)
+# with open(os.devnull, 'w') as DEVNULL:
+#     out = subprocess.check_output(temp)
+#     print out
+# end = time.time()
+#
+# # out = out.split('\n')
+# #
+# # for xxx in out:
+# #     if 'time' in xxx:
+# #         vvv = xxx.split()
+# #         print vvv[6].split('=')[1]
+# #
+# # out = out.split('\n')
+# # for i in out:
+# #     if 'query time' in i.lower():
+# #         print i
+#
+# print (end - start) * 1000
 
-    return platforms[sys.platform], timeout[sys.platform]
+from platform import system as system_name  # Returns the system/OS name
+from subprocess import call   as system_call  # Execute a shell command
 
 
-platform, timeout = my_platform()
-dest = 'google.com'
+def ping(host):
+    """
+    Returns True if host (str) responds to a ping request.
+    Remember that a host may not respond to a ping (ICMP) request even if the host name is valid.
+    """
 
-with open(os.devnull, 'w') as DEVNULL:
+    # Ping command count option as function of OS
+    param = '-n' if system_name().lower() == 'windows' else '-c'
+
+    # Building the command. Ex: "ping -c 1 google.com"
+    command = ['ping', param, '1', '-t', '1', host]
+
+    # output = subprocess.check_output(command)
+    result = 1
+    response = 0
     try:
-        subprocess.check_call(
-            ['ping', platform, '1', timeout, '1',  dest],
-            # stdout=DEVNULL,
-            # stderr=DEVNULL
-        )
-        is_up = 0
-    except subprocess.CalledProcessError:
-        is_up = 1
+        output = subprocess.check_output(command).split('\n')
+        for element in output:
+            if 'time' in element.lower():
+                print element
+                response = element.split('=')[1]
+                result = 0
+    except:
+        result = 2
+        response = 0
 
-print is_up
+    return result, response
+
+    # Pinging
+    # return system_call(command) == 0
+
+print ping('google.com')
+
+def dns(host, destination='https://google.com'):
+
+    command = ['dig', '@'+host, destination]
+
+    try:
+        output = subprocess.check_output(command).split('\n')
+        for i in output:
+            if 'query time' in i.lower():
+                print i.split()
+    except:
+        print "Error"
+
+# dns('1.1.1.1')
