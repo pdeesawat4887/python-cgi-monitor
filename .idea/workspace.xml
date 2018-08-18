@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/file/Script.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/Script.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" afterDir="false" />
     </list>
@@ -16,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script.coverage" NAME="Script Coverage Results" MODIFIED="1534499775177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script.coverage" NAME="Script Coverage Results" MODIFIED="1534613367465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript.coverage" NAME="NodeScript Coverage Results" MODIFIED="1533697329478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$first_test.coverage" NAME="first-test Coverage Results" MODIFIED="1532534370641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$DNS_py.coverage" NAME="DNS-py Coverage Results" MODIFIED="1533196152085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
@@ -34,26 +33,26 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP.coverage" NAME="IMAP Coverage Results" MODIFIED="1533050301769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Candy.coverage" NAME="Candy Coverage Results" MODIFIED="1533055402620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/playground/py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1534405034545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1534494299958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1534611954075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.49407116">
+    <splitter split-orientation="horizontal" split-proportion="0.4202381">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="schedul_del2.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="schedul_del2.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="56">
-                  <caret line="1009" column="59" selection-start-line="1009" selection-start-column="59" selection-end-line="1009" selection-end-column="59" />
+                <state relative-caret-position="573">
+                  <caret line="1115" column="11" selection-start-line="1115" selection-start-column="11" selection-end-line="1115" selection-end-column="11" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="268">
+                <state relative-caret-position="74">
                   <caret line="221" column="28" lean-forward="true" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
                   <folding>
                     <element signature="e#0#16#0" expanded="true" />
@@ -65,8 +64,8 @@
           <file leaf-file-name="Script.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1269">
-                  <caret line="302" column="39" lean-forward="true" selection-start-line="302" selection-start-column="39" selection-end-line="302" selection-end-column="39" />
+                <state relative-caret-position="4380">
+                  <caret line="354" column="41" selection-start-line="354" selection-start-column="41" selection-end-line="354" selection-end-column="41" />
                 </state>
               </provider>
             </entry>
@@ -99,8 +98,8 @@
           <file leaf-file-name="Script.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2494">
-                  <caret line="107" column="26" lean-forward="true" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="26" />
+                <state relative-caret-position="527">
+                  <caret line="358" column="21" selection-start-line="358" selection-start-column="21" selection-end-line="358" selection-end-column="21" />
                   <folding>
                     <element signature="e#83#96#0" expanded="true" />
                   </folding>
@@ -113,15 +112,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="15">
                   <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="10" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="website_conf.txt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
                 </state>
               </provider>
             </entry>
@@ -230,10 +220,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="30" />
-    <option name="y" value="22" />
-    <option name="width" value="1604" />
-    <option name="height" value="987" />
+    <option name="x" value="1689" />
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="1017" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -243,6 +233,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -267,11 +258,15 @@
               <item name="service-py" type="462c0819:PsiDirectoryNode" />
               <item name="file" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
+              <item name="speedtest-py" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -586,21 +581,28 @@
       <option name="project" value="LOCAL" />
       <updated>1534438491385</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website">
+      <created>1534501668937</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1534501668937</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="987" extended-state="6" />
+    <frame x="1680" y="22" width="1920" height="1017" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5005208" side_tool="true" weight="0.34570518" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32968238" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.29682365" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32873806" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.29586425" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32968238" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09940476" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.125" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -647,7 +649,8 @@
     <MESSAGE value="Update user for MySql to remote with ip address. (5)" />
     <MESSAGE value="Re-Design use at service-py" />
     <MESSAGE value="Re-Design use at service-py (2)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Re-Design use at service-py (2)" />
+    <MESSAGE value="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website" />
+    <option name="LAST_COMMIT_MESSAGE" value="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -655,16 +658,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/speedtest-py/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/speedtest-py/POP3.py" />
-    <entry file="file://$PROJECT_DIR$/speedtest-py/IMAP.py" />
-    <entry file="file://$PROJECT_DIR$/speedtest-py/telnet-me.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/Utillity.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -711,13 +704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/speedtest-cli-python-backup(2).py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="460" lean-forward="true" selection-start-line="460" selection-end-line="460" />
         </state>
       </provider>
     </entry>
@@ -897,13 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="149" lean-forward="true" selection-start-line="11" selection-end-line="11" selection-end-column="149" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/playground/py/Candy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -939,17 +918,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="1009" column="59" selection-start-line="1009" selection-start-column="59" selection-end-line="1009" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/conf/website_conf.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
@@ -957,6 +929,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/setting.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="5" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -970,10 +949,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/first-test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.1/python_stubs/-320917907/time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="149" column="4" selection-start-line="149" selection-start-column="4" selection-end-line="149" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python2.7/site-packages/speedtest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="1011" column="8" selection-start-line="1011" selection-start-column="8" selection-end-line="1011" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/speedtest-cli-python-backup(2).py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="114" column="8" lean-forward="true" selection-start-line="114" selection-start-column="8" selection-end-line="114" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python2.7/site-packages/bitmath/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-277">
+          <caret line="248" column="8" lean-forward="true" selection-start-line="248" selection-start-column="8" selection-end-line="249" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="1115" column="11" selection-start-line="1115" selection-start-column="11" selection-end-line="1115" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2494">
-          <caret line="107" column="26" lean-forward="true" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="26" />
+        <state relative-caret-position="527">
+          <caret line="358" column="21" selection-start-line="358" selection-start-column="21" selection-end-line="358" selection-end-column="21" />
           <folding>
             <element signature="e#83#96#0" expanded="true" />
           </folding>

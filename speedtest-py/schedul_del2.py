@@ -1007,7 +1007,7 @@ def ping(host):
     result = 1
     response = 0
     try:
-        output = subprocess.check_output(command).split('\n')
+        output = subprocess.check_output(command).split()
         for element in output:
             if 'time' in element.lower():
                 print element
@@ -1022,7 +1022,7 @@ def ping(host):
     # Pinging
     # return system_call(command) == 0
 
-print ping('google.com')
+# print ping('google.com')
 
 def dns(host, destination='https://google.com'):
 
@@ -1037,3 +1037,80 @@ def dns(host, destination='https://google.com'):
         print "Error"
 
 # dns('1.1.1.1')
+
+def speedtest(server):
+    import speedtest
+    clinet = speedtest.Speedtest()
+    # clinet.get_servers([server])
+    clinet.get_best_server()
+    clinet.download()
+    clinet.upload()
+    result = clinet.results.dict()
+    return result
+    # return result['ping'], result['download'], result['upload'], result['server']['name']
+
+
+test1111 = speedtest('19036')
+
+for i in test1111:
+    print 'Key :', i
+    print 'Value :', test1111[i]
+
+han = test1111['download']
+
+def convert_byte(number_of_bytes):
+    if number_of_bytes < 0:
+        raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
+
+    step_to_greater_unit = 1024.
+
+    number_of_bytes = float(number_of_bytes)
+    unit = 'bytes'
+
+    if (number_of_bytes / step_to_greater_unit) >= 1:
+        number_of_bytes /= step_to_greater_unit
+        unit = 'KB'
+
+    if (number_of_bytes / step_to_greater_unit) >= 1:
+        number_of_bytes /= step_to_greater_unit
+        unit = 'MB'
+
+    if (number_of_bytes / step_to_greater_unit) >= 1:
+        number_of_bytes /= step_to_greater_unit
+        unit = 'GB'
+
+    if (number_of_bytes / step_to_greater_unit) >= 1:
+        number_of_bytes /= step_to_greater_unit
+        unit = 'TB'
+
+    precision = 1
+    number_of_bytes = round(number_of_bytes, precision)
+
+    return number_of_bytes, unit
+
+
+
+import bitmath
+
+# han = 617641.410832
+
+print convert_byte(han)
+
+# test = bitmath.kb(bytes=han)
+# test2 = bitmath.kB(bits=han)
+test1 = bitmath.MiB(bytes=han)
+test2 = bitmath.MiB(bits=han)
+test3 = bitmath.Mib(bytes=han)
+test4 = bitmath.Mib(bits=han)
+# test5 = bitmath.Kib(bits=han)
+
+
+# print test
+# print test2
+# print test3
+# print test4
+# print test5
+print test1
+print test2
+print test3
+print test4

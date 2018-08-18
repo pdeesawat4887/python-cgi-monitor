@@ -9,6 +9,8 @@ import sys
 import subprocess
 import urlparse
 import requests
+import bitmath
+import speedtest
 from pip._vendor.colorama import Fore, Style
 
 
@@ -17,7 +19,7 @@ class MySQLDatabase:
     def __init__(self):
         self.create_connection()
 
-    def create_connection(self, user='centos', passwd='root', host='192.168.51.102', database='project'):
+    def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
@@ -42,6 +44,11 @@ class MySQLDatabase:
 
     def insert_availability_service(self, list_data):
         insert_sql = "INSERT INTO availability_service VALUES (NULL, %s, %s, %s, %s, %s)"
+        self.mycursor.executemany(insert_sql, list_data)
+        self.connection.commit()
+
+    def insert_performance_service(self, list_data):
+        insert_sql = "INSERT INTO performance_service VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(insert_sql, list_data)
         self.connection.commit()
 
@@ -122,7 +129,7 @@ class Service(Probe):
     def get_response_time(self, start, end):
         return (end - start) * 1000
 
-    def round_time(self, time):
+    def round_2_decimal(self, time):
         return round(float(time), 2)
 
     # def get_platform(self):
@@ -147,35 +154,38 @@ class Service(Probe):
     def identify_url(self, url):
         return urlparse.urlparse(url)
 
-    def convert_byte(self, number_of_bytes):
-        if number_of_bytes < 0:
-            raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
+    def convert_to_mbs(self, number_of_bytes):
+        return bitmath.MiB(bytes=number_of_bytes)
 
-        step_to_greater_unit = 1024.
-
-        number_of_bytes = float(number_of_bytes)
-        unit = 'bytes'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'KB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'MB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'GB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'TB'
-
-        precision = 1
-        number_of_bytes = round(number_of_bytes, precision)
-
-        return number_of_bytes
+    # def convert_byte(self, number_of_bytes):
+    #     if number_of_bytes < 0:
+    #         raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
+    #
+    #     step_to_greater_unit = 1024.
+    #
+    #     number_of_bytes = float(number_of_bytes)
+    #     unit = 'bytes'
+    #
+    #     if (number_of_bytes / step_to_greater_unit) >= 1:
+    #         number_of_bytes /= step_to_greater_unit
+    #         unit = 'KB'
+    #
+    #     if (number_of_bytes / step_to_greater_unit) >= 1:
+    #         number_of_bytes /= step_to_greater_unit
+    #         unit = 'MB'
+    #
+    #     if (number_of_bytes / step_to_greater_unit) >= 1:
+    #         number_of_bytes /= step_to_greater_unit
+    #         unit = 'GB'
+    #
+    #     if (number_of_bytes / step_to_greater_unit) >= 1:
+    #         number_of_bytes /= step_to_greater_unit
+    #         unit = 'TB'
+    #
+    #     precision = 1
+    #     number_of_bytes = round(number_of_bytes, precision)
+    #
+    #     return number_of_bytes
 
     def query_data(self, service_id):
         query_sql = "SELECT * FROM configuration WHERE service_id='{}'".format(service_id)
@@ -193,14 +203,34 @@ class Service(Probe):
 
             status, response = self.get_status(destination, counter[3])
 
-            response = self.round_time(response)
+            response = self.round_2_decimal(response)
 
             temp = (self.id, counter[0], status, response, time_start)
             self.data_forDB.append(temp)
 
         self.insert_availability_service(self.data_forDB)
         print "SUCCESS INSERT DATA"
+        self.data_forDB = []
 
+    def performance_service(self, service_id):
+        self.query_data(service_id)
+
+        time_start = self.get_time_format()
+
+        for counter in self.result:
+            counter = list(counter)
+            destination = self.reformat_counter(counter[2])
+
+            ping, download, upload, location = self.get_status(destination, counter[3])
+
+            download = self.round_2_decimal(self.convert_to_mbs(download))
+            upload = self.round_2_decimal(self.convert_to_mbs(upload))
+
+            temp = (self.id, counter[0], ping, download, upload, location, time_start)
+            self.data_forDB.append(temp)
+
+        self.insert_performance_service(self.data_forDB)
+        print "SUCCESS INSERT DATA"
         self.data_forDB = []
 
     # def test_output(self, service_id):
@@ -214,7 +244,7 @@ class Service(Probe):
         pass
 
     def reformat_counter(self, destination):
-        pass
+        return destination
 
 
 class ICMPService(Service):
@@ -270,8 +300,8 @@ class DNSService(Service):
 
         return status, response
 
-    def reformat_counter(self, destination):
-        return destination
+    # def reformat_counter(self, destination):
+    #     return destination
 
 
 class WebService(Service):
@@ -284,23 +314,46 @@ class WebService(Service):
         try:
             res_http = requests.get(destination, headers=header)
             status_code = res_http.status_code
-            timer = res_http.elapsed.total_seconds()*1000
+            timer = res_http.elapsed.total_seconds() * 1000
             res_http.close()
             status = self.check_response_code(status_code)
             return status, timer
         except:
             return 2, 0
 
-    def reformat_counter(self, destination):
-        return destination
+    # def reformat_counter(self, destination):
+    #     return destination
 
 
-example = ICMPService()
-hello = DNSService()
-world = WebService()
-while True:
-    # example.test_output('1')
-    # example.availability_service('1')
-    # hello.availability_service('2')
-    world.availability_service('4')
-    time.sleep(60)
+class SpeedtestService(Service):
+
+    def __init__(self):
+        Service.__init__(self)
+
+    def get_status(self, destination, port):
+        try:
+            clinet = speedtest.Speedtest()
+            clinet.get_servers([destination])
+            clinet.get_best_server()
+            clinet.download()
+            clinet.upload()
+            result = clinet.results.dict()
+            return result['ping'], result['download'], result['upload'], result['server']['name']
+        except:
+            print "Error"
+            return 0, 0, 0, 'NULL'
+
+    # def reformat_counter(self, destination):
+    #     return destination
+
+# example = ICMPService()
+# hello = DNSService()
+# world = WebService()
+# speed = SpeedtestService()
+# while True:
+#     # example.test_output('1')
+#     # example.availability_service('1')
+#     # hello.availability_service('2')
+#     # world.availability_service('4')
+#     speed.performance_service('5')
+#     time.sleep(120)
