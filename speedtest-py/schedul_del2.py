@@ -1049,14 +1049,14 @@ def speedtest(server):
     return result
     # return result['ping'], result['download'], result['upload'], result['server']['name']
 
+#
+# test1111 = speedtest('19036')
+#
+# for i in test1111:
+#     print 'Key :', i
+#     print 'Value :', test1111[i]
 
-test1111 = speedtest('19036')
-
-for i in test1111:
-    print 'Key :', i
-    print 'Value :', test1111[i]
-
-han = test1111['download']
+# han = test1111['download']
 
 def convert_byte(number_of_bytes):
     if number_of_bytes < 0:
@@ -1090,27 +1090,42 @@ def convert_byte(number_of_bytes):
 
 
 
-import bitmath
-
+# import bitmath
+#
 # han = 617641.410832
-
-print convert_byte(han)
-
-# test = bitmath.kb(bytes=han)
-# test2 = bitmath.kB(bits=han)
-test1 = bitmath.MiB(bytes=han)
-test2 = bitmath.MiB(bits=han)
-test3 = bitmath.Mib(bytes=han)
-test4 = bitmath.Mib(bits=han)
-# test5 = bitmath.Kib(bits=han)
-
-
-# print test
+#
+# print convert_byte(han)
+#
+# # test = bitmath.kb(bytes=han)
+# # test2 = bitmath.kB(bits=han)
+# test1 = bitmath.MiB(bytes=han)
+# test2 = bitmath.MiB(bits=han)
+# test3 = bitmath.Mib(bytes=han)
+# test4 = bitmath.Mib(bits=han)
+# # test5 = bitmath.Kib(bits=han)
+#
+#
+# # print test
+# # print test2
+# # print test3
+# # print test4
+# # print test5
+# print test1
 # print test2
 # print test3
 # print test4
-# print test5
-print test1
-print test2
-print test3
-print test4
+#
+# import socket
+# s = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
+# s.connect( ( "imap.gmail.com", 993) )
+# s.send("EHLO") # GET??
+# response = s.recv(8048)
+# print response
+
+import smtplib
+import poplib
+import imaplib
+
+connection = imaplib.IMAP4_SSL('smtp-mail.outlookf.com', 993)
+if 'ok' and 'ready' in connection.welcome:
+    print "YeSSSSSSSSSSSSSSSSSSS"

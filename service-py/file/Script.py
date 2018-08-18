@@ -11,6 +11,9 @@ import urlparse
 import requests
 import bitmath
 import speedtest
+import smtplib
+import poplib
+import imaplib
 from pip._vendor.colorama import Fore, Style
 
 
@@ -201,6 +204,9 @@ class Service(Probe):
             counter = list(counter)
             destination = self.reformat_counter(counter[2])
 
+            print "DESTINATION", destination
+            print "PORT", counter[3]
+
             status, response = self.get_status(destination, counter[3])
 
             response = self.round_2_decimal(response)
@@ -343,6 +349,93 @@ class SpeedtestService(Service):
             print "Error"
             return 0, 0, 0, 'NULL'
 
+class SMTPService(Service):
+
+    def __init__(self):
+        Service.__init__(self)
+
+    def get_status(self, destination, port):
+        try:
+            start = self.get_time()
+            connection = smtplib.SMTP()
+            connection.connect(destination, port)
+
+            end = self.get_time()
+            connection.close()
+
+            status = self.check_response_code(connection.helo()[0])
+            response = self.get_response_time(start, end)
+
+            return status, response
+        except:
+            return 2, 0
+
+class IMAPService(Service):
+
+    def __init__(self):
+        Service.__init__(self)
+
+    def get_status(self, destination, port):
+        try:
+            start = self.get_time()
+            connection = imaplib.IMAP4_SSL(destination, port)
+            msg = connection.welcome
+            end = self.get_time()
+            connection.shutdown()
+
+            response = self.get_response_time(start, end)
+
+            if 'ok' and 'ready' in msg.lower():
+                return 0, response
+        except:
+            try:
+                start = self.get_time()
+                connection = imaplib.IMAP4_SSL(destination, port)
+                msg = connection.welcome
+                end = self.get_time()
+                connection.shutdown()
+
+                response = self.get_response_time(start, end)
+
+                if 'ok' and 'ready' in msg.lower():
+                    return 0, response
+            except:
+                return 2, 0
+
+class POP3Service(Service):
+
+    def __init__(self):
+        Service.__init__(self)
+
+    def get_status(self, destination, port):
+        try:
+            start = self.get_time()
+            connection = poplib.POP3(destination, port)
+            msg = connection.welcome
+            end = self.get_time()
+            connection.quit()
+
+            response = self.get_response_time(start, end)
+
+            if 'ok' and 'ready' in msg.lower():
+                return 0, response
+        except:
+            try:
+                start = self.get_time()
+                connection = poplib.POP3_SSL(destination, port)
+                msg = connection.welcome
+                end = self.get_time()
+                connection.quit()
+
+                response = self.get_response_time(start, end)
+
+                if 'ok' and 'ready' in msg.lower():
+                    return 0, response
+            except:
+                return 2, 0
+
+
+
     # def reformat_counter(self, destination):
     #     return destination
 
@@ -357,3 +450,9 @@ class SpeedtestService(Service):
 #     # world.availability_service('4')
 #     speed.performance_service('5')
 #     time.sleep(120)
+
+xxx = IMAPService()
+xxx.availability_service('8')
+
+yyy = POP3Service()
+yyy.availability_service('9')
