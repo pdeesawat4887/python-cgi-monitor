@@ -1,3 +1,5 @@
+#!/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/venv/bin/python
+# -*- coding: utf-8 -*-
 # import json
 # import sched, time
 #
@@ -1126,6 +1128,16 @@ import smtplib
 import poplib
 import imaplib
 
-connection = imaplib.IMAP4_SSL('smtp-mail.outlookf.com', 993)
-if 'ok' and 'ready' in connection.welcome:
-    print "YeSSSSSSSSSSSSSSSSSSS"
+# connection = imaplib.IMAP4_SSL('smtp-mail.outlookf.com', 993)
+# if 'ok' and 'ready' in connection.welcome:
+#     print "YeSSSSSSSSSSSSSSSSSSS"
+
+import requests
+
+url = 'https://notify-api.line.me/api/notify'
+token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
+headers = {'content-type':'application/x-www-form-urlencoded', 'Authorization':'Bearer '+token}
+
+msg = '@บดินดุ๊ก testing time line notify working'
+r = requests.post(url, headers=headers, data= {'message':msg})
+print r.text

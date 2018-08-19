@@ -55,6 +55,12 @@ class MySQLDatabase:
         self.mycursor.executemany(insert_sql, list_data)
         self.connection.commit()
 
+    def query_service(self, service_id):
+        query_sql = "SELECT service_name FROM service WHERE service_id='{}'".format(service_id)
+        self.mycursor.execute(query_sql)
+        myresult = self.mycursor.fetchone()
+        return myresult[0]
+
     def close_connection(self):
         self.connection.disconnect()
 
@@ -135,60 +141,11 @@ class Service(Probe):
     def round_2_decimal(self, time):
         return round(float(time), 2)
 
-    # def get_platform(self):
-    #     platforms = {
-    #         'linux1': '-c',
-    #         'linux2': '-c',
-    #         'darwin': '-c',
-    #         'win32': '-n'
-    #     }
-    #     # timeout = {
-    #     #     'linux1': '-t',
-    #     #     'linux2': '-t',
-    #     #     'darwin': '-t',
-    #     #     'win32': '-w'
-    #     # }
-    #     if sys.platform not in platforms:
-    #         return sys.platform
-    #
-    #     # return platforms[sys.platform], timeout[sys.platform]
-    #     return platforms[sys.platform]
-
     def identify_url(self, url):
         return urlparse.urlparse(url)
 
     def convert_to_mbs(self, number_of_bytes):
         return bitmath.MiB(bytes=number_of_bytes)
-
-    # def convert_byte(self, number_of_bytes):
-    #     if number_of_bytes < 0:
-    #         raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
-    #
-    #     step_to_greater_unit = 1024.
-    #
-    #     number_of_bytes = float(number_of_bytes)
-    #     unit = 'bytes'
-    #
-    #     if (number_of_bytes / step_to_greater_unit) >= 1:
-    #         number_of_bytes /= step_to_greater_unit
-    #         unit = 'KB'
-    #
-    #     if (number_of_bytes / step_to_greater_unit) >= 1:
-    #         number_of_bytes /= step_to_greater_unit
-    #         unit = 'MB'
-    #
-    #     if (number_of_bytes / step_to_greater_unit) >= 1:
-    #         number_of_bytes /= step_to_greater_unit
-    #         unit = 'GB'
-    #
-    #     if (number_of_bytes / step_to_greater_unit) >= 1:
-    #         number_of_bytes /= step_to_greater_unit
-    #         unit = 'TB'
-    #
-    #     precision = 1
-    #     number_of_bytes = round(number_of_bytes, precision)
-    #
-    #     return number_of_bytes
 
     def query_data(self, service_id):
         query_sql = "SELECT * FROM configuration WHERE service_id='{}'".format(service_id)
@@ -213,6 +170,11 @@ class Service(Probe):
 
             temp = (self.id, counter[0], status, response, time_start)
             self.data_forDB.append(temp)
+
+            ##################### Notify by line ###########################
+
+            service_name = self.query_service(service_id)
+            self.notify_line(self.name, self.ip, service_name, destination, status)
 
         self.insert_availability_service(self.data_forDB)
         print "SUCCESS INSERT DATA"
@@ -252,6 +214,20 @@ class Service(Probe):
     def reformat_counter(self, destination):
         return destination
 
+    def notify_line(self, probe_name, ip, service, destination, status):
+
+        if status != 0:
+            url = 'https://notify-api.line.me/api/notify'
+            token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
+            headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + token}
+
+            msg = 'WARNING !!!\nProbe Name: {}\nIP Address: {}\nService: {}\nDestination: {}\nStatus: {}\nPlease check your service'.format(
+                probe_name, ip, service, destination, status)
+
+            request = requests.post(url, headers=headers, data={'message': msg})
+
+            print request.text
+
 
 class ICMPService(Service):
 
@@ -280,7 +256,7 @@ class ICMPService(Service):
         return status, response
 
     def reformat_counter(self, destination):
-        return urlparse.urlparse(destination).netloc
+        return self.identify_url(destination).netloc
 
 
 class DNSService(Service):
@@ -306,9 +282,6 @@ class DNSService(Service):
 
         return status, response
 
-    # def reformat_counter(self, destination):
-    #     return destination
-
 
 class WebService(Service):
 
@@ -326,9 +299,6 @@ class WebService(Service):
             return status, timer
         except:
             return 2, 0
-
-    # def reformat_counter(self, destination):
-    #     return destination
 
 
 class SpeedtestService(Service):
@@ -348,6 +318,7 @@ class SpeedtestService(Service):
         except:
             print "Error"
             return 0, 0, 0, 'NULL'
+
 
 class SMTPService(Service):
 
@@ -369,6 +340,7 @@ class SMTPService(Service):
             return status, response
         except:
             return 2, 0
+
 
 class IMAPService(Service):
 
@@ -402,6 +374,7 @@ class IMAPService(Service):
             except:
                 return 2, 0
 
+
 class POP3Service(Service):
 
     def __init__(self):
@@ -434,10 +407,9 @@ class POP3Service(Service):
             except:
                 return 2, 0
 
-
-
     # def reformat_counter(self, destination):
     #     return destination
+
 
 # example = ICMPService()
 # hello = DNSService()
@@ -451,8 +423,11 @@ class POP3Service(Service):
 #     speed.performance_service('5')
 #     time.sleep(120)
 
-xxx = IMAPService()
-xxx.availability_service('8')
+# xxx = IMAPService()
+# xxx.availability_service('8')
+#
+# yyy = POP3Service()
+# yyy.availability_service('9')
 
-yyy = POP3Service()
-yyy.availability_service('9')
+xxx = ICMPService()
+xxx.availability_service('1')
