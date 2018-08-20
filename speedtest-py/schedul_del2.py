@@ -1092,15 +1092,15 @@ def convert_byte(number_of_bytes):
 
 
 
-# import bitmath
+import bitmath
 #
-# han = 617641.410832
+han = 2424708.6729394053
 #
 # print convert_byte(han)
 #
 # # test = bitmath.kb(bytes=han)
 # # test2 = bitmath.kB(bits=han)
-# test1 = bitmath.MiB(bytes=han)
+test1 = bitmath.MiB(bytes=han)
 # test2 = bitmath.MiB(bits=han)
 # test3 = bitmath.Mib(bytes=han)
 # test4 = bitmath.Mib(bits=han)
@@ -1112,7 +1112,7 @@ def convert_byte(number_of_bytes):
 # # print test3
 # # print test4
 # # print test5
-# print test1
+print test1
 # print test2
 # print test3
 # print test4
@@ -1132,12 +1132,13 @@ import imaplib
 # if 'ok' and 'ready' in connection.welcome:
 #     print "YeSSSSSSSSSSSSSSSSSSS"
 
-import requests
 
-url = 'https://notify-api.line.me/api/notify'
-token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
-headers = {'content-type':'application/x-www-form-urlencoded', 'Authorization':'Bearer '+token}
-
-msg = '@บดินดุ๊ก testing time line notify working'
-r = requests.post(url, headers=headers, data= {'message':msg})
-print r.text
+# import requests
+#
+# url = 'https://notify-api.line.me/api/notify'
+# token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
+# headers = {'content-type':'application/x-www-form-urlencoded', 'Authorization':'Bearer '+token}
+#
+# msg = '@บดินดุ๊ก testing time line notify working'
+# r = requests.post(url, headers=headers, data= {'message':msg})
+# print r.text
