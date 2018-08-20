@@ -127,6 +127,14 @@ class Probe(MySQLDatabase):
         self.name = self.setting['probe_name']
         # return self.setting['node_name']
 
+    def query_start_service(self, probe_id, service_id):
+        query_sql = "SELECT setting FROM setting WHERE probe_id='{}' and service_id='{}'".format(self.id, service_id)
+        self.mycursor.execute(query_sql)
+        my_result = self.mycursor.fetchone()
+        print my_result
+        return my_result[0]
+
+
 
 class Service(Probe):
     data = {}
@@ -172,7 +180,6 @@ class Service(Probe):
     def convert_to_mbs(self, number_of_bytes):
         ''' Return Megabit per second from byte per second '''
         try:
-            print number_of_bytes
             return bitmath.MiB(bytes=number_of_bytes)
         except:
             return 'NULL'
@@ -201,7 +208,7 @@ class Service(Probe):
             data_for_database.append(temp)
 
         self.insert_availability_service(data_for_database)
-        print "SUCCESS INSERT DATA"
+        print "SUCCESS INSERT DATA", service_id
         data_for_database = []
         # self.close_connection()
 
@@ -224,6 +231,7 @@ class Service(Probe):
             data_for_database.append(temp)
 
         self.insert_performance_service(data_for_database)
+        print "SUCCESS INSERT DATA", service_id
         data_for_database = []
         # self.close_connection()
 
@@ -261,16 +269,19 @@ class ICMPService(Service):
     def get_status(self, destination, port):
 
         param = '-n' if sys.platform.lower() == 'windows' else '-c'
-        command = ['ping', param, '1', destination]
+        command = ['ping', param, '4', destination]
         status = 1
         response = 0
 
         try:
-            output = subprocess.check_output(command).split()
+            output = subprocess.check_output(command).split('\n')
             for element in output:
-                if 'time' in element.lower():
+                if 'min/avg/max/' in element.lower():
                     status = 0
-                    response = element.split('=')[1]
+                    response = element.split('/')[-3]
+                elif 'average' in element.lower():
+                    status = 0
+                    response = element.split()[-1][:-2:]
 
         except:
             status = 2
@@ -440,19 +451,15 @@ class POP3Service(Service):
 class VideoService(Service):
     data_speed = []
 
-    def __int__(self):
+    def __init__(self):
         Service.__init__(self)
         self.performance_service('6')
 
     def collect_data(self, result):
         if result['status'] != 'finished':
             speed = result['speed']
-            print speed
-            # if type(speed) != <type 'NoneType'>:
             if isinstance(speed, float):
-                print type(speed)
                 self.data_speed.append(speed)
-                print self.data_speed
 
     def get_status(self, destination, port):
         opts = {
@@ -465,7 +472,6 @@ class VideoService(Service):
             ydl.download([destination])
 
             avg = sum(self.data_speed) / float(len(self.data_speed))
-            print 'AVG: ', avg
 
             name = '../video'
             os.system('rm -rf {}'.format(name))
@@ -486,4 +492,4 @@ if __name__ == '__main__':
         eee = IMAPService()
         www = POP3Service()
         you = VideoService()
-        time.sleep(60)
+        time.sleep(600)

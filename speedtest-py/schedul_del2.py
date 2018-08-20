@@ -1142,3 +1142,7 @@ import imaplib
 # msg = '@บดินดุ๊ก testing time line notify working'
 # r = requests.post(url, headers=headers, data= {'message':msg})
 # print r.text
+
+text = 'Minimum = 97ms, Maximum = 97ms, Average = 111197ms'
+text = text.split()[-1][:-2:]
+print text
