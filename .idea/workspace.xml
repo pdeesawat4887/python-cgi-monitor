@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/service-py/playground/youtube.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/conf/configure" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/conf/configure" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/file/Script.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/Script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" beforeDir="false" afterPath="$PROJECT_DIR$/speedtest-py/schedul_del2.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,67 +38,29 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45405406">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="schedul_del2.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="835">
-                  <caret line="1134" selection-start-line="1134" selection-end-line="1134" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="NodeScript-dev.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2170">
-                  <caret line="410" column="26" selection-start-line="410" selection-start-column="26" selection-end-line="410" selection-end-column="26" />
-                  <folding>
-                    <element signature="e#0#16#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Script.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-553">
-                  <caret line="159" column="53" selection-start-line="159" selection-start-column="53" selection-end-line="159" selection-end-column="53" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="youtube.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/service-py/playground/youtube.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="352">
-                  <caret line="57" column="43" lean-forward="true" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="Script.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="313">
-                  <caret line="470" lean-forward="true" selection-start-line="470" selection-end-line="470" />
-                  <folding>
-                    <element signature="e#83#96#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Script.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="36" column="79" lean-forward="true" selection-start-line="36" selection-start-column="79" selection-end-line="36" selection-end-column="79" />
+              <folding>
+                <element signature="e#83#96#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="configure" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/service-py/conf/configure">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="5" selection-start-column="5" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -130,9 +89,13 @@
       <find>whois</find>
       <find>convert_byte</find>
       <find>19036</find>
+      <find>node</find>
+      <find>data_forDB</find>
     </findStrings>
     <replaceStrings>
       <replace>load_setting</replace>
+      <replace>prepare_probe</replace>
+      <replace>data_for_database</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -187,9 +150,9 @@
         <option value="$PROJECT_DIR$/service-py/playground/throught.py" />
         <option value="$PROJECT_DIR$/speedtest-py/conf/email_conf.txt" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/service-py/conf/configure" />
         <option value="$PROJECT_DIR$/speedtest-py/schedul_del2.py" />
         <option value="$PROJECT_DIR$/service-py/playground/youtube.py" />
+        <option value="$PROJECT_DIR$/service-py/conf/configure" />
         <option value="$PROJECT_DIR$/service-py/file/Script.py" />
       </list>
     </option>
@@ -204,10 +167,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="38" />
+    <option name="x" value="1691" />
     <option name="y" value="22" />
-    <option name="width" value="1680" />
-    <option name="height" value="987" />
+    <option name="width" value="1895" />
+    <option name="height" value="1017" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -217,6 +180,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -251,7 +215,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -594,20 +557,35 @@
       <option name="project" value="LOCAL" />
       <updated>1534705122582</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Measure video speed rate download. (1)">
+      <created>1534758798440</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1534758798440</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Measure video speed rate download. (2)">
+      <created>1534760461967</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1534760461967</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1680" height="987" extended-state="6" />
+    <frame x="1681" y="22" width="1920" height="1017" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5005208" side_tool="true" weight="0.34570518" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32873806" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.2946331" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" weight="0.2946331" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32968238" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11904762" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.104166664" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -634,7 +612,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="speedtest-cli-python-test.py for test&#10;speedtest-cli-python.py for edit&#10;Add WebService test [Ping, Status, Reason]" />
     <MESSAGE value="speedtest-cli-python-test.py for test&#10;speedtest-cli-python.py for edit&#10;Add WebService test [Ping, Status, Reason]&#10;Change requests -&gt; urllib" />
     <MESSAGE value="speedtest-cli-python-test.py for test&#10;speedtest-cli-python.py for edit&#10;Add WebService test [Ping, Status, Reason]&#10;Change requests -&gt; urllib (2)" />
     <MESSAGE value="EMail Test&#10;- SMTP&#10;- POP3&#10;using email.txt to setting." />
@@ -658,21 +635,16 @@
     <MESSAGE value="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website&#10;- Speedtest" />
     <MESSAGE value="Re-Design use at service-py (4)&#10;- ICMP&#10;- DNS&#10;- Website&#10;- Speedtest&#10;- SMTP&#10;- IMAP&#10;- POP3" />
     <MESSAGE value="Add Notify by line to service monitor. (1)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Notify by line to service monitor. (1)" />
+    <MESSAGE value="Measure video speed rate download. (1)" />
+    <MESSAGE value="Measure video speed rate download. (2)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Measure video speed rate download. (2)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="9" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/speedtest-py/conf/email.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/IMAP4-py.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -950,13 +922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/conf/configure">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="16" selection-start-column="16" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/second-test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -971,9 +936,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/playground/youtube.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript-dev.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2170">
+        <state relative-caret-position="866">
           <caret line="410" column="26" selection-start-line="410" selection-start-column="26" selection-end-line="410" selection-end-column="26" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
@@ -983,22 +955,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/speedtest-py/schedul_del2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="835">
+        <state relative-caret-position="671">
           <caret line="1134" selection-start-line="1134" selection-end-line="1134" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/playground/youtube.py">
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/uuid.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="57" column="43" lean-forward="true" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+        <state relative-caret-position="306">
+          <caret line="507" column="4" selection-start-line="507" selection-start-column="4" selection-end-line="507" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/conf/configure">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="470" lean-forward="true" selection-start-line="470" selection-end-line="470" />
+        <state relative-caret-position="540">
+          <caret line="36" column="79" lean-forward="true" selection-start-line="36" selection-start-column="79" selection-end-line="36" selection-end-column="79" />
           <folding>
             <element signature="e#83#96#0" expanded="true" />
           </folding>

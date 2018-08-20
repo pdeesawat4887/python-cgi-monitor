@@ -21,10 +21,11 @@ from pip._vendor.colorama import Fore, Style
 class MySQLDatabase:
 
     def __init__(self):
+        '''Create connection to MariaDB SQL'''
         self.create_connection()
 
-    # def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project'):
-    def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project'):
+    def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project'):
+        # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
@@ -32,38 +33,44 @@ class MySQLDatabase:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
 
     def query_probe(self, id, name, ip, mac_address):
+        ''' Check before test, that database contain this probe '''
         query_sql = "SELECT probe_id FROM probe WHERE probe_id='{}'".format(id)
         self.mycursor.execute(query_sql)
-        myresult = self.mycursor.fetchall()
+        my_result = self.mycursor.fetchall()
         if self.mycursor.rowcount == 1:
-            probe_id = myresult[0][0]
+            probe_id = my_result[0][0]
         else:
             self.insert_new_probe(id=id, name=name, ip=ip, mac_address=mac_address)
             probe_id = id
         return probe_id
 
     def insert_new_probe(self, id, name, ip, mac_address):
+        ''' If probe doesn't exist in database, insert probe first '''
         insert_sql = "INSERT INTO probe VALUES ('{}', '{}', '{}', '{}', '0')".format(id, name, ip, mac_address)
         self.mycursor.execute(insert_sql)
         self.connection.commit()
 
     def insert_availability_service(self, list_data):
+        ''' Insert row to availability_service from list of data that contain id(AUTO_IN), configure_id, status, response_time, time '''
         insert_sql = "INSERT INTO availability_service VALUES (NULL, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(insert_sql, list_data)
         self.connection.commit()
 
     def insert_performance_service(self, list_data):
+        ''' Insert row to performance_service from list of data that contain id(AUTO_IN), configure_id, status, response_time, time '''
         insert_sql = "INSERT INTO performance_service VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(insert_sql, list_data)
         self.connection.commit()
 
     def query_service(self, service_id):
+        ''' Get service_name for Line Notify '''  ### Unuse line notify at here
         query_sql = "SELECT service_name FROM service WHERE service_id='{}'".format(service_id)
         self.mycursor.execute(query_sql)
-        myresult = self.mycursor.fetchone()
-        return myresult[0]
+        my_result = self.mycursor.fetchone()
+        return my_result[0]
 
     def close_connection(self):
+        ''' Close connection to MariaDB SQL '''
         self.mycursor.close()
         self.connection.disconnect()
         print 'Terminate Connection'
@@ -75,9 +82,10 @@ class Probe(MySQLDatabase):
     def __init__(self):
         MySQLDatabase.__init__(self)
         self.prepare_setting()
-        self.prepare_node()
+        self.prepare_probe()
 
     def prepare_setting(self, file='../conf/configure'):
+        ''' Open and read configure file to prepare for probe and service test '''
         infile = open(file, "r")
         for line in infile:
             if not line.strip():
@@ -88,21 +96,23 @@ class Probe(MySQLDatabase):
                     self.setting[key] = value
         infile.close()
 
-    def prepare_node(self):
+    def prepare_probe(self):
+        ''' Set probe configure use for store in database '''
         self.get_mac_address()
         self.get_ip()
         self.get_name()
         self.query_probe(id=self.id, name=self.name, ip=self.ip, mac_address=self.mac_address)
 
     def get_mac_address(self):
+        ''' Get MAC Address and create EUI64 for probe_id to collect in database '''
         mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
         eui64 = mac[0:6] + 'fffe' + mac[6:]
         eui64 = hex(int(eui64[0:2], 16) ^ 2)[2:].zfill(2) + eui64[2:]
-        # return eui64, mac
         self.mac_address = mac
         self.id = eui64
 
     def get_ip(self):
+        ''' Get probe ip from source ip contain in socket that connect to 8.8.8.8 '''
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
@@ -110,11 +120,11 @@ class Probe(MySQLDatabase):
             s.close()
         except:
             ip_address = '127.0.0.1'
-        # return ip_address
         self.ip = ip_address
 
     def get_name(self):
-        self.name = self.setting['node_name']
+        ''' Set probe_name from configuration file store at /conf/configure '''
+        self.name = self.setting['probe_name']
         # return self.setting['node_name']
 
 
@@ -125,6 +135,7 @@ class Service(Probe):
         Probe.__init__(self)
 
     def check_response_code(self, response_code):
+        ''' Reference from HTTP status code return 0 if status = 2xx, return 1 if invalid or error status and return 2 if status = 4xx-5xx or fail to connection '''
         try:
             if (200 <= int(response_code) <= 299):
                 result = 0
@@ -136,25 +147,30 @@ class Service(Probe):
         return result
 
     def get_time_format(self):
+        ''' Return time format for database like 2018-08-01 09:06:09 '''
         return time.strftime('%Y-%m-%d %H:%M:%S')
 
     def get_time(self):
+        ''' Return current time '''
         return time.time()
 
     def get_response_time(self, start, end):
+        ''' Return different milli second from 2 different time'''
         return (end - start) * 1000
 
-    def round_2_decimal(self, time):
+    def round_2_decimal(self, value):
+        ''' Return the floating point value number rounded to 2 digits after the decimal point form input '''
         try:
-            print time
-            return round(float(time), 2)
+            return round(float(value), 2)
         except:
             return 'NULL'
 
     def identify_url(self, url):
+        ''' Return 6 tuple correspond to general structure of a URL '''
         return urlparse.urlparse(url)
 
     def convert_to_mbs(self, number_of_bytes):
+        ''' Return Megabit per second from byte per second '''
         try:
             print number_of_bytes
             return bitmath.MiB(bytes=number_of_bytes)
@@ -162,110 +178,85 @@ class Service(Probe):
             return 'NULL'
 
     def query_data(self, service_id):
+        ''' Get destination and information from input service_id prepare to use for test '''
         query_sql = "SELECT * FROM configuration WHERE service_id='{}'".format(service_id)
         self.mycursor.execute(query_sql)
         self.result = self.mycursor.fetchall()
 
     def availability_service(self, service_id, warning_value=2):
-        data_forDB = []
+        ''' Step to prepare destination, set parameter, testing, prepare attribute before insert to availability_service and insert data '''
+        data_for_database = []
         self.query_data(service_id)
 
         time_start = self.get_time_format()
 
         for counter in self.result:
             counter = list(counter)
+
             destination = self.reformat_counter(counter[2])
-
-            # print "DESTINATION", destination
-            # print "PORT", counter[3]
-
             status, response = self.get_status(destination, counter[3])
-
             response = self.round_2_decimal(response)
 
             temp = (self.id, counter[0], status, response, time_start)
-            data_forDB.append(temp)
+            data_for_database.append(temp)
 
-            ##################### Notify by line ###########################
-
-            service_name = self.query_service(service_id)
-            self.notify_line(self.name, self.ip, service_name, destination, status, warning_value)
-
-        print data_forDB
-        self.insert_availability_service(data_forDB)
+        self.insert_availability_service(data_for_database)
         print "SUCCESS INSERT DATA"
-        data_forDB = []
-        print data_forDB
-        print self.result
-
+        data_for_database = []
         # self.close_connection()
 
     def performance_service(self, service_id, warning_value=2):
-        data_forDB = []
+        ''' Step to prepare destination, set parameter, testing, prepare attribute before insert to performance_service and insert data '''
+        data_for_database = []
         self.query_data(service_id)
 
         time_start = self.get_time_format()
 
         for counter in self.result:
             counter = list(counter)
+
             destination = self.reformat_counter(counter[2])
-
             ping, download, upload, location = self.get_status(destination, counter[3])
-
             download = self.round_2_decimal(self.convert_to_mbs(download))
             upload = self.round_2_decimal(self.convert_to_mbs(upload))
 
             temp = (self.id, counter[0], ping, download, upload, location, time_start)
-            print temp
-            data_forDB.append(temp)
+            data_for_database.append(temp)
 
-            # ##################### Notify by line ###########################
-            #
-            # service_name = self.query_service(service_id)
-            # self.notify_line(self.name, self.ip, service_name, destination, status, warning_value)
-
-        print   data_forDB
-        self.insert_performance_service(data_forDB)
-        print "SUCCESS INSERT DATA"
-        data_forDB = []
-        print   data_forDB
-        print self.result
-
+        self.insert_performance_service(data_for_database)
+        data_for_database = []
         # self.close_connection()
 
-    # def test_output(self, service_id):
-    #     self.query_data(service_id)
-    #     for i in self.result:
-    #         i = list(i)
-    #         dest = self.reformat_counter(i[2])
-    #         self.get_status(dest, i[3])
-
     def get_status(self, destination, port):
+        ''' Abstract function: Return status and response for availability service and
+         return ping, download, upload, location for performance service.
+         Every new service must override this function that importance to get status and other parameter for different service '''
         pass
 
     def reformat_counter(self, destination):
+        ''' Override this function to format destination If format from database cannot use immediate '''
         return destination
 
-    def notify_line(self, probe_name, ip, service, destination, status, warning_value):
-
-        if status == warning_value:
-            url = 'https://notify-api.line.me/api/notify'
-            token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
-            headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + token}
-
-            msg = '\nWARNING !!!\nProbe Name: {}\nIP Address: {}\nService: {}\nDestination: {}\nStatus: {}\nPlease check your service'.format(
-                probe_name, ip, service, destination, status)
-
-            request = requests.post(url, headers=headers, data={'message': msg})
-
-            # print request.text
+    # def notify_line(self, probe_name, ip, service, destination, status, warning_value):
+    #
+    #     if status == warning_value:
+    #         url = 'https://notify-api.line.me/api/notify'
+    #         token = 'pyL4xY6ys303vg0bVnvd0DRco7UyILVo5dOXZGjBWD8'
+    #         headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + token}
+    #
+    #         msg = '\nWARNING !!!\nProbe Name: {}\nIP Address: {}\nService: {}\nDestination: {}\nStatus: {}\nPlease check your service'.format(
+    #             probe_name, ip, service, destination, status)
+    #
+    #         request = requests.post(url, headers=headers, data={'message': msg})
+    #
+    #         print request.text
 
 
 class ICMPService(Service):
 
     def __init__(self):
         Service.__init__(self)
-        # self.main()
+        self.availability_service('1')
 
     def get_status(self, destination, port):
 
@@ -295,6 +286,7 @@ class DNSService(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('2')
 
     def get_status(self, destination, port):
 
@@ -319,6 +311,7 @@ class WebService(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('4')
 
     def get_status(self, destination, port):
         header = {'User-Agent': self.setting['User-Agent']}
@@ -337,6 +330,7 @@ class SpeedtestService(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('5')
 
     def get_status(self, destination, port):
         try:
@@ -356,6 +350,7 @@ class SMTPService(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('7')
 
     def get_status(self, destination, port):
         try:
@@ -378,6 +373,7 @@ class IMAPService(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('8')
 
     def get_status(self, destination, port):
         try:
@@ -411,6 +407,7 @@ class POP3Service(Service):
 
     def __init__(self):
         Service.__init__(self)
+        self.availability_service('9')
 
     def get_status(self, destination, port):
         try:
@@ -439,15 +436,13 @@ class POP3Service(Service):
             except:
                 return 2, 0
 
-    # def reformat_counter(self, destination):
-    #     return destination
-
 
 class VideoService(Service):
     data_speed = []
 
     def __int__(self):
         Service.__init__(self)
+        self.availability_service('6')
 
     def collect_data(self, result):
         if result['status'] != 'finished':
@@ -480,52 +475,16 @@ class VideoService(Service):
         return 'NULL', avg, 'NULL', 'NULL'
 
 
-aaa = ICMPService()
-bbb = DNSService()
-ccc = WebService()
-sss = SpeedtestService()
-ddd = SMTPService()
-eee = IMAPService()
-www = POP3Service()
-you = VideoService()
+if __name__ == '__main__':
+    while True:
+        print Service.get_time_format()
 
-while True:
-    # aaa.availability_service('1')
-    # bbb.availability_service('2')
-    # ccc.availability_service('4')
-    # sss.performance_service('5')
-    # ddd.availability_service('7')
-    # eee.availability_service('8')
-    # www.availability_service('9')
-    you.performance_service('6')
-    time.sleep(60)
-
-# xxx = IMAPService()
-# xxx.availability_service('8')
-#
-# yyy = POP3Service()
-# yyy.availability_service('9')
-
-# xxx = ICMPService()
-# xxx.availability_service('1')
-#
-# yyy = WebService()
-# yyy.availability_service('4')
-#
-# zzz = DNSService()
-# zzz.availability_service('2')
-#
-# uuu = SpeedtestService()
-# uuu.performance_service('5')
-#
-# ooo = SMTPService()
-# ooo.availability_service('7')
-#
-# ppp = IMAPService()
-# ppp.availability_service('8')
-#
-# www = POP3Service()
-# www.availability_service('9')
-
-# uuu = SpeedtestService()
-# uuu.performance_service('5')
+        aaa = ICMPService()
+        bbb = DNSService()
+        ccc = WebService()
+        sss = SpeedtestService()
+        ddd = SMTPService()
+        eee = IMAPService()
+        www = POP3Service()
+        you = VideoService()
+        time.sleep(60)
