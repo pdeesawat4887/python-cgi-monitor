@@ -96,7 +96,7 @@ class Probe(MySQLDatabase):
 
     def get_mac_address(self):
         mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
-        eui64 = mac[0:6] + 'eebb' + mac[6:]
+        eui64 = mac[0:6] + 'fffe' + mac[6:]
         eui64 = hex(int(eui64[0:2], 16) ^ 2)[2:].zfill(2) + eui64[2:]
         # return eui64, mac
         self.mac_address = mac
@@ -258,7 +258,7 @@ class Service(Probe):
 
             request = requests.post(url, headers=headers, data={'message': msg})
 
-            print request.text
+            # print request.text
 
 
 class ICMPService(Service):
@@ -474,6 +474,8 @@ class VideoService(Service):
 
             name = '../video'
             os.system('rm -rf {}'.format(name))
+
+            self.data_speed = []
 
         return 'NULL', avg, 'NULL', 'NULL'
 
