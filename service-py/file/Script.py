@@ -24,7 +24,7 @@ class MySQLDatabase:
         '''Create connection to MariaDB SQL'''
         self.create_connection()
 
-    def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project'):
+    def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project_vm'):
         # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
@@ -477,8 +477,7 @@ class VideoService(Service):
 
 if __name__ == '__main__':
     while True:
-        print Service.get_time_format()
-
+        print time.ctime(time.time())
         aaa = ICMPService()
         bbb = DNSService()
         ccc = WebService()
