@@ -261,7 +261,7 @@ class ICMPService(Service):
     def get_status(self, destination, port):
 
         param = '-n' if sys.platform.lower() == 'windows' else '-c'
-        command = ['ping', param, '1', '-t', '1', destination]
+        command = ['ping', param, '1', destination]
         status = 1
         response = 0
 
@@ -330,7 +330,7 @@ class SpeedtestService(Service):
 
     def __init__(self):
         Service.__init__(self)
-        self.availability_service('5')
+        self.performance_service('5')
 
     def get_status(self, destination, port):
         try:
@@ -442,7 +442,7 @@ class VideoService(Service):
 
     def __int__(self):
         Service.__init__(self)
-        self.availability_service('6')
+        self.performance_service('6')
 
     def collect_data(self, result):
         if result['status'] != 'finished':
