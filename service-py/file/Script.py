@@ -1,4 +1,4 @@
-#!/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/venv/bin/python
+#!/usr/bin/pyhton2.7
 
 import socket
 import mysql.connector
