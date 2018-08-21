@@ -61,12 +61,12 @@ class ActiveService(Database.MySQLDatabase):
 
     def ssh_command(self, ssh, service_id):
         # ssh.invoke_shell()
-        chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
-        command = './python-cgi-monitor/service-py/file/' + self.file[service_id]
-        # print command
+        # chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
+        command = 'python ' + self.file[service_id]
+        print command
 
         # stdin, stdout, stderr = ssh.exec_command(command)
-        ssh.exec_command(chmod)
+        # ssh.exec_command(chmod)
         stdin, stdout, stderr = ssh.exec_command(command)
 
         print(stdout.read())
