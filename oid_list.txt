@@ -1,6 +1,0 @@
-system system
-icmp icmp
-udp udp
-snmp snmp
-ip ip
-interface ifNumber,ifDescr,ifType,ifMtu,ifSpeed,ifAdminStatus,ifOperStatus

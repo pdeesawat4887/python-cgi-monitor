@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import socket
-import mysql.connector
 import re, uuid
 import time
 import os
@@ -17,130 +16,15 @@ import imaplib
 import youtube_dl
 from pip._vendor.colorama import Fore, Style
 
-
-class MySQLDatabase:
-
-    def __init__(self):
-        '''Create connection to MariaDB SQL'''
-        self.create_connection()
-
-    def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project_vm'):
-        # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project'):
-        try:
-            self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
-            self.mycursor = self.connection.cursor()
-        except Exception as error:
-            print 'Error database: ', Fore.RED, error, Style.RESET_ALL
-
-    def query_probe(self, id, name, ip, mac_address):
-        ''' Check before test, that database contain this probe '''
-        query_sql = "SELECT probe_id FROM probe WHERE probe_id='{}'".format(id)
-        self.mycursor.execute(query_sql)
-        my_result = self.mycursor.fetchall()
-        if self.mycursor.rowcount == 1:
-            probe_id = my_result[0][0]
-        else:
-            self.insert_new_probe(id=id, name=name, ip=ip, mac_address=mac_address)
-            probe_id = id
-        return probe_id
-
-    def insert_new_probe(self, id, name, ip, mac_address):
-        ''' If probe doesn't exist in database, insert probe first '''
-        insert_sql = "INSERT INTO probe VALUES ('{}', '{}', '{}', '{}', '0')".format(id, name, ip, mac_address)
-        self.mycursor.execute(insert_sql)
-        self.connection.commit()
-
-    def insert_availability_service(self, list_data):
-        ''' Insert row to availability_service from list of data that contain id(AUTO_IN), configure_id, status, response_time, time '''
-        insert_sql = "INSERT INTO availability_service VALUES (NULL, %s, %s, %s, %s, %s)"
-        self.mycursor.executemany(insert_sql, list_data)
-        self.connection.commit()
-
-    def insert_performance_service(self, list_data):
-        ''' Insert row to performance_service from list of data that contain id(AUTO_IN), configure_id, status, response_time, time '''
-        insert_sql = "INSERT INTO performance_service VALUES (NULL, %s, %s, %s, %s, %s, %s, %s)"
-        self.mycursor.executemany(insert_sql, list_data)
-        self.connection.commit()
-
-    def query_service(self, service_id):
-        ''' Get service_name for Line Notify '''  ### Unuse line notify at here
-        query_sql = "SELECT service_name FROM service WHERE service_id='{}'".format(service_id)
-        self.mycursor.execute(query_sql)
-        my_result = self.mycursor.fetchone()
-        return my_result[0]
-
-    def close_connection(self):
-        ''' Close connection to MariaDB SQL '''
-        self.mycursor.close()
-        self.connection.disconnect()
-        print 'Terminate Connection'
-
-
-class Probe(MySQLDatabase):
-    setting = {}
-
-    def __init__(self):
-        MySQLDatabase.__init__(self)
-        self.prepare_setting()
-        self.prepare_probe()
-
-    def prepare_setting(self, file='../conf/configure'):
-        ''' Open and read configure file to prepare for probe and service test '''
-        infile = open(file, "r")
-        for line in infile:
-            if not line.strip():
-                continue
-            else:
-                if not '#' in line:
-                    key, value = line.strip().split('=')
-                    self.setting[key] = value
-        infile.close()
-
-    def prepare_probe(self):
-        ''' Set probe configure use for store in database '''
-        self.get_mac_address()
-        self.get_ip()
-        self.get_name()
-        self.query_probe(id=self.id, name=self.name, ip=self.ip, mac_address=self.mac_address)
-
-    def get_mac_address(self):
-        ''' Get MAC Address and create EUI64 for probe_id to collect in database '''
-        mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
-        eui64 = mac[0:6] + 'fffe' + mac[6:]
-        eui64 = hex(int(eui64[0:2], 16) ^ 2)[2:].zfill(2) + eui64[2:]
-        self.mac_address = mac
-        self.id = eui64
-
-    def get_ip(self):
-        ''' Get probe ip from source ip contain in socket that connect to 8.8.8.8 '''
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(("8.8.8.8", 80))
-            ip_address = s.getsockname()[0]
-            s.close()
-        except:
-            ip_address = '127.0.0.1'
-        self.ip = ip_address
-
-    def get_name(self):
-        ''' Set probe_name from configuration file store at /conf/configure '''
-        self.name = self.setting['probe_name']
-        # return self.setting['node_name']
-
-    def query_start_service(self, probe_id, service_id):
-        query_sql = "SELECT setting FROM setting WHERE probe_id='{}' and service_id='{}'".format(self.id, service_id)
-        self.mycursor.execute(query_sql)
-        my_result = self.mycursor.fetchone()
-        print my_result
-        return my_result[0]
-
+import Database
+import Probe
 
 
 class Service(Probe):
     data = {}
 
     def __init__(self):
-        Probe.__init__(self)
+        Probe.Probe.__init__(self)
 
     def check_response_code(self, response_code):
         ''' Reference from HTTP status code return 0 if status = 2xx, return 1 if invalid or error status and return 2 if status = 4xx-5xx or fail to connection '''
