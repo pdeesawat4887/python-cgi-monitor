@@ -10,7 +10,8 @@ class MySQLDatabase:
         self.create_connection()
 
     # def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project_vm'):
-    def create_connection(self, user='catma', passwd='root', host='192.168.51.102', database='project_vm'):
+    def create_connection(self, user='centos', passwd='root', host='192.168.51.102', database='project_vm'):
+    # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project_vm'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
