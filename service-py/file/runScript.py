@@ -114,7 +114,7 @@ class ActiveService(Database.MySQLDatabase):
 
 
 if __name__ == '__main__':
-    os.system('python ProbeFile.py')
+    os.system('python python-cgi-monitor/service-py/ProbeFile.py')
     xxx = ActiveService()
 
 # for i in xxx.probe:
