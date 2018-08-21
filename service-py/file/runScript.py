@@ -3,6 +3,8 @@ import subprocess
 # subprocess.call(['./Script.py'])
 
 import paramiko
+
+
 #
 # ssh = paramiko.SSHClient()
 # hostname = '172.16.30.150'
@@ -16,6 +18,7 @@ def ssh_command(ssh):
     stdin, stdout, stderr = ssh.exec_command(command)
     print(stdout.read())
 
+
 def ssh_connect(host, user, key):
     try:
         ssh = paramiko.SSHClient()
@@ -23,18 +26,20 @@ def ssh_connect(host, user, key):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(hostname=host, username=user, password=key)
         print 'SUCCESS'
-        cmd = 'ping -c 4 google.com'
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(cmd)
 
-        print 'ssh_stdin', dir(ssh_stdin)
-        print 'ssh_stdout',ssh_stdout.read
-        print 'ssh_stderr',ssh_stderr.readline
-        # ssh_command(ssh)
+        stdin, stdout, stderr = ssh.exec_command(
+            "./python-cgi-monitor/hello-world.py")
+        # stdin.write('lol\n')
+        # stdin.flush()
+        data = stdout.read()
+        print type(data)
+        print data
     except Exception as e:
         print('Connection Failed')
         print(e)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     # user = input("Username:")
     # key = input("Public key full path:")
     # host = input("Target Hostname:")

@@ -1,3 +1,3 @@
-#!/usr/bin/pyhton2.7
+#!/usr/bin/pyhton
 
 print 'Hello World'
