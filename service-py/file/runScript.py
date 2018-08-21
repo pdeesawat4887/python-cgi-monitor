@@ -7,6 +7,7 @@ import Database
 import getpass
 import os
 
+
 #
 # ssh = paramiko.SSHClient()
 # hostname = '172.16.30.150'
@@ -16,6 +17,7 @@ import os
 
 class ActiveService(Database.MySQLDatabase):
     probe_info = {}
+
     # file = {
     #     1: 'ICMPService.py',
     #     2: 'DNSService.py',
@@ -33,12 +35,10 @@ class ActiveService(Database.MySQLDatabase):
         self.query_all_probe()
         self.command_to_probe()
 
-
     def read_file_dictionary(self):
         line = open('../conf/dictionary', 'r').read()
         self.file = eval(line)
         print self.file
-
 
     def query_all_probe(self):
         try:
@@ -109,6 +109,7 @@ class ActiveService(Database.MySQLDatabase):
     #     key = 'root'
     #     host = '172.16.30.150'
     #     ssh_connect(host, user, key)
+
 
 if __name__ == '__main__':
     xxx = ActiveService()
