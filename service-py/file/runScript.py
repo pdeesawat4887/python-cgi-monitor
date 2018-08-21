@@ -4,7 +4,7 @@ import subprocess
 
 import paramiko
 import Database
-
+import getpass
 
 #
 # ssh = paramiko.SSHClient()
@@ -50,39 +50,40 @@ class ActiveService(Database.MySQLDatabase):
         my_result = self.mycursor.fetchall()
         return my_result
 
-    def ssh_command(ssh):
-        command = input("Command:")
+    def ssh_command(self, ssh, file):
         ssh.invoke_shell()
+        # command = 'chmod +x python-cgi-monitor/service-py/file/' + file
+        command = './python-cgi-monitor/service-py/file/' + file
+        print command
+
         stdin, stdout, stderr = ssh.exec_command(command)
+
         print(stdout.read())
 
     def ssh_connect(self, host, user='root', password='root'):
         try:
             ssh = paramiko.SSHClient()
-            print('Calling paramiko')
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(hostname=host, username=user, password=password)
-            print 'SUCCESS'
-
-            stdin, stdout, stderr = ssh.exec_command(
-                "./python-cgi-monitor/hello-world.py")
-            # stdin.write('lol\n')
-            # stdin.flush()
-            data = stdout.read()
-            print type(data)
-            print data
+            print('Successful connection')
+            return ssh
         except Exception as e:
             print('Connection Failed')
             print(e)
 
     def command_to_probe(self):
         for probe_id in self.probe_info:
-            result = self.query_active_service(probe_id=self.probe_info[probe_id])
-            self.ssh_connect(host=probe_id)
+            ip = self.probe_info[probe_id]
+            result = self.query_active_service(probe_id=probe_id)
+
+            print 'Connect to ip: ' + ip
+            user = raw_input('User: ')
+            pswd = getpass.getpass('Password: ')
+
+            print result
+            ssh = self.ssh_connect(host=ip, user=user, password=pswd)
             for service in result:
-                pass
-
-
+                print service[0]
 
     # if __name__ == '__main__':
     #     # user = input("Username:")
