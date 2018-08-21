@@ -63,6 +63,8 @@ class ActiveService(Database.MySQLDatabase):
     def ssh_connect(self, host, user='root', password='root'):
         try:
             ssh = paramiko.SSHClient()
+            print user
+            print password
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(hostname=host, username=user, password=password)
             print('Successful connection')

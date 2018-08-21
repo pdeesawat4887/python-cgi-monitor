@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/file/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/Database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-py/file/runScript.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/runScript.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +32,7 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$python_youtube.coverage" NAME="python-youtube Coverage Results" MODIFIED="1533104633930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$shopping_py.coverage" NAME="shopping-py Coverage Results" MODIFIED="1533615585240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$speedtest_cli_python_test.coverage" NAME="speedtest-cli-python-test Coverage Results" MODIFIED="1532589295672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$runScript.coverage" NAME="runScript Coverage Results" MODIFIED="1534835645380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$runScript.coverage" NAME="runScript Coverage Results" MODIFIED="1534840461749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$throught.coverage" NAME="throught Coverage Results" MODIFIED="1534242008775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3_p.coverage" NAME="POP3-p Coverage Results" MODIFIED="1533058586846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP4_py.coverage" NAME="IMAP4-py Coverage Results" MODIFIED="1533096850153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
@@ -57,7 +57,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Database.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Database.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/file/Database.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="593">
@@ -69,11 +69,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="runScript.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="runScript.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/file/runScript.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="420">
-                  <caret line="79" column="81" selection-start-line="79" selection-start-column="81" selection-end-line="79" selection-end-column="81" />
+                <state relative-caret-position="346">
+                  <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#17#0" expanded="true" />
                   </folding>
@@ -130,8 +130,8 @@
           <file leaf-file-name="Script-dev.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/file/Script-dev.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1770">
-                  <caret line="118" column="27" lean-forward="true" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
+                <state relative-caret-position="435">
+                  <caret line="29" column="36" lean-forward="true" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
                   <folding>
                     <element signature="e#19#32#0" expanded="true" />
                   </folding>
@@ -232,11 +232,11 @@
         <option value="$PROJECT_DIR$/hello-world.py" />
         <option value="$PROJECT_DIR$/service-py/file/Script.py" />
         <option value="$PROJECT_DIR$/service-py/playground/playground-py.py" />
-        <option value="$PROJECT_DIR$/service-py/file/runScript.py" />
         <option value="$PROJECT_DIR$/service-py/file/Script-dev.py" />
         <option value="$PROJECT_DIR$/service-py/conf/configure" />
         <option value="$PROJECT_DIR$/service-py/file/Probe.py" />
         <option value="$PROJECT_DIR$/service-py/file/Database.py" />
+        <option value="$PROJECT_DIR$/service-py/file/runScript.py" />
       </list>
     </option>
   </component>
@@ -329,7 +329,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Probe">
+  <component name="RunManager" selected="Python.runScript">
     <configuration name="Database" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -454,9 +454,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.runScript" />
         <item itemvalue="Python.Probe" />
         <item itemvalue="Python.Database" />
-        <item itemvalue="Python.runScript" />
         <item itemvalue="Python.playground-py" />
         <item itemvalue="Python.Script-dev" />
       </list>
@@ -739,7 +739,21 @@
       <option name="project" value="LOCAL" />
       <updated>1534836782738</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Insert setting when insert new probe.">
+      <created>1534838603242</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1534838603242</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Action to probe start service (1)">
+      <created>1534840380719</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1534840380719</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -751,7 +765,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32873806" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.16867469" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.20920044" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32968238" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11904762" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -780,8 +794,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(Lab) create setup.py for install module." />
-    <MESSAGE value="Add requirements.txt to test lab install module." />
     <MESSAGE value="Update user for MySql to remote with ip address." />
     <MESSAGE value="Update user for MySql to remote with ip address. (2)" />
     <MESSAGE value="Update user for MySql to remote with ip address. (3)" />
@@ -805,7 +817,9 @@
     <MESSAGE value="Open ssh to centOS (3)" />
     <MESSAGE value="Open ssh to centOS (4)" />
     <MESSAGE value="Delete unused code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete unused code." />
+    <MESSAGE value="Insert setting when insert new probe." />
+    <MESSAGE value="Action to probe start service (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Action to probe start service (1)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1104,32 +1118,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/file/runScript.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="79" column="81" selection-start-line="79" selection-start-column="81" selection-end-line="79" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service-py/file/Script.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5">
           <caret line="24" column="32" lean-forward="true" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
           <folding>
             <element signature="e#83#96#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/file/Script-dev.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1770">
-          <caret line="118" column="27" lean-forward="true" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
-          <folding>
-            <element signature="e#19#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1157,6 +1151,26 @@
           <caret line="81" column="36" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
           <folding>
             <element signature="e#19#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/file/Script-dev.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="36" lean-forward="true" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+          <folding>
+            <element signature="e#19#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/file/runScript.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
