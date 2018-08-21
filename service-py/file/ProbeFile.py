@@ -12,7 +12,7 @@ class Probe(Database.MySQLDatabase):
         self.prepare_setting()
         self.prepare_probe()
 
-    def prepare_setting(self, file='../conf/configure'):
+    def prepare_setting(self, file='python-cgi-monitor/service-py/conf/configure'):
         ''' Open and read configure file to prepare for probe and service test '''
         infile = open(file, "r")
         for line in infile:

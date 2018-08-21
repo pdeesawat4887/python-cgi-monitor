@@ -36,7 +36,7 @@ class ActiveService(Database.MySQLDatabase):
         self.command_to_probe()
 
     def read_file_dictionary(self):
-        line = open('../conf/dictionary', 'r').read()
+        line = open('python-cgi-monitor/service-py/conf/dictionary', 'r').read()
         self.file = eval(line)
         print self.file
 

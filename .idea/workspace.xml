@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/file/Probe.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/ProbeFile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/file/Script.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/Script.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/file/runScript.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/file/runScript.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
@@ -49,8 +47,8 @@
       <file leaf-file-name="runScript.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/service-py/file/runScript.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+            <state relative-caret-position="197">
+              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -706,7 +704,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534846987097</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Action to probe start service (7)">
+      <created>1534848336913</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1534848336913</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -747,7 +752,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Re-Design use at service-py" />
     <MESSAGE value="Re-Design use at service-py (2)" />
     <MESSAGE value="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website" />
     <MESSAGE value="Re-Design use at service-py (2)&#10;- ICMP&#10;- DNS&#10;- Website&#10;- Speedtest" />
@@ -772,7 +776,8 @@
     <MESSAGE value="Action to probe start service (4)" />
     <MESSAGE value="Action to probe start service (5)" />
     <MESSAGE value="Action to probe start service (6)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Action to probe start service (6)" />
+    <MESSAGE value="Action to probe start service (7)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Action to probe start service (7)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1135,8 +1140,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/file/runScript.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+        <state relative-caret-position="197">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
