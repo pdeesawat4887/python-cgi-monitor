@@ -5,6 +5,7 @@ import subprocess
 import paramiko
 import Database
 import getpass
+import os
 
 #
 # ssh = paramiko.SSHClient()
@@ -15,21 +16,29 @@ import getpass
 
 class ActiveService(Database.MySQLDatabase):
     probe_info = {}
-    file = {
-        1: 'ICMPService.py',
-        2: 'DNSService.py',
-        4: 'WebService.py',
-        5: 'SpeedtestService.py',
-        6: 'VideoService.py',
-        7: 'SMTPService.py',
-        8: 'IMAPService.py',
-        9: 'POP3Service.py'
-    }
+    # file = {
+    #     1: 'ICMPService.py',
+    #     2: 'DNSService.py',
+    #     4: 'WebService.py',
+    #     5: 'SpeedtestService.py',
+    #     6: 'VideoService.py',
+    #     7: 'SMTPService.py',
+    #     8: 'IMAPService.py',
+    #     9: 'POP3Service.py'
+    # }
 
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
+        self.read_file_dictionary()
         self.query_all_probe()
         self.command_to_probe()
+
+
+    def read_file_dictionary(self):
+        line = open('../conf/dictionary', 'r').read()
+        self.file = eval(line)
+        print self.file
+
 
     def query_all_probe(self):
         try:
@@ -50,21 +59,21 @@ class ActiveService(Database.MySQLDatabase):
         my_result = self.mycursor.fetchall()
         return my_result
 
-    def ssh_command(self, ssh, file):
-        ssh.invoke_shell()
-        # command = 'chmod +x python-cgi-monitor/service-py/file/' + file
-        command = './python-cgi-monitor/service-py/file/' + file
-        print command
+    def ssh_command(self, ssh, service_id):
+        # ssh.invoke_shell()
+        chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
+        command = './python-cgi-monitor/service-py/file/' + self.file[service_id]
+        # print command
 
-        stdin, stdout, stderr = ssh.exec_command(command)
+        # stdin, stdout, stderr = ssh.exec_command(command)
+        ssh.exec_command(chmod)
+        stdin, stdout, stderr = ssh.exec_command('ping -c 4 google.com')
 
         print(stdout.read())
 
     def ssh_connect(self, host, user='root', password='root'):
         try:
             ssh = paramiko.SSHClient()
-            print user
-            print password
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(hostname=host, username=user, password=password)
             print('Successful connection')
@@ -79,13 +88,17 @@ class ActiveService(Database.MySQLDatabase):
             result = self.query_active_service(probe_id=probe_id)
 
             print 'Connect to ip: ' + ip
+
             user = raw_input('User: ')
             pswd = getpass.getpass('Password: ')
 
-            print result
             ssh = self.ssh_connect(host=ip, user=user, password=pswd)
+
             for service in result:
-                print service[0]
+                try:
+                    self.ssh_command(ssh, service[0])
+                except Exception as error:
+                    print error
 
     # if __name__ == '__main__':
     #     # user = input("Username:")
@@ -97,8 +110,9 @@ class ActiveService(Database.MySQLDatabase):
     #     host = '172.16.30.150'
     #     ssh_connect(host, user, key)
 
-
-xxx = ActiveService()
+if __name__ == '__main__':
+    xxx = ActiveService()
+    os.system('python Probe.py')
 
 # for i in xxx.probe:
 #     print '---->', i

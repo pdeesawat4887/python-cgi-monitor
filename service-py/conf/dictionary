@@ -1,0 +1,12 @@
+### Service: 'Service.py' ###
+
+{
+        1: 'ICMPService.py',
+        2: 'DNSService.py',
+        4: 'WebService.py',
+        5: 'SpeedtestService.py',
+        6: 'VideoService.py',
+        7: 'SMTPService.py',
+        8: 'IMAPService.py',
+        9: 'POP3Service.py'
+}
