@@ -62,7 +62,7 @@ class ActiveService(Database.MySQLDatabase):
     def ssh_command(self, ssh, service_id):
         ssh.invoke_shell()
         # chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
-        command = 'python python-cgi-monitor/service-py/file' + self.file[service_id]
+        command = 'python python-cgi-monitor/service-py/file/' + self.file[service_id]
         # command = 'ping -c 4 google.com'
         # os.system('python '+ self.file[service_id])
         print command
