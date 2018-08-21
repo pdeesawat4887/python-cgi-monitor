@@ -10,9 +10,7 @@ class Probe(Database.MySQLDatabase):
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
         self.prepare_setting()
-        print 'prepare setting success'
         self.prepare_probe()
-        print 'prepare probe success'
 
     def prepare_setting(self, file='../conf/configure'):
         ''' Open and read configure file to prepare for probe and service test '''

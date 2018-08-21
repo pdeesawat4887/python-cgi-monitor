@@ -17,14 +17,14 @@ import youtube_dl
 from pip._vendor.colorama import Fore, Style
 
 import Database
-import Probe
+import ProbeFile
 
 
-class Service(Probe):
+class Service(ProbeFile.Probe):
     data = {}
 
     def __init__(self):
-        Probe.Probe.__init__(self)
+        ProbeFile.Probe.__init__(self)
 
     def check_response_code(self, response_code):
         ''' Reference from HTTP status code return 0 if status = 2xx, return 1 if invalid or error status and return 2 if status = 4xx-5xx or fail to connection '''

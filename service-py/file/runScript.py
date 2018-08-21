@@ -60,15 +60,17 @@ class ActiveService(Database.MySQLDatabase):
         return my_result
 
     def ssh_command(self, ssh, service_id):
-        # ssh.invoke_shell()
+        ssh.invoke_shell()
         # chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
-        command = 'python ' + self.file[service_id]
+        command = 'python python-cgi-monitor/service-py/file' + self.file[service_id]
+        # command = 'ping -c 4 google.com'
+        # os.system('python '+ self.file[service_id])
         print command
 
-        # stdin, stdout, stderr = ssh.exec_command(command)
-        # ssh.exec_command(chmod)
         stdin, stdout, stderr = ssh.exec_command(command)
-
+        # ssh.exec_command(chmod)
+        # stdin, stdout, stderr = ssh.exec_command(command)
+        print(stderr.read())
         print(stdout.read())
 
     def ssh_connect(self, host, user='root', password='root'):
@@ -112,7 +114,7 @@ class ActiveService(Database.MySQLDatabase):
 
 
 if __name__ == '__main__':
-    os.system('python Probe.py')
+    os.system('python ProbeFile.py')
     xxx = ActiveService()
 
 # for i in xxx.probe:
