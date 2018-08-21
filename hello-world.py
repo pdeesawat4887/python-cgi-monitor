@@ -1,3 +1,3 @@
-#!/usr/bin/pyhton
+#!/usr/bin/python
 
 print 'Hello World'
