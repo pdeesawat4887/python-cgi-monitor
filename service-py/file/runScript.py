@@ -67,7 +67,7 @@ class ActiveService(Database.MySQLDatabase):
 
         # stdin, stdout, stderr = ssh.exec_command(command)
         ssh.exec_command(chmod)
-        stdin, stdout, stderr = ssh.exec_command('ping -c 4 google.com')
+        stdin, stdout, stderr = ssh.exec_command(command)
 
         print(stdout.read())
 
@@ -112,8 +112,8 @@ class ActiveService(Database.MySQLDatabase):
 
 
 if __name__ == '__main__':
-    xxx = ActiveService()
     os.system('python Probe.py')
+    xxx = ActiveService()
 
 # for i in xxx.probe:
 #     print '---->', i
