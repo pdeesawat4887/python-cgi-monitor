@@ -3,6 +3,7 @@
 import mysql.connector
 from pip._vendor.colorama import Fore, Style
 
+
 class MySQLDatabase:
 
     def __init__(self):
@@ -32,9 +33,17 @@ class MySQLDatabase:
 
     def insert_new_probe(self, id, name, ip, mac_address):
         ''' If probe doesn't exist in database, insert probe first '''
+        temp_db = []
         insert_sql = "INSERT INTO probe VALUES ('{}', '{}', '{}', '{}', '0')".format(id, name, ip, mac_address)
         self.mycursor.execute(insert_sql)
         self.connection.commit()
+
+        service_result = self.query_all_service()
+
+        for service_id in service_result:
+            temp = (id, service_id[0], 0)
+            temp_db.append(temp)
+        self.insert_active_new_probe(temp_db)
 
     def insert_availability_service(self, list_data):
         ''' Insert row to availability_service from list of data that contain id(AUTO_IN), configure_id, status, response_time, time '''
@@ -48,8 +57,19 @@ class MySQLDatabase:
         self.mycursor.executemany(insert_sql, list_data)
         self.connection.commit()
 
+    def query_all_service(self):
+        query_sql = "SELECT service_id FROM service"
+        self.mycursor.execute(query_sql)
+        my_result = self.mycursor.fetchall()
+        return my_result
+
+    def insert_active_new_probe(self, list_data):
+        insert_sql = "INSERT INTO setting VALUES (%s, %s, %s)"
+        self.mycursor.executemany(insert_sql, list_data)
+        self.connection.commit()
+
     def query_service(self, service_id):
-        ''' Get service_name for Line Notify '''  ### Unuse line notify at here
+        ''' Get service_name for Line Notify '''
         query_sql = "SELECT service_name FROM service WHERE service_id='{}'".format(service_id)
         self.mycursor.execute(query_sql)
         my_result = self.mycursor.fetchone()
@@ -60,4 +80,3 @@ class MySQLDatabase:
         self.mycursor.close()
         self.connection.disconnect()
         print 'Terminate Connection'
-
