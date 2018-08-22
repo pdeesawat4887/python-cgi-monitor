@@ -12,12 +12,27 @@ class MySQLDatabase:
 
     # def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project_vm'):
     def create_connection(self, user='centos', passwd='root', host='192.168.51.102', database='project_vm'):
-    # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project_vm'):
+        # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project_vm'):
         try:
             self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
             self.mycursor = self.connection.cursor()
         except Exception as error:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
+
+    def query_all_probe(self):
+        try:
+            query_sql = "SELECT probe_id, ip_address FROM probe"
+            self.mycursor.execute(query_sql)
+            my_result = self.mycursor.fetchall()
+            return my_result
+        except Exception as error:
+            print 'Error', error
+
+    def query_active_service(self, probe_id):
+        query_sql = "SELECT service_id FROM setting WHERE probe_id='{}' and setting='0';".format(probe_id)
+        self.mycursor.execute(query_sql)
+        my_result = self.mycursor.fetchall()
+        return my_result
 
     def query_probe(self, id, name, ip, mac_address):
         ''' Check before test, that database contain this probe '''

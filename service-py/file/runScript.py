@@ -7,71 +7,98 @@ import Database
 import getpass
 import os
 
+import threading
 
-#
-# ssh = paramiko.SSHClient()
-# hostname = '172.16.30.150'
-# username = 'root'
-# password = 'root'
-# ssh.connect(hostname=hostname, username=username, password=password, )
 
 class ActiveService(Database.MySQLDatabase):
     probe_info = {}
-
-    # file = {
-    #     1: 'ICMPService.py',
-    #     2: 'DNSService.py',
-    #     4: 'WebService.py',
-    #     5: 'SpeedtestService.py',
-    #     6: 'VideoService.py',
-    #     7: 'SMTPService.py',
-    #     8: 'IMAPService.py',
-    #     9: 'POP3Service.py'
-    # }
+    outlock = threading.Lock()
 
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
-        self.read_file_dictionary()
-        self.query_all_probe()
-        self.command_to_probe()
+        # self.read_file_dictionary()
+        # print self.query_all_probe()
+        # self.command_to_probe()
+        self.uuu()
+        self.main()
+
+    def uuu(self):
+        self.probe_info = dict(self.query_all_probe())
+        print self.probe_info
+
+    def workon(self, host, probe_id):
+
+
+
+        # cmd0 = 'rm -rf SSH-Threading'
+        # cmd = "mkdir SSH-Threading_sub_two"
+
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(host, username='root', password='root')
+        print 'success'
+
+        lll = self.query_active_service(probe_id=probe_id)
+        active = [i[0] for i in lll]
+
+        threads2 = []
+        for service in active:
+            t = threading.Thread(target=self.ssh_command, args=(ssh, service))
+            t.start()
+            threads2.append(t)
+        for t in threads2:
+            t.join()
+        # self.ssh_command(ssh, )
+        # stdin, stdout, stderr = ssh.exec_command(cmd0)
+        # stdin, stdout, stderr = ssh.exec_command(cmd)
+        # stdin.write('xy\n')
+        # stdin.flush()
+
+        with self.outlock:
+            pass
+            # print stdout.readlines()
+
+    def ssh_command(self, ssh, service_id):
+        # transport = ssh.get_transport()
+        # channel = transport.open_session()
+        print service_id
+        # ssh.invoke_shell()
+        # chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
+        # command = 'python python-cgi-monitor/service-py/file/' + self.file[service_id]
+        # command = 'ping -c 4 google.com'
+        command = 'mkdir run{}'.format(service_id)
+        print command
+        # command = 'ping -c 4 google.com'
+        # os.system('python '+ self.file[service_id])
+        # print command
+
+        # stdin, stdout, stderr = channel.exec_command(command)
+        stdin, stdout, stderr = ssh.exec_command(command)
+        # ssh.exec_command(chmod)
+        # stdin, stdout, stderr = ssh.exec_command(command)
+        # print(stderr.read())
+        # print(stdout.read())
+        # return stdout, stderr
+
+        with self.outlock:
+            pass
+
+    def main(self):
+
+        threads = []
+        for i in self.probe_info:
+            print '------->', i
+            t = threading.Thread(target=self.workon, args=(self.probe_info[i], i,))
+            t.start()
+            threads.append(t)
+        for t in threads:
+            t.join()
 
     def read_file_dictionary(self):
         line = open('python-cgi-monitor/service-py/conf/dictionary', 'r').read()
         self.file = eval(line)
         print self.file
 
-    def query_all_probe(self):
-        try:
-            query_sql = "SELECT probe_id, ip_address FROM probe"
-            self.mycursor.execute(query_sql)
-            my_result = self.mycursor.fetchall()
-
-            for line in my_result:
-                self.probe_info[line[0]] = line[1]
-
-        except Exception as error:
-            self.probe_info = {}
-            print 'Error', error
-
-    def query_active_service(self, probe_id):
-        query_sql = "SELECT service_id FROM setting WHERE probe_id='{}' and setting='0'".format(probe_id)
-        self.mycursor.execute(query_sql)
-        my_result = self.mycursor.fetchall()
-        return my_result
-
-    def ssh_command(self, ssh, service_id):
-        ssh.invoke_shell()
-        # chmod = 'chmod +x python-cgi-monitor/service-py/file/' + self.file[service_id]
-        command = 'python python-cgi-monitor/service-py/file/' + self.file[service_id]
-        # command = 'ping -c 4 google.com'
-        # os.system('python '+ self.file[service_id])
-        print command
-
-        stdin, stdout, stderr = ssh.exec_command(command)
-        # ssh.exec_command(chmod)
-        # stdin, stdout, stderr = ssh.exec_command(command)
-        print(stderr.read())
-        print(stdout.read())
 
     def ssh_connect(self, host, user='root', password='root'):
         try:
@@ -99,20 +126,12 @@ class ActiveService(Database.MySQLDatabase):
                 except Exception as error:
                     print error
 
-    # if __name__ == '__main__':
-    #     # user = input("Username:")
-    #     # key = input("Public key full path:")
-    #     # host = input("Target Hostname:")
-    #
-    #     user = 'root'
-    #     key = 'root'
-    #     host = '172.16.30.150'
-    #     ssh_connect(host, user, key)
-
 
 if __name__ == '__main__':
     # os.system('python python-cgi-monitor/service-py/file/ProbeFile.py')
     xxx = ActiveService()
+    # lll = xxx.query_active_service(probe_id='020c29fffe148d28')
+    # active = [i[0] for i in lll]
 
 # for i in xxx.probe:
 #     print '---->', i
