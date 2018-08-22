@@ -127,13 +127,6 @@ class ActiveService(Database.MySQLDatabase):
                     print error
 
 
-if __name__ == '__main__':
-    # os.system('python python-cgi-monitor/service-py/file/ProbeFile.py')
-    xxx = ActiveService()
-    # lll = xxx.query_active_service(probe_id='020c29fffe148d28')
-    # active = [i[0] for i in lll]
-
-# for i in xxx.probe:
-#     print '---->', i
-#     for j in xxx.query_active_service(i):
-#         print xxx.file[str(j[0])]
+import os
+dict = {1: 'ICMPService.py'}
+print 'python', os.path.abspath(dict[1])

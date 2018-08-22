@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import mysql.connector
+import logging
 from pip._vendor.colorama import Fore, Style
 
 
@@ -13,7 +14,7 @@ class MySQLDatabase:
         self.create_connection()
 
     def prepare_setting(self, file):
-        ''' Open and read configure file to prepare for probe and service test '''
+        ''' Open and read configure file to prepare for database, probe and service test '''
         infile = open(file, "r")
         for line in infile:
             if not line.strip():
@@ -49,17 +50,22 @@ class MySQLDatabase:
         my_result = self.mycursor.fetchall()
         return my_result
 
-    def query_probe(self, id, name, ip, mac_address):
+    def set_probe(self, id, name, ip, mac_address):
         ''' Check before test, that database contain this probe '''
         query_sql = "SELECT probe_id FROM probe WHERE probe_id='{}'".format(id)
         self.mycursor.execute(query_sql)
-        my_result = self.mycursor.fetchall()
+        self.mycursor.fetchall()
+
         if self.mycursor.rowcount == 1:
-            probe_id = my_result[0][0]
+            self.update_probe(id, name, ip, mac_address)
         else:
             self.insert_new_probe(id=id, name=name, ip=ip, mac_address=mac_address)
-            probe_id = id
-        return probe_id
+
+    def update_probe(self, id, name, ip, mac_address):
+        update_sql = "UPDATE probe SET probe_name='{}', ip_address='{}', mac_address='{}', status='{}' WHERE probe_id='{}'".format(
+            name, ip, mac_address, 0, id)
+        self.mycursor.execute(update_sql)
+        self.connection.commit()
 
     def insert_new_probe(self, id, name, ip, mac_address):
         ''' If probe doesn't exist in database, insert probe first '''
@@ -110,7 +116,3 @@ class MySQLDatabase:
         self.mycursor.close()
         self.connection.disconnect()
         print 'Terminate Connection'
-
-if __name__ == '__main__':
-    xxx = MySQLDatabase()
-    print xxx.setting

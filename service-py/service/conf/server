@@ -1,4 +1,11 @@
+# Probe Information
+probe_name=Server
+
+# Database Information
 mysql_host=192.168.1.8
 mysql_user=centos
 mysql_password=root
 mysql_database=project_vm
+output=0
+
+

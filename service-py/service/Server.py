@@ -1,7 +1,7 @@
+#!/usr/bin/python
+
 import paramiko
 import Database
-import getpass
-import os
 import threading
 
 
@@ -11,10 +11,10 @@ class Active(Database.MySQLDatabase):
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
         self.read_file_dictionary()
-        self.all_probe = dict(self.query_all_probe())
+        # self.all_probe = dict(self.query_all_probe())
 
     def read_file_dictionary(self):
-        line = open('python-cgi-monitor/service-py/conf/dictionary', 'r').read()
+        line = open('conf/dictionary', 'r').read()
         # line = open('../conf/dictionary', 'r').read()
         self.mapping_service = eval(line)
 
@@ -40,7 +40,6 @@ class Active(Database.MySQLDatabase):
         with outlock:
             pass
 
-
     def workon(self, probe_ip, probe_id, list_service):
 
         outlock = threading.Lock()
@@ -51,7 +50,6 @@ class Active(Database.MySQLDatabase):
 
         print 'Success SSH to {}'.format(probe_ip)
         print 'that have PROBE_ID in database as {}'.format(probe_id)
-
 
         # service_list = self.query_active_service(probe_id=probe_id)
         # print probe_id, list_service
@@ -83,7 +81,6 @@ class Active(Database.MySQLDatabase):
             for service_id in temp_service:
                 temp_data.append(service_id[0])
 
-
             t = threading.Thread(target=self.workon, args=(probe_ip[i], probe_id[i], temp_data,))
             t.start()
             threads.append(t)
@@ -91,11 +88,14 @@ class Active(Database.MySQLDatabase):
             t.join()
 
 
-import time
-test = Active()
-test.main()
-while True:
-    # print time.ctime(time.time())
-    test.main()
-    time.sleep(300)
+# import time
+#
+# test = Active()
+# test.main()
+# while True:
+#     # print time.ctime(time.time())
+#     test.main()
+#     time.sleep(300)
 
+if __name__ == '__main__':
+    sss = Active()
