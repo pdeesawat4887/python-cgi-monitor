@@ -1,0 +1,4 @@
+mysql_host=192.168.1.8
+mysql_user=centos
+mysql_password=root
+mysql_database=project_vm

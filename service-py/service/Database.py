@@ -5,16 +5,31 @@ from pip._vendor.colorama import Fore, Style
 
 
 class MySQLDatabase:
+    setting = {}
 
     def __init__(self):
         '''Create connection to MariaDB SQL'''
+        self.prepare_setting(file='conf/server')
         self.create_connection()
 
-    # def create_connection(self, user='centos', passwd='root', host='192.168.1.8', database='project_vm'):
-    def create_connection(self, user='centos', passwd='root', host='192.168.51.102', database='project_vm'):
-        # def create_connection(self, user='catma', passwd='root', host='127.0.0.1', database='project_vm'):
+    def prepare_setting(self, file):
+        ''' Open and read configure file to prepare for probe and service test '''
+        infile = open(file, "r")
+        for line in infile:
+            if not line.strip():
+                continue
+            else:
+                if not '#' in line:
+                    key, value = line.strip().split('=')
+                    self.setting[key] = value
+        infile.close()
+
+    def create_connection(self):
         try:
-            self.connection = mysql.connector.connect(user=user, password=passwd, host=host, database=database)
+            self.connection = mysql.connector.connect(user=self.setting['mysql_user'],
+                                                      password=self.setting['mysql_password'],
+                                                      host=self.setting['mysql_host'],
+                                                      database=self.setting['mysql_database'])
             self.mycursor = self.connection.cursor()
         except Exception as error:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
@@ -95,3 +110,7 @@ class MySQLDatabase:
         self.mycursor.close()
         self.connection.disconnect()
         print 'Terminate Connection'
+
+if __name__ == '__main__':
+    xxx = MySQLDatabase()
+    print xxx.setting

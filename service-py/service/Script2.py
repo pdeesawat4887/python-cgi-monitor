@@ -18,21 +18,24 @@ class Active(Database.MySQLDatabase):
         # line = open('../conf/dictionary', 'r').read()
         self.mapping_service = eval(line)
 
-    def write_command(self, ssh, folder):
+    def write_command(self, ssh, file, output=0):
 
         outlock = threading.Lock()
 
-        # command = "mkdir {}".format(folder)
-        # command = "rm -rf {}".format(folder)
+        # command = "mkdir {}".format(file)
+        # command = "rm -rf {}".format(file)
         # command = "ls"
-        command = "python python-cgi-monitor/service-py/file/{}".format(self.mapping_service[folder])
+        command = "python python-cgi-monitor/service-py/file/{}".format(self.mapping_service[file])
 
         print command
 
         stdin, stdout, stderr = ssh.exec_command(command)
 
-        print stdout.read()
-        print stderr.read()
+        if output == 0:
+            print stdout.read()
+            print stderr.read()
+        else:
+            pass
 
         with outlock:
             pass
@@ -55,8 +58,8 @@ class Active(Database.MySQLDatabase):
         # list = ['run1', 'run2', 'run3', 'run4', 'run5', 'run6', 'run7', 'run8']
 
         threads2 = []
-        for folder in list_service:
-            t = threading.Thread(target=self.write_command, args=(ssh, folder,))
+        for file in list_service:
+            t = threading.Thread(target=self.write_command, args=(ssh, file,))
             t.start()
             threads2.append(t)
         for t in threads2:
