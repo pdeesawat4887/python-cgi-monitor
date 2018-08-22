@@ -12,8 +12,9 @@ class MySQLDatabase:
 
     def __init__(self):
         '''Create connection to MariaDB SQL'''
-        pathname = os.path.dirname(sys.argv[0])
-        self.path = os.path.abspath(pathname)
+        self.path = os.path.dirname(sys.argv[0])
+        # pathname = os.path.dirname(sys.argv[0])
+        # self.path = os.path.abspath(pathname)
         self.prepare_setting(file=self.path + '/conf/server')
         self.create_connection()
 
