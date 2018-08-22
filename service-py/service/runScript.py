@@ -131,5 +131,6 @@ class ActiveService(Database.MySQLDatabase):
 import os
 # dict = {1: 'ICMPService.py'}
 # print 'python', os.path.abspath(dict[1])
-path=os.popen("readlink -f ICMPService.py").read()
-print path
+import time
+
+print time.ctime(time.time())
