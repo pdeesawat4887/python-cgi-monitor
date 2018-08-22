@@ -91,7 +91,8 @@ class Active(Database.MySQLDatabase):
 import time
 test = Active()
 test.main()
-# while True:
-#     print time.ctime(time.time())
-#     test.main()
+while True:
+    # print time.ctime(time.time())
+    test.main()
+    time.sleep(300)
 
