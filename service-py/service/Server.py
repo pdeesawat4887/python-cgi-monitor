@@ -31,11 +31,11 @@ class Active(Database.MySQLDatabase):
 
         print command
 
-        # stdin, stdout, stderr = ssh.exec_command(command)
-        #
-        # if self.setting['output'] == 0:
-        #     print stdout.read()
-        # print stderr.read()
+        stdin, stdout, stderr = ssh.exec_command(command)
+
+        if self.setting['output'] == 0:
+            print stdout.read()
+        print stderr.read()
 
         with outlock:
             pass
@@ -99,4 +99,6 @@ class Active(Database.MySQLDatabase):
 #     time.sleep(300)
 
 if __name__ == '__main__':
+    import time
+    print time.ctime(time.time())
     sss = Active()
