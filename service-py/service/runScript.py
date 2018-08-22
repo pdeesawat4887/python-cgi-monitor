@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import subprocess
 # subprocess.call(['chmod', '+x', 'Script.py'])
 # subprocess.call(['./Script.py'])
@@ -128,5 +129,7 @@ class ActiveService(Database.MySQLDatabase):
 
 
 import os
-dict = {1: 'ICMPService.py'}
-print 'python', os.path.abspath(dict[1])
+# dict = {1: 'ICMPService.py'}
+# print 'python', os.path.abspath(dict[1])
+path=os.popen("readlink -f ICMPService.py").read()
+print path
