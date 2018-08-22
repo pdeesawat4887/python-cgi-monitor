@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/service/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/service/Server.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
@@ -77,8 +78,8 @@
           <file leaf-file-name="Database.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/service/Database.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-77">
-                  <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
+                <state relative-caret-position="185">
+                  <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
                   <folding>
                     <element signature="e#19#41#0" expanded="true" />
                   </folding>
@@ -111,10 +112,22 @@
           <file leaf-file-name="Server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/service/Server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="276">
-                  <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
+                <state relative-caret-position="546">
+                  <caret line="72" column="20" lean-forward="true" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="20" />
                   <folding>
                     <element signature="e#19#34#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Script.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-519">
+                  <caret line="77" column="72" selection-start-line="77" selection-start-column="72" selection-end-line="77" selection-end-column="72" />
+                  <folding>
+                    <element signature="e#19#32#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -468,20 +481,6 @@
       <option name="presentableId" value="Default" />
       <updated>1532485401679</updated>
     </task>
-    <task id="LOCAL-00016" summary="Update user for MySql to remote with ip address. (3)">
-      <created>1533870443611</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1533870443611</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Update user for MySql to remote with ip address. (4)">
-      <created>1533886279500</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1533886279500</updated>
-    </task>
     <task id="LOCAL-00018" summary="Update user for MySql to remote with ip address. (5)">
       <created>1533887032712</created>
       <option name="number" value="00018" />
@@ -811,7 +810,21 @@
       <option name="project" value="LOCAL" />
       <updated>1534955950635</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Renew path for test cron (5)">
+      <created>1534957124250</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1534957124250</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Renew path for test cron (6)">
+      <created>1534957315605</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1534957315605</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -852,8 +865,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Delete unused code." />
-    <MESSAGE value="Insert setting when insert new probe." />
     <MESSAGE value="Action to probe start service (2)" />
     <MESSAGE value="Action to probe start service (3)" />
     <MESSAGE value="Action to probe start service (4)" />
@@ -877,7 +888,9 @@
     <MESSAGE value="Renew path for test cron (2)" />
     <MESSAGE value="Renew path for test cron (3)" />
     <MESSAGE value="Renew path for test cron (4)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renew path for test cron (4)" />
+    <MESSAGE value="Renew path for test cron (5)" />
+    <MESSAGE value="Renew path for test cron (6)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renew path for test cron (6)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1137,16 +1150,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1303">
-          <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
-          <folding>
-            <element signature="e#19#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/conf/dictionary">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1197,18 +1200,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/Database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-77">
-          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
+        <state relative-caret-position="185">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="e#19#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-519">
+          <caret line="77" column="72" selection-start-line="77" selection-start-column="72" selection-end-line="77" selection-end-column="72" />
+          <folding>
+            <element signature="e#19#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/Server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
+        <state relative-caret-position="546">
+          <caret line="72" column="20" lean-forward="true" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="20" />
           <folding>
             <element signature="e#19#34#0" expanded="true" />
           </folding>

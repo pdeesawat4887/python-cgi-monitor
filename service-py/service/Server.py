@@ -80,7 +80,6 @@ class Active(Database.MySQLDatabase):
 
             for service_id in temp_service:
                 temp_data.append(service_id[0])
-            print temp_data
 
             t = threading.Thread(target=self.workon, args=(probe_ip[i], probe_id[i], temp_data,))
             t.start()
