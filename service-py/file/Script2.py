@@ -15,15 +15,19 @@ class Active(Database.MySQLDatabase):
 
     def read_file_dictionary(self):
         line = open('python-cgi-monitor/service-py/conf/dictionary', 'r').read()
+        # line = open('../conf/dictionary', 'r').read()
         self.mapping_service = eval(line)
 
     def write_command(self, ssh, folder):
 
         outlock = threading.Lock()
 
-        command = "mkdir {}".format(folder)
+        # command = "mkdir {}".format(folder)
         # command = "rm -rf {}".format(folder)
         # command = "ls"
+        command = "python python-cgi-monitor/service-py/file/{}".format(self.mapping_service[folder])
+
+        print command
 
         stdin, stdout, stderr = ssh.exec_command(command)
 
