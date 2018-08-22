@@ -44,3 +44,6 @@ class Probe(Database.MySQLDatabase):
         ''' Get MAC Address from probe '''
         mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
         self.mac_address = mac
+
+if __name__ == '__main__':
+    probe = Probe()

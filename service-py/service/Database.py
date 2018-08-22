@@ -3,6 +3,8 @@
 import mysql.connector
 import logging
 from pip._vendor.colorama import Fore, Style
+import os
+import sys
 
 
 class MySQLDatabase:
@@ -10,7 +12,9 @@ class MySQLDatabase:
 
     def __init__(self):
         '''Create connection to MariaDB SQL'''
-        self.prepare_setting(file='conf/server')
+        pathname = os.path.dirname(sys.argv[0])
+        self.path = os.path.abspath(pathname)
+        self.prepare_setting(file=self.path + '/conf/server')
         self.create_connection()
 
     def prepare_setting(self, file):

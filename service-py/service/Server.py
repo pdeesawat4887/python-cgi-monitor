@@ -3,8 +3,7 @@
 import paramiko
 import Database
 import threading
-import os
-import sys
+
 
 
 class Active(Database.MySQLDatabase):
@@ -12,8 +11,6 @@ class Active(Database.MySQLDatabase):
 
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
-        pathname = os.path.dirname(sys.argv[0])
-        self.path = os.path.abspath(pathname)
         self.read_file_dictionary()
         self.all_probe = dict(self.query_all_probe())
         self.main()
