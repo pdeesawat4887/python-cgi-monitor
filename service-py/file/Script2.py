@@ -31,6 +31,9 @@ class Active(Database.MySQLDatabase):
 
         stdin, stdout, stderr = ssh.exec_command(command)
 
+        print stdout.read()
+        print stderr.read()
+
         with outlock:
             pass
 
