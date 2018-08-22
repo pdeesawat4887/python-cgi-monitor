@@ -3,6 +3,8 @@
 import paramiko
 import Database
 import threading
+import os
+import sys
 
 
 class Active(Database.MySQLDatabase):
@@ -10,32 +12,33 @@ class Active(Database.MySQLDatabase):
 
     def __init__(self):
         Database.MySQLDatabase.__init__(self)
+        pathname = os.path.dirname(sys.argv[0])
+        self.path = os.path.abspath(pathname)
         self.read_file_dictionary()
-        # self.all_probe = dict(self.query_all_probe())
+        self.all_probe = dict(self.query_all_probe())
+        self.main()
 
     def read_file_dictionary(self):
-        line = open('conf/dictionary', 'r').read()
+        line = open(self.path + '/conf/dictionary', 'r').read()
         # line = open('../conf/dictionary', 'r').read()
         self.mapping_service = eval(line)
 
-    def write_command(self, ssh, file, output=0):
+    def write_command(self, ssh, file):
 
         outlock = threading.Lock()
 
         # command = "mkdir {}".format(file)
         # command = "rm -rf {}".format(file)
         # command = "ls"
-        command = "python python-cgi-monitor/service-py/file/{}".format(self.mapping_service[file])
+        command = "python " + self.path + '/' + self.mapping_service[file]
 
         print command
 
-        stdin, stdout, stderr = ssh.exec_command(command)
-
-        if output == 0:
-            print stdout.read()
-            print stderr.read()
-        else:
-            pass
+        # stdin, stdout, stderr = ssh.exec_command(command)
+        #
+        # if self.setting['output'] == 0:
+        #     print stdout.read()
+        # print stderr.read()
 
         with outlock:
             pass
@@ -80,6 +83,7 @@ class Active(Database.MySQLDatabase):
 
             for service_id in temp_service:
                 temp_data.append(service_id[0])
+            print temp_data
 
             t = threading.Thread(target=self.workon, args=(probe_ip[i], probe_id[i], temp_data,))
             t.start()
