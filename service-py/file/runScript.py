@@ -91,10 +91,7 @@ class ActiveService(Database.MySQLDatabase):
 
             print 'Connect to ip: ' + ip
 
-            user = raw_input('User: ')
-            pswd = getpass.getpass('Password: ')
-
-            ssh = self.ssh_connect(host=ip, user=user, password=pswd)
+            ssh = self.ssh_connect(host=ip)
 
             for service in result:
                 try:
@@ -114,7 +111,7 @@ class ActiveService(Database.MySQLDatabase):
 
 
 if __name__ == '__main__':
-    os.system('python python-cgi-monitor/service-py/file/ProbeFile.py')
+    # os.system('python python-cgi-monitor/service-py/file/ProbeFile.py')
     xxx = ActiveService()
 
 # for i in xxx.probe:
