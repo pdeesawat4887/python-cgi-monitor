@@ -22,7 +22,7 @@ class VideoService(Script.Service):
         opts = {
             'progress_hooks': [self.collect_data],
             'format': 'bestvideo+bestaudio/best',
-            'outtmpl': '../video/sample.%(ext)s'
+            'outtmpl': self.path + '/video/sample.%(ext)s'
         }
 
         with youtube_dl.YoutubeDL(opts) as ydl:
