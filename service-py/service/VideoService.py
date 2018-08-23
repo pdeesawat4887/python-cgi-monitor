@@ -30,7 +30,7 @@ class VideoService(Script.Service):
 
             avg = sum(self.data_speed) / float(len(self.data_speed))
 
-            name = '../video'
+            name = self.path + '/video'
             os.system('rm -rf {}'.format(name))
 
             self.data_speed = []

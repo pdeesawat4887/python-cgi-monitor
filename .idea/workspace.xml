@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/service/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/service/Database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/service/ProbeFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/service/ProbeFile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-py/service/VideoService.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/service/VideoService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/service/conf/server" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/service/conf/server" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,13 +53,25 @@
     <splitter split-orientation="horizontal" split-proportion="0.52613944">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="ProbeFile.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ProbeFile.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/ProbeFile.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="126">
-                  <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+                <state relative-caret-position="890">
+                  <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
                   <folding>
                     <element signature="e#19#34#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="VideoService.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/service-py/service/VideoService.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="395">
+                  <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+                  <folding>
+                    <element signature="e#18#31#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -71,7 +80,7 @@
           <file leaf-file-name="runScript.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/runScript.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="560">
+                <state relative-caret-position="1509">
                   <caret line="142" column="21" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="46" />
                 </state>
               </provider>
@@ -80,8 +89,8 @@
           <file leaf-file-name="Database.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/Database.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-866">
-                  <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+                <state relative-caret-position="1845">
+                  <caret line="123" selection-start-line="123" selection-end-line="123" />
                   <folding>
                     <element signature="e#19#41#0" expanded="true" />
                   </folding>
@@ -93,7 +102,7 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="server" pinned="false" current-in-tab="true">
+          <file leaf-file-name="server" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/conf/server">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="150">
@@ -102,19 +111,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="configure" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service-py/service/conf/configure">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="30">
-                  <caret line="2" selection-start-line="1" selection-end-line="2" />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/Server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="192">
+                <state relative-caret-position="975">
                   <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="66" selection-end-column="16" />
                   <folding>
                     <element signature="e#19#34#0" expanded="true" />
@@ -126,7 +126,7 @@
           <file leaf-file-name="Script.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="330">
+                <state relative-caret-position="-930">
                   <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
                   <folding>
                     <element signature="e#19#32#0" expanded="true" />
@@ -135,10 +135,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ICMPService.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="ICMPService.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/service-py/service/ICMPService.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
+                <state relative-caret-position="-25">
                   <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
                 </state>
               </provider>
@@ -241,10 +241,10 @@
         <option value="$PROJECT_DIR$/service-py/service/conf/configure" />
         <option value="$PROJECT_DIR$/service-py/service/Server.py" />
         <option value="$PROJECT_DIR$/callHello.py" />
-        <option value="$PROJECT_DIR$/service-py/service/Database.py" />
         <option value="$PROJECT_DIR$/service-py/service/conf/server" />
-        <option value="$PROJECT_DIR$/service-py/service/VideoService.py" />
         <option value="$PROJECT_DIR$/service-py/service/ProbeFile.py" />
+        <option value="$PROJECT_DIR$/service-py/service/Database.py" />
+        <option value="$PROJECT_DIR$/service-py/service/VideoService.py" />
       </list>
     </option>
   </component>
@@ -309,13 +309,6 @@
               <item name="service-py" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
               <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service-py" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="video" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -498,13 +491,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1532485401679</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Re-Design use at service-py">
-      <created>1534438455474</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1534438455474</updated>
     </task>
     <task id="LOCAL-00020" summary="Re-Design use at service-py (2)">
       <created>1534438491385</created>
@@ -842,11 +828,19 @@
       <option name="project" value="LOCAL" />
       <updated>1534959854609</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Probe do it by yourself. (1)">
+      <created>1534995873993</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1534995873995</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="987" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.3141515" side_tool="true" weight="0.3023001" />
@@ -882,7 +876,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Action to probe start service (3)" />
     <MESSAGE value="Action to probe start service (4)" />
     <MESSAGE value="Action to probe start service (5)" />
     <MESSAGE value="Action to probe start service (6)" />
@@ -907,7 +900,8 @@
     <MESSAGE value="Renew path for test cron (5)" />
     <MESSAGE value="Renew path for test cron (6)" />
     <MESSAGE value="Renew path for test cron (7)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Renew path for test cron (7)" />
+    <MESSAGE value="Probe do it by yourself. (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Probe do it by yourself. (1)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1050,13 +1044,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/DNSService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="16" selection-start-column="16" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/SMTPService.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1130,23 +1117,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/ICMPService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
-          <folding>
-            <element signature="e#19#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/callHello.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -1154,27 +1124,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/Server.py">
+    <entry file="file://$PROJECT_DIR$/service-py/service/runScript.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="66" selection-end-column="16" />
-          <folding>
-            <element signature="e#19#34#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1509">
+          <caret line="142" column="21" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/runScript.py">
+    <entry file="file://$PROJECT_DIR$/service-py/service/Database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="142" column="21" selection-start-line="142" selection-start-column="21" selection-end-line="142" selection-end-column="46" />
+        <state relative-caret-position="1845">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+          <folding>
+            <element signature="e#19#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/conf/configure">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" selection-start-line="1" selection-end-line="2" />
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -1185,32 +1155,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/VideoService.py">
+    <entry file="file://$PROJECT_DIR$/service-py/service/Server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        <state relative-caret-position="975">
+          <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="66" selection-end-column="16" />
           <folding>
-            <element signature="e#18#31#0" expanded="true" />
+            <element signature="e#19#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/service/Database.py">
+    <entry file="file://$PROJECT_DIR$/service-py/service/Script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-866">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        <state relative-caret-position="-930">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
           <folding>
-            <element signature="e#19#41#0" expanded="true" />
+            <element signature="e#19#32#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/service/ICMPService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-25">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/service/DNSService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="16" selection-start-column="16" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/service/ProbeFile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+        <state relative-caret-position="890">
+          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
           <folding>
             <element signature="e#19#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/service/VideoService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+          <folding>
+            <element signature="e#18#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
