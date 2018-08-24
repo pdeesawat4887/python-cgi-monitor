@@ -87,6 +87,15 @@ class Active(Database.MySQLDatabase):
         for t in threads:
             t.join()
 
+class Notify(Database.MySQLDatabase):
+
+    def __init__(self):
+        Database.MySQLDatabase.__init__(self)
+
+
+if __name__ == '__main__':
+    line = Notify()
+
 
 # import time
 #
@@ -96,8 +105,8 @@ class Active(Database.MySQLDatabase):
 #     # print time.ctime(time.time())
 #     test.main()
 #     time.sleep(300)
-
-if __name__ == '__main__':
-    import time
-    print time.ctime(time.time())
-    sss = Active()
+#
+# if __name__ == '__main__':
+#     import time
+#     print time.ctime(time.time())
+#     sss = Active()
