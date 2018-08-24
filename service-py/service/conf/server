@@ -3,9 +3,9 @@ probe_name=Probe
 
 # Database Information
 mysql_host=192.168.254.31
-mysql_user=centos
-mysql_password=root
-mysql_database=project_vm
+mysql_user=monitor
+mysql_password=p@ssword
+mysql_database=project
 output=0
 
 # ICMP Information
