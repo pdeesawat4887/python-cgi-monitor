@@ -1,30 +1,18 @@
 #!/usr/bin/python
 
-import socket
-import re, uuid
 import time
-import os
-import sys
-import subprocess
 import urlparse
-import requests
 import bitmath
-import speedtest
-import smtplib
-import poplib
-import imaplib
-import youtube_dl
 from pip._vendor.colorama import Fore, Style
 
-import Database
-import ProbeFile
+import Probe
 
 
-class Service(ProbeFile.Probe):
+class Service(Probe):
     data = {}
 
     def __init__(self):
-        ProbeFile.Probe.__init__(self)
+        Probe.Probe.__init__(self)
 
     def check_response_code(self, response_code):
         ''' Reference from HTTP status code return 0 if status = 2xx, return 1 if invalid or error status and return 2 if status = 4xx-5xx or fail to connection '''

@@ -1,14 +1,13 @@
 #!usr/bin/python
 
-import Script
+import __Service__
 import requests
 
 
-class WebService(Script.Service):
+class WebService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.availability_service('4')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
         header = {'User-Agent': self.setting['User-Agent']}
@@ -25,3 +24,5 @@ class WebService(Script.Service):
 
 if __name__ == '__main__':
     service = WebService()
+    service.collect_service_data(service_id='4', type='availability_service')
+    service.close_connection()

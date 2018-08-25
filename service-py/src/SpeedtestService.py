@@ -1,14 +1,13 @@
 #!usr/bin/python
 
-import Script
+import __Service__
 import speedtest
 
 
-class SpeedtestService(Script.Service):
+class SpeedtestService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.performance_service('5')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
         try:
@@ -26,3 +25,5 @@ class SpeedtestService(Script.Service):
 
 if __name__ == '__main__':
     service = SpeedtestService()
+    service.collect_service_data(service_id='5', type='performance_service')
+    service.close_connection()

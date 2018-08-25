@@ -1,15 +1,14 @@
 #!usr/bin/python
 
-import Script
+import __Service__
 import subprocess
 import sys
 
 
-class ICMPService(Script.Service):
+class ICMPService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.availability_service('1')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
 
@@ -34,9 +33,11 @@ class ICMPService(Script.Service):
 
         return status, response
 
-    def reformat_counter(self, destination):
+    def format_destination(self, destination):
         return self.identify_url(destination).netloc
 
 
 if __name__ == '__main__':
     service = ICMPService()
+    service.collect_service_data(service_id='1', type='availability_service')
+    service.close_connection()

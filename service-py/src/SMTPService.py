@@ -1,14 +1,13 @@
 #!usr/bin/python
 
-import Script
+import __Service__
 import smtplib
 
 
-class SMTPService(Script.Service):
+class SMTPService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.availability_service('7')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
         try:
@@ -29,3 +28,5 @@ class SMTPService(Script.Service):
 
 if __name__ == '__main__':
     service = SMTPService()
+    service.collect_service_data(service_id='7', type='availability_service')
+    service.close_connection()

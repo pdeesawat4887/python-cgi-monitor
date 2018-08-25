@@ -1,16 +1,16 @@
 #!usr/bin/python
 
-import Script
+from __future__ import unicode_literals
+import __Service__
 import os
 import youtube_dl
 
 
-class VideoService(Script.Service):
+class VideoService(__Service__.Service):
     data_speed = []
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.performance_service('6')
+        __Service__.Service.__init__(self)
 
     def collect_data(self, result):
         if result['status'] != 'finished':
@@ -21,7 +21,7 @@ class VideoService(Script.Service):
     def get_status(self, destination, port):
         opts = {
             'progress_hooks': [self.collect_data],
-            'format': 'bestvideo+bestaudio/best',
+            'format': 'best[height<=?1080]',
             'outtmpl': self.path + '/video/sample.%(ext)s'
         }
 
@@ -40,3 +40,5 @@ class VideoService(Script.Service):
 
 if __name__ == '__main__':
     service = VideoService()
+    service.collect_service_data(service_id='6', type='performance_service')
+    service.close_connection()

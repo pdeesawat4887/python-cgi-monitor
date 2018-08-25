@@ -1,12 +1,9 @@
 #!/usr/bin/python
-import subprocess
 # subprocess.call(['chmod', '+x', 'Script.py'])
 # subprocess.call(['./Script.py'])
 
 import paramiko
 import Database
-import getpass
-import os
 
 import threading
 
@@ -28,8 +25,6 @@ class ActiveService(Database.MySQLDatabase):
         print self.probe_info
 
     def workon(self, host, probe_id):
-
-
 
         # cmd0 = 'rm -rf SSH-Threading'
         # cmd = "mkdir SSH-Threading_sub_two"
@@ -100,7 +95,6 @@ class ActiveService(Database.MySQLDatabase):
         self.file = eval(line)
         print self.file
 
-
     def ssh_connect(self, host, user='root', password='root'):
         try:
             ssh = paramiko.SSHClient()
@@ -128,16 +122,54 @@ class ActiveService(Database.MySQLDatabase):
                     print error
 
 
-import os
 # dict = {1: 'ICMPService.py'}
 # print 'python', os.path.abspath(dict[1])
-import time
+# import time
+#
+# print time.ctime(time.time())
+#
+# import sys, os
+#
+# print 'sys.argv[0] =', sys.argv[0]
+# pathname = os.path.dirname(sys.argv[0])
+# print 'path =', pathname
+# print 'full path =', os.path.abspath(pathname)
+#
+#
+# def insert(table, list_data):
+#     values = None
+#     query = "INSERT INTO %s " % table
+#
+#     values = list_data
+#     query += " VALUES (" + ",".join(["%s"] * len(values[0])) + ")"
+#
+#
+#
+# # insert('table','ggg', 'ooo')
+# # insert('car', car_make='ford', car_model='escort', car_year='2005')
+#
+# ppp = [('hello', 'google', 'cloud', 'platform'), ('banana', 'minnion', 'goodbye', 'my')]
+#
+# insert('table', ppp)
+#
+# print ppp[0].__len__()
 
-print time.ctime(time.time())
+def select(table, where=None, *args, **kwargs):
+    result = None
+    query = 'SELECT '
+    keys = args
+    values = tuple(kwargs.values())
+    l = len(keys) - 1
 
-import sys, os
+    for i, key in enumerate(keys):
+        query += "`" + key + "`"
+        if i < l:
+            query += ","
+    ## End for keys
 
-print 'sys.argv[0] =', sys.argv[0]
-pathname = os.path.dirname(sys.argv[0])
-print 'path =', pathname
-print 'full path =', os.path.abspath(pathname)
+    query += 'FROM %s' % table
+
+    if where:
+        query += " WHERE %s" % where
+
+    return result

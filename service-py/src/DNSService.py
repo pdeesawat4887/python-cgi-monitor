@@ -1,14 +1,13 @@
 #!usr/bin/python
 
-import Script
+import __Service__
 import subprocess
 
 
-class DNSService(Script.Service):
+class DNSService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.availability_service('2')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
 
@@ -31,3 +30,5 @@ class DNSService(Script.Service):
 
 if __name__ == '__main__':
     service = DNSService()
+    service.collect_service_data(service_id='2', type='availability_service')
+    service.close_connection()

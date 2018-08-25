@@ -1,22 +1,21 @@
 #!usr/bin/python
 
-import Script
-import poplib
+import __Service__
+import imaplib
 
 
-class POP3Service(Script.Service):
+class IMAPService(__Service__.Service):
 
     def __init__(self):
-        Script.Service.__init__(self)
-        self.availability_service('9')
+        __Service__.Service.__init__(self)
 
     def get_status(self, destination, port):
         try:
             start = self.get_time()
-            connection = poplib.POP3(destination, port)
+            connection = imaplib.IMAP4_SSL(destination, port)
             msg = connection.welcome
             end = self.get_time()
-            connection.quit()
+            connection.shutdown()
 
             response = self.get_response_time(start, end)
 
@@ -25,10 +24,10 @@ class POP3Service(Script.Service):
         except:
             try:
                 start = self.get_time()
-                connection = poplib.POP3_SSL(destination, port)
+                connection = imaplib.IMAP4_SSL(destination, port)
                 msg = connection.welcome
                 end = self.get_time()
-                connection.quit()
+                connection.shutdown()
 
                 response = self.get_response_time(start, end)
 
@@ -39,4 +38,6 @@ class POP3Service(Script.Service):
 
 
 if __name__ == '__main__':
-    service = POP3Service()
+    service = IMAPService()
+    service.collect_service_data(service_id='8', type='availability_service')
+    service.close_connection()

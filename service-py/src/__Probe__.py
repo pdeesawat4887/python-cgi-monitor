@@ -1,16 +1,15 @@
 #!/usr/bin/python
 
-import Database
+import __Database__
 import socket
 import re, uuid
-import threading
 import os
 
 
-class Probe(Database.MySQLDatabase):
+class Probe(__Database__.MySQLDatabase):
 
     def __init__(self):
-        Database.MySQLDatabase.__init__(self)
+        __Database__.MySQLDatabase.__init__(self)
         self.prepare_probe()
 
     def prepare_probe(self):
@@ -46,49 +45,3 @@ class Probe(Database.MySQLDatabase):
         ''' Get MAC Address from probe '''
         mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
         self.mac_address = mac
-
-
-class Command(Probe):
-    def __init__(self):
-        Probe.__init__(self)
-        self.read_file_dictionary()
-        self.workon()
-
-    def read_file_dictionary(self):
-        line = open(self.path + '/conf/dictionary', 'r').read()
-        # line = open('conf/dictionary', 'r').read()
-        self.mapping_service = eval(line)
-
-    def get_service_active(self):
-        list_service = []
-        temp_service = self.query_active_service(probe_id=self.id)
-
-        for service_id in temp_service:
-            list_service.append(service_id[0])
-        return list_service
-
-    def workon(self):
-        outlock = threading.Lock()
-
-        list_service = self.get_service_active()
-
-        threads = []
-        for service in list_service:
-            t = threading.Thread(target=self.work_service, args=(service,))
-            t.start()
-            threads.append(t)
-        for t in threads:
-            t.join()
-
-    def work_service(self, service_id):
-        outlock = threading.Lock()
-
-        command = "python " + self.path + '/' + self.mapping_service[int(service_id)]
-
-        print command
-
-        os.system(command)
-
-
-if __name__ == '__main__':
-    running = Command()

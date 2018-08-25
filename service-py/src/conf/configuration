@@ -1,11 +1,11 @@
 # Probe Information
-probe_name=Probe
+probe_name=ProbePycharm
 
 # Database Information
-mysql_host=192.168.254.31
-mysql_user=monitor
-mysql_password=p@ssword
-mysql_database=project
+mysql_host=192.168.1.9
+mysql_user=centos
+mysql_password=root
+mysql_database=project_vm_dump
 output=0
 
 # ICMP Information
