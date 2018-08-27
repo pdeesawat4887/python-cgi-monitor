@@ -2,10 +2,10 @@
 probe_name=ProbePycharm
 
 # Database Information
-mysql_host=192.168.1.9
-mysql_user=centos
-mysql_password=root
-mysql_database=project_vm_dump
+mysql_host=192.168.254.31
+mysql_user=monitor
+mysql_password=p@ssword
+mysql_database=project
 output=0
 
 # ICMP Information
@@ -13,3 +13,7 @@ User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (K
 
 # Notify Information
 interval=15
+
+#SSH Information
+ssh_user=root
+ssh_password=p@ssword

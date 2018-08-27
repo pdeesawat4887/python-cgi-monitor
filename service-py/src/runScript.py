@@ -3,17 +3,17 @@
 # subprocess.call(['./Script.py'])
 
 import paramiko
-import Database
+import __Database__
 
 import threading
 
 
-class ActiveService(Database.MySQLDatabase):
+class ActiveService(__Database__.MySQLDatabase):
     probe_info = {}
     outlock = threading.Lock()
 
     def __init__(self):
-        Database.MySQLDatabase.__init__(self)
+        __Database__.MySQLDatabase.__init__(self)
         # self.read_file_dictionary()
         # print self.query_all_probe()
         # self.command_to_probe()
@@ -128,12 +128,12 @@ class ActiveService(Database.MySQLDatabase):
 #
 # print time.ctime(time.time())
 #
-# import sys, os
-#
-# print 'sys.argv[0] =', sys.argv[0]
-# pathname = os.path.dirname(sys.argv[0])
-# print 'path =', pathname
-# print 'full path =', os.path.abspath(pathname)
+import sys, os
+
+print 'sys.argv[0] =', sys.argv[0]
+pathname = os.path.dirname(sys.argv[0])
+print 'path =', pathname
+print 'full path =', os.path.abspath(pathname)
 #
 #
 # def insert(table, list_data):
@@ -154,22 +154,22 @@ class ActiveService(Database.MySQLDatabase):
 #
 # print ppp[0].__len__()
 
-def select(table, where=None, *args, **kwargs):
-    result = None
-    query = 'SELECT '
-    keys = args
-    values = tuple(kwargs.values())
-    l = len(keys) - 1
-
-    for i, key in enumerate(keys):
-        query += "`" + key + "`"
-        if i < l:
-            query += ","
-    ## End for keys
-
-    query += 'FROM %s' % table
-
-    if where:
-        query += " WHERE %s" % where
-
-    return result
+# def select(table, where=None, *args, **kwargs):
+#     result = None
+#     query = 'SELECT '
+#     keys = args
+#     values = tuple(kwargs.values())
+#     l = len(keys) - 1
+#
+#     for i, key in enumerate(keys):
+#         query += "`" + key + "`"
+#         if i < l:
+#             query += ","
+#     ## End for keys
+#
+#     query += 'FROM %s' % table
+#
+#     if where:
+#         query += " WHERE %s" % where
+#
+#     return result
