@@ -1,22 +1,5 @@
 #!/usr/bin/python
 
-# import os
-# import paramiko
-# import scp
-#
-# ssh = paramiko.SSHClient()
-# ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-# ssh.load_host_keys(os.path.expanduser(os.path.join("~", ".ssh", "known_hosts")))
-# ssh.connect(hostname='192.168.254.33', username='root', password='p@ssword')
-# # sftp = ssh.open_sftp()
-# # # sftp.put('conf/server', '/root/FTPTest.txt')
-# # # sftp.close()
-# # # ssh.close()
-#
-# with scp.SCPClient(ssh.get_transport()) as scp:
-#     scp.put('conf/server', '/root/FTP')
-#     # scp.get('test2.txt')
-
 import __Database__
 import ICMPService
 import paramiko
@@ -49,19 +32,19 @@ class Server(__Database__.MySQLDatabase):
         file_name = full_path.split('/')[-1]
         print file_name
 
-        for probe in self.all_probe:
-            print probe
-        # self.insert_new_service(service_name=service_name, file_name=file_name)
-
-        # threads = []
         # for probe in self.all_probe:
-        #     ip = probe[1]
-        #     path = probe[2]
-        #     t = threading.Thread(target=self.creation_ssh_connection, args=(ip, full_path, path + '/' + file_name))
-        #     t.start()
-        #     threads.append(t)
-        # for t in threads:
-        #     t.join()
+        #     print probe
+        self.insert_new_service(service_name=service_name, file_name=file_name)
+
+        threads = []
+        for probe in self.all_probe:
+            ip = probe[1]
+            path = probe[2]
+            t = threading.Thread(target=self.creation_ssh_connection, args=(ip, full_path, path + '/' + file_name))
+            t.start()
+            threads.append(t)
+        for t in threads:
+            t.join()
 
     def insert_new_service(self, service_name, file_name):
         data = [('NULL', service_name, file_name)]
@@ -74,10 +57,7 @@ class Server(__Database__.MySQLDatabase):
         sftp = ssh.open_sftp()
         sftp.put(source, destination)
 
-    # def upload_file(self, host, source, destination):
-    #     self.creation_ssh_connection(host=host, source=source, destination=destination)
-
-
 if __name__ == '__main__':
     example = Server()
-    example.create_new_service(service_name='gaming', full_path='/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/service-py/src/gaming.py')
+    example.create_new_service(service_name='gaming',
+                               full_path='/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/service-py/src/gaming.py')

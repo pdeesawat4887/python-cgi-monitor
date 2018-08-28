@@ -22,7 +22,7 @@ class Probe(__Database__.MySQLDatabase):
 
     def get_probe_id(self):
         ''' Create EUI64 from Mac Address for probe_id to collect in database '''
-        eui64 = self.mac_address[0:6] + 'fffe' + self.mac_address[6:]
+        eui64 = self.mac[0:6] + 'fffe' + self.mac[6:]
         eui64 = hex(int(eui64[0:2], 16) ^ 2)[2:].zfill(2) + eui64[2:]
         self.id = eui64
 
@@ -43,5 +43,9 @@ class Probe(__Database__.MySQLDatabase):
 
     def get_mac_address(self):
         ''' Get MAC Address from probe '''
-        mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
-        self.mac_address = mac
+        self.mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
+        self.mac_address = ':'.join(self.mac[i:i + 2] for i in range(0, 12, 2))
+
+if __name__ == '__main__':
+    me = Probe()
+    print me.mac_address

@@ -47,10 +47,18 @@ class Service(__Probe__.Probe):
         ''' Return 6 tuple correspond to general structure of a URL '''
         return urlparse.urlparse(url)
 
+    # def convert_to_mbs(self, number_of_bytes):
+    #     ''' Return Megabit per second from byte per second '''
+    #     try:
+    #         return bitmath.MiB(bytes=number_of_bytes)
+    #     except:
+    #         return 'NULL'
+
     def convert_to_mbs(self, number_of_bytes):
         ''' Return Megabit per second from byte per second '''
         try:
-            return bitmath.MiB(bytes=number_of_bytes)
+            bit = bitmath.Bit(number_of_bytes)
+            return bit.to_Mib()
         except:
             return 'NULL'
 
@@ -62,7 +70,7 @@ class Service(__Probe__.Probe):
 
         for counter in my_result:
             counter = list(counter)
-            destination = self.reformat_counter(counter[2])
+            destination = self.format_destination(counter[2])
 
             if type == 'availability_service':
                 status, response = self.get_status(destination, counter[3])

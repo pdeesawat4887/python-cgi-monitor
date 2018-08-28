@@ -72,3 +72,9 @@ class Utilities:
 # time = tools.humanize(11557997560)
 # # print tools.convertTime(1155772339)
 # print time
+
+import bitmath
+
+downstream = bitmath.Bit(1048576)
+
+print downstream.to_Mib()

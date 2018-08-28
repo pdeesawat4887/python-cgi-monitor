@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+
 import cgi
 from easysnmp import Session
 import ast
