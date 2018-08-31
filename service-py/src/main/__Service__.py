@@ -4,13 +4,13 @@ import time
 import urlparse
 import bitmath
 from pip._vendor.colorama import Fore, Style
-import __Probe__
+import __Probe__ as pb
 
 
-class Service(__Probe__.Probe):
+class Service(pb.Probe):
 
     def __init__(self):
-        __Probe__.Probe.__init__(self)
+        pb.Probe.__init__(self)
 
     def check_response_code(self, response_code):
         ''' Reference from HTTP status code return0 if status = 2xx, return 1 if invalid or error status and return 2 if status = 4xx-5xx or fail to connection '''

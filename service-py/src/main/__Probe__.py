@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
-import __Database__
+import __Database__ as mariadb
 import socket
 import re, uuid
-import os
 
 
-class Probe(__Database__.MySQLDatabase):
+class Probe(mariadb.MySQLDatabase):
 
     def __init__(self):
-        __Database__.MySQLDatabase.__init__(self)
+        mariadb.MySQLDatabase.__init__(self)
         self.prepare_probe()
 
     def prepare_probe(self):
@@ -45,7 +44,3 @@ class Probe(__Database__.MySQLDatabase):
         ''' Get MAC Address from probe '''
         self.mac = ''.join(re.findall('..', '%012x' % uuid.getnode()))
         self.mac_address = ':'.join(self.mac[i:i + 2] for i in range(0, 12, 2))
-
-if __name__ == '__main__':
-    me = Probe()
-    print me.mac_address

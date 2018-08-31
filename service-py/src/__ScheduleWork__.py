@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-import __Probe__
+import main.__Probe__ as pb
 import os
 
-class ScheduleWork(__Probe__.Probe):
+class ScheduleWork(pb.Probe):
     def __init__(self):
-        __Probe__.Probe.__init__(self)
+        pb.Probe.__init__(self)
         self.mapping_service = dict(self.select('service', None, 'service_id', 'file_name'))
         self.workon()
 
