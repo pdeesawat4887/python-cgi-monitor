@@ -34,7 +34,7 @@ class MySQLDatabase:
                                                       host=self.setting['mysql_host'],
                                                       database=self.setting['mysql_database'])
             self.mycursor = self.connection.cursor()
-            print 'Create connection successful.'
+
         except Exception as error:
             print 'Error database: ', Fore.RED, error, Style.RESET_ALL
 

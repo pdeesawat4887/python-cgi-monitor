@@ -83,7 +83,7 @@ class CheckProbe(__Distribution__.Server):
 
 if __name__ == '__main__':
     checker = CheckProbe()
-    # checker.main()
+    checker.main()
     availability, performance = checker.get_warning_from_baseline()
     checker.notify_me(data=availability, type='availability')
     checker.notify_me(data=performance, type='performance')
