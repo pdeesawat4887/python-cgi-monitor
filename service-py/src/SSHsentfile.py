@@ -29,41 +29,32 @@ class Server(__Database__.MySQLDatabase):
                 self.mycursor.execute(update_sql)
                 self.connection.commit()
 
-    def create_new_service(self, service_name, full_path):
-        file_name = full_path.split('/')[-1]
-        print file_name
+    def sent_new_service_file(self, file):
 
         # for probe in self.all_probe:
         #     print probe
-        self.insert_new_service(service_name=service_name, file_name=file_name)
+        # self.insert_new_service(service_name=service_name, file_name=file_name)
 
         threads = []
         for probe in self.all_probe:
             ip = probe[1]
             path = probe[2]
-            t = threading.Thread(target=self.creation_ssh_connection, args=(ip, full_path, path + '/' + file_name))
+            t = threading.Thread(target=self.creation_ssh_connection, args=(ip, file, path + '/' + file))
             t.start()
             threads.append(t)
         for t in threads:
             t.join()
 
-    def insert_new_service(self, service_name, file_name):
-        data = [('NULL', service_name, file_name)]
-        self.insert(table='service', list_data=data)
+    # def insert_new_service(self, service_name, file_name):
+    #     data = [('NULL', service_name, file_name)]
+    #     self.insert(table='service', list_data=data)
 
-    def creation_ssh_connection(self, host, source, destination):
+    def creation_ssh_connection(self, host, file, destination):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(hostname=host, username=self.setting['ssh_user'], password=self.setting['ssh_password'])
         sftp = ssh.open_sftp()
-        sftp.put(source, destination)
-
-    def creation_ssh_connection2(self, host, source, destination):
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(hostname=host, username='root', password='p@ssword')
-        sftp = ssh.open_sftp()
-        sftp.put(source, destination)
+        sftp.put('/var/www/upload/'+file, destination)
 
     def check_if_directory_is_empty(self):
 
@@ -73,8 +64,9 @@ class Server(__Database__.MySQLDatabase):
             if not os.listdir(dirName):
                 print("Directory is empty")
             else:
-                onlyfiles = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
-                print onlyfiles
+                file_name = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
+                self.sent_new_service_file(file_name)
+
         else:
             print("Given Directory don't exists")
 
