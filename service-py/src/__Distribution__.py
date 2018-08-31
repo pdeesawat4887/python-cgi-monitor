@@ -1,15 +1,15 @@
 #!/usr/bin/python
 
-import __Database__
+import main.__Database__ as mariadb
 import paramiko
 import threading
 import os
 
 
-class Server(__Database__.MySQLDatabase):
+class Server(mariadb.MySQLDatabase):
 
     def __init__(self):
-        __Database__.MySQLDatabase.__init__(self)
+        mariadb.MySQLDatabase.__init__(self)
         self.all_probe = self.select('probe', None, 'probe_id', 'ip_address', 'path')
 
 
