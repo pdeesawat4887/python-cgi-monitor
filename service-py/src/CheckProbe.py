@@ -29,7 +29,7 @@ class CheckProbe(__Distribution__.Server):
                          " inner join destination on destination.destination_id=performance_service.destination_id" \
                          " inner join probe on performance_service.probe_id=probe.probe_id" \
                          " inner join service on destination.service_id=service.service_id" \
-                         " where ((ping != 0 and (upload < {} or download < {})) or (ping = 0 and download < {}) )and (time < NOW() - INTERVAL {} MINUTE);".format(
+                         " where ((ping != 0 and (upload < {} or download < {})) or (ping = 0 and download < {}) )and (time > NOW() - INTERVAL {} MINUTE);".format(
             self.setting['upload_baseline'], self.setting['download_baseline'], self.setting['download_only'],
             self.setting['interval'])
 

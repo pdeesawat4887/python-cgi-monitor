@@ -19,5 +19,5 @@ ssh_password=p@ssword
 download_baseline=50
 upload_baseline=10
 download_only=4
-interval=10
+interval=15
 response_time=10000
