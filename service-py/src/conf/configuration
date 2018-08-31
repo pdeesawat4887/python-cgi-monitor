@@ -11,9 +11,13 @@ output=0
 # ICMP Information
 User-Agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36 OPR/53.0.2907.99
 
-# Notify Information
-interval=15
-
 #SSH Information
 ssh_user=root
 ssh_password=p@ssword
+
+#Notify Information
+download_baseline=50
+upload_baseline=10
+download_only=4
+interval=10
+response_time=10000

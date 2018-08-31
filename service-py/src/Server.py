@@ -1,16 +1,16 @@
 #!/usr/bin/python
 
 import paramiko
-import Database
+import __Database__
 import threading
 
 
 
-class Active(Database.MySQLDatabase):
+class Active(__Database__.MySQLDatabase):
     all_probe = {}
 
     def __init__(self):
-        Database.MySQLDatabase.__init__(self)
+        __Database__.MySQLDatabase.__init__(self)
         self.read_file_dictionary()
         self.all_probe = dict(self.query_all_probe())
         self.main()

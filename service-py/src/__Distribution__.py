@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import __Database__
-import ICMPService
 import paramiko
 import threading
 import os
@@ -13,21 +12,6 @@ class Server(__Database__.MySQLDatabase):
         __Database__.MySQLDatabase.__init__(self)
         self.all_probe = self.select('probe', None, 'probe_id', 'ip_address', 'path')
 
-    def check_ping(self, ip_address):
-        ping = ICMPService.ICMPService()
-        status, response = ping.get_status(destination=ip_address, port=None)
-        return status
-
-    def check_probe_alive(self):
-
-        for probe in self.all_probe:
-            id = probe[0]
-            ip = probe[1]
-
-            if self.check_ping(ip) == 1:
-                update_sql = "UPDATE probe SET status='{}' WHERE probe_id='{}'".format(1, id)
-                self.mycursor.execute(update_sql)
-                self.connection.commit()
 
     def sent_new_service_file(self, file):
 
@@ -52,9 +36,16 @@ class Server(__Database__.MySQLDatabase):
     def creation_ssh_connection(self, host, file, destination):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(hostname=host, username=self.setting['ssh_user'], password=self.setting['ssh_password'])
+        try:
+            ssh.connect(hostname=host, username=self.setting['ssh_user'], password=self.setting['ssh_password'])
+        except:
+            ssh.connect(hostname=host, username='pi', password='raspberry')
+
         sftp = ssh.open_sftp()
-        sftp.put('/var/www/upload/'+file, destination)
+        sftp.put('/var/www/upload/' + file, destination)
+
+        command = "chmod +x " + destination
+        ssh.exec_command(command)
 
     def check_if_directory_is_empty(self):
 
@@ -65,11 +56,10 @@ class Server(__Database__.MySQLDatabase):
                 print("Directory is empty")
             else:
                 file_name = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
-                self.sent_new_service_file(file_name)
-
+                self.sent_new_service_file(file_name[0])
+                os.remove(dirName + '/' + file_name[0])
         else:
             print("Given Directory don't exists")
-
 
 
 if __name__ == '__main__':
