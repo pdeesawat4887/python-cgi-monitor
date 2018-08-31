@@ -4,6 +4,7 @@ import __Database__
 import ICMPService
 import paramiko
 import threading
+import os
 
 
 class Server(__Database__.MySQLDatabase):
@@ -57,7 +58,32 @@ class Server(__Database__.MySQLDatabase):
         sftp = ssh.open_sftp()
         sftp.put(source, destination)
 
+    def creation_ssh_connection2(self, host, source, destination):
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=host, username='root', password='p@ssword')
+        sftp = ssh.open_sftp()
+        sftp.put(source, destination)
+
+    def check_if_directory_is_empty(self):
+
+        dirName = '/var/www/upload'
+
+        if os.path.exists(dirName) and os.path.isdir(dirName):
+            if not os.listdir(dirName):
+                print("Directory is empty")
+            else:
+                onlyfiles = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
+                print onlyfiles
+        else:
+            print("Given Directory don't exists")
+
+
+
 if __name__ == '__main__':
     example = Server()
-    example.create_new_service(service_name='gaming',
-                               full_path='/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/service-py/src/gaming.py')
+    example.check_if_directory_is_empty()
+    # example.check_probe_alive()
+    # example.creation_ssh_connection2('192.168.254.31', '/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/service-py/src/SSHsentfile.py', '/root/SSHsentfile.py')
+    # example.create_new_service(service_name='gaming',
+    #                            full_path='/Applications/XAMPP/xamppfiles/htdocs/python/python-cgi-monitor/service-py/src/gaming.py')
