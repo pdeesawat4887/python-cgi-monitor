@@ -1,27 +1,41 @@
-import __Distribution__
-import ICMPService
+#!/usr/bin/python
+
+import database as maria_db
+import paramiko
 import threading
+import os
+import platform
+import subprocess
 import requests
 
 
-class CheckProbe:
+class Server(maria_db.MySQLDatabase):
 
     def __init__(self):
-        pass
-        # __Distribution__.Server.__init__(self)
+        maria_db.MySQLDatabase.__init__(self)
+        self.all_probe = self.select('probe', None, 'probe_id', 'ip_address', 'path')
 
     def check_ping(self, ip_address):
-        ping = ICMPService.ICMPService()
-        status, response = ping.get_status(destination=ip_address, port=None)
-        return status
+        param = '-n' if platform.system().lower() == 'windows' else '-c'
+        command = ['ping', param, '1', ip_address]
+        return subprocess.call(command) == 0
 
-    def check_probe_alive(self, id, ip):
-
-        if self.check_ping(ip) != 0:
-            update_sql = "UPDATE probe SET status='{}' WHERE probe_id='{}'".format(1, id)
+    def update_probe_alive(self, probe_id, ip_address):
+        if self.check_ping(ip_address) != 0:
+            update_sql = "UPDATE probe SET status='{}' WHERE probe_id='{}'".format(1, probe_id)
             self.mycursor.execute(update_sql)
             self.connection.commit()
-            print 'probe id {} is Inactive'.format(id)
+
+    def check_probe(self):
+        threads = []
+        for probe in self.all_probe:
+            probe_id = probe[0]
+            ip_address = probe[1]
+            t = threading.Thread(target=self.update_probe_alive, args=(probe_id, ip_address,))
+            t.start()
+            threads.append(t)
+        for t in threads:
+            t.join()
 
     def get_warning_from_baseline(self):
 
@@ -67,24 +81,49 @@ class CheckProbe:
 
             request = requests.post(url, headers=headers, data={'message': msg})
 
-    def check_probe(self):
+    def check_if_directory_is_empty(self):
 
+        dirName = '/var/www/upload'
+
+        if os.path.exists(dirName) and os.path.isdir(dirName):
+            if not os.listdir(dirName):
+                print("Directory is empty")
+            else:
+                file_name = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
+                self.sent_new_service_file(file_name[0])
+                os.remove(dirName + '/' + file_name[0])
+        else:
+            print("Given Directory don't exists")
+
+    def sent_new_service_file(self, file):
         threads = []
         for probe in self.all_probe:
-            id = probe[0]
             ip = probe[1]
-
-            self.check_probe_alive(id, ip)
-            t = threading.Thread(target=self.check_probe_alive, args=(id, ip,))
+            path = probe[2]
+            t = threading.Thread(target=self.creation_ssh_connection, args=(ip, file, path + '/' + file))
             t.start()
             threads.append(t)
         for t in threads:
             t.join()
 
+    def creation_ssh_connection(self, host, file, destination):
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        try:
+            ssh.connect(hostname=host, username=self.setting['ssh_user'], password=self.setting['ssh_password'])
+        except:
+            ssh.connect(hostname=host, username='pi', password='raspberry')
+
+        sftp = ssh.open_sftp()
+        sftp.put('/var/www/upload/' + file, destination)
+
+        command = "chmod +x " + destination
+        ssh.exec_command(command)
+
 
 if __name__ == '__main__':
-    checker = CheckProbe()
-    checker.check_probe()
-    availability, performance = checker.get_warning_from_baseline()
-    checker.notify_me(data=availability, type='availability')
-    checker.notify_me(data=performance, type='performance')
+    server = Server()
+    server.check_probe()
+    availability, performance = server.get_warning_from_baseline()
+    server.notify_me(data=availability, type='availability')
+    server.notify_me(data=performance, type='performance')
