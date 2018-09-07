@@ -7,7 +7,9 @@ print '''Content-type: text/html\n'''
 
 
 def performance_result(probe_id, service_type, range_day):
-    probe_name = get_probe_info(probe_id)[0]
+    probe_info = get_anything("probe_name, ip_address, mac_address,`status`", "probe",
+                              "probe_id = '{}'".format(probe_id))
+    probe_name = probe_info[0]
     list_performance = get_list_performance_service(service_type)
     for item in list_performance:
         performance_item, ping, download, upload, time = get_performance_result(
@@ -164,7 +166,9 @@ def performance_result(probe_id, service_type, range_day):
 
 
 def availability_result(probe_id, service_type, range_day):
-    probe_name = get_probe_info(probe_id)[0]
+    probe_info = get_anything("probe_name, ip_address, mac_address,`status`", "probe",
+                              "probe_id = '{}'".format(probe_id))
+    probe_name = probe_info[0]
     list_availability = get_list_availability_service(service_type)
     print '''        <section class="section" id="availability_graph">
             <div class="container has-text-centered">
@@ -255,17 +259,26 @@ def availability_result(probe_id, service_type, range_day):
         </section>'''
 
 
-def get_probe_info(probe_id):
-    # mariadb_connection = mariadb.connect(user='monitor', password='p@ssword', database='project',
-    #                                      host='192.168.254.31')
-    # cursor = mariadb_connection.cursor()
-    # cursor.execute("select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
-    # probe_info = cursor.fetchone()
+def get_anything(column_name, table, where=None):
     db = mariadb.MySQLDatabase()
-    db.mycursor.execute(
-        "select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
-    probe_info = db.mycursor.fetchone()
-    return probe_info
+    if where:
+        db.mycursor.execute("select {} from {} where {};".format(column_name, table, where))
+    else:
+        db.mycursor.execute("select {} from {};".format(column_name, table))
+    result = db.mycursor.fetchone()
+    return result
+
+# def get_probe_info(probe_id):
+#     # mariadb_connection = mariadb.connect(user='monitor', password='p@ssword', database='project',
+#     #                                      host='192.168.254.31')
+#     # cursor = mariadb_connection.cursor()
+#     # cursor.execute("select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
+#     # probe_info = cursor.fetchone()
+#     db = mariadb.MySQLDatabase()
+#     db.mycursor.execute(
+#         "select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
+#     probe_info = db.mycursor.fetchone()
+#     return probe_info
 
 
 def get_list_performance_service(service_type):

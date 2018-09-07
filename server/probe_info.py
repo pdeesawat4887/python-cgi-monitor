@@ -7,7 +7,8 @@ print '''Content-type: text/html\n'''
 
 
 def probe_header(probe_id):
-    probe_info = get_probe_info(probe_id)
+    probe_info = get_anything("probe_name, ip_address, mac_address,`status`", "probe",
+                              "probe_id = '{}'".format(probe_id))
     print '''        <section class="section" id="probe_header" style="margin-top: -3%;">
             <div class="container">
                 <nav class="level">
@@ -121,17 +122,26 @@ def probe_header(probe_id):
     print '''        </script>'''
 
 
-def get_probe_info(probe_id):
-    # mariadb_connection = mariadb.connect(user='monitor', password='p@ssword', database='project',
-    #                                      host='192.168.254.31')
-    # cursor = mariadb_connection.cursor()
-    # cursor.execute("select probe_name, ip_address, mac_address, `status` from probe where probe_id = '{}';".format(probe_id))
-    # probe_info = cursor.fetchone()
+# def get_probe_info(probe_id):
+#     # mariadb_connection = mariadb.connect(user='monitor', password='p@ssword', database='project',
+#     #                                      host='192.168.254.31')
+#     # cursor = mariadb_connection.cursor()
+#     # cursor.execute("select probe_name, ip_address, mac_address, `status` from probe where probe_id = '{}';".format(probe_id))
+#     # probe_info = cursor.fetchone()
+#     db = mariadb.MySQLDatabase()
+#     db.mycursor.execute(
+#         "select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
+#     probe_info = db.mycursor.fetchone()
+#     return probe_info
+
+def get_anything(column_name, table, where=None):
     db = mariadb.MySQLDatabase()
-    db.mycursor.execute(
-        "select probe_name, ip_address, mac_address,`status` from probe where probe_id = '{}';".format(probe_id))
-    probe_info = db.mycursor.fetchone()
-    return probe_info
+    if where:
+        db.mycursor.execute("select {} from {} where {};".format(column_name, table, where))
+    else:
+        db.mycursor.execute("select {} from {};".format(column_name, table))
+    result = db.mycursor.fetchone()
+    return result
 
 
 form = cgi.FieldStorage()
