@@ -2,25 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/service/DNSService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/ICMPService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/IMAPService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/POP3Service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/SMTPService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/SpeedtestService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/VideoService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/WebService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/conf/configuration" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/distribution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/file_distribution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/main/service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/running.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/dashboard.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/destination.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/destination_delete.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/destination_insert.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/destination_update.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/graph_result.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/list_probe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/conf/configuration" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/devices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/distribution.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/interfaces.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/probe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/main/service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/probe_info.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/running_server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/running_update.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/service_distribute.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/service_insert.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/service_selector.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/service_upload.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/snmpwalk.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/destination.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/main/devices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/main/interfaces.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/running_server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/running_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-py/src/CheckProbe.py" beforeDir="false" afterPath="$PROJECT_DIR$/service-py/src/CheckProbe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/main/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/main/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/main/distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/main/distribution.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/main/file_distribution.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/main/probe.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/main/probe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/running.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/running.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usage/Devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/usage/Devices.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,131 +50,90 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$hello.coverage" NAME="hello Coverage Results" MODIFIED="1534843255302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script_dev.coverage" NAME="Script-dev Coverage Results" MODIFIED="1534823756935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$DNS_py.coverage" NAME="DNS-py Coverage Results" MODIFIED="1533196152085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$speedtest_cli_python.coverage" NAME="speedtest-cli-python Coverage Results" MODIFIED="1533049832381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$ProbeFile__1_.coverage" NAME="ProbeFile (1) Coverage Results" MODIFIED="1535201368032" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$probe.coverage" NAME="probe Coverage Results" MODIFIED="1535990011990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service/main" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Database.coverage" NAME="Database Coverage Results" MODIFIED="1535195466937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$running.coverage" NAME="running Coverage Results" MODIFIED="1535992232467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$runScript__1_.coverage" NAME="runScript (1) Coverage Results" MODIFIED="1534953270437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Server.coverage" NAME="Server Coverage Results" MODIFIED="1535011057065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$FTP_py.coverage" NAME="FTP-py Coverage Results" MODIFIED="1533113777188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$thread_ssh.coverage" NAME="thread-ssh Coverage Results" MODIFIED="1534924986096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$SSHsentfile.coverage" NAME="SSHsentfile Coverage Results" MODIFIED="1535683338128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$__Probe__.coverage" NAME="__Probe__ Coverage Results" MODIFIED="1535710029121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$callHello.coverage" NAME="callHello Coverage Results" MODIFIED="1534993571403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$ProbeFile.coverage" NAME="ProbeFile Coverage Results" MODIFIED="1535195615560" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del.coverage" NAME="schedul_del Coverage Results" MODIFIED="1533020071705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Utillity.coverage" NAME="Utillity Coverage Results" MODIFIED="1535443592796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP.coverage" NAME="IMAP Coverage Results" MODIFIED="1533050301769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Candy.coverage" NAME="Candy Coverage Results" MODIFIED="1533055402620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/playground/py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$write.coverage" NAME="write Coverage Results" MODIFIED="1535383777555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src/conf" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script.coverage" NAME="Script Coverage Results" MODIFIED="1534922981404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript.coverage" NAME="NodeScript Coverage Results" MODIFIED="1533697329478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$example.coverage" NAME="example Coverage Results" MODIFIED="1534819661138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Probe.coverage" NAME="Probe Coverage Results" MODIFIED="1534843135569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$database.coverage" NAME="database Coverage Results" MODIFIED="1535991166057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service/main" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$first_test.coverage" NAME="first-test Coverage Results" MODIFIED="1532534370641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$subprocess.coverage" NAME="subprocess Coverage Results" MODIFIED="1534239483198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$ICMPService.coverage" NAME="ICMPService Coverage Results" MODIFIED="1535103869767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$youtube.coverage" NAME="youtube Coverage Results" MODIFIED="1534784244986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$python_youtube.coverage" NAME="python-youtube Coverage Results" MODIFIED="1533104633930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$shopping_py.coverage" NAME="shopping-py Coverage Results" MODIFIED="1533615585240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$speedtest_cli_python_test.coverage" NAME="speedtest-cli-python-test Coverage Results" MODIFIED="1532589295672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$runScript.coverage" NAME="runScript Coverage Results" MODIFIED="1535339792110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script2.coverage" NAME="Script2 Coverage Results" MODIFIED="1534931446107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$throught.coverage" NAME="throught Coverage Results" MODIFIED="1534242008775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3_p.coverage" NAME="POP3-p Coverage Results" MODIFIED="1533058586846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP4_py.coverage" NAME="IMAP4-py Coverage Results" MODIFIED="1533096850153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$SpeedtestService.coverage" NAME="SpeedtestService Coverage Results" MODIFIED="1535095118603" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$CheckProbe.coverage" NAME="CheckProbe Coverage Results" MODIFIED="1535707353403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$playground_py.coverage" NAME="playground-py Coverage Results" MODIFIED="1534842727683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$NodeScript_dev.coverage" NAME="NodeScript-dev Coverage Results" MODIFIED="1534405034545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1534780811515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$VideoService.coverage" NAME="VideoService Coverage Results" MODIFIED="1535100921734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$__Database__.coverage" NAME="__Database__ Coverage Results" MODIFIED="1535598357394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$VideoService.coverage" NAME="VideoService Coverage Results" MODIFIED="1536052146547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$__ScheduleWork__.coverage" NAME="__ScheduleWork__ Coverage Results" MODIFIED="1535206398021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$hello.coverage" NAME="hello Coverage Results" MODIFIED="1534843255302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script_dev.coverage" NAME="Script-dev Coverage Results" MODIFIED="1534823756935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$running_server.coverage" NAME="running_server Coverage Results" MODIFIED="1536045400030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$probe.coverage" NAME="probe Coverage Results" MODIFIED="1535990011990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service/main" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Database.coverage" NAME="Database Coverage Results" MODIFIED="1535195466937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$runScript__1_.coverage" NAME="runScript (1) Coverage Results" MODIFIED="1534953270437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Server.coverage" NAME="Server Coverage Results" MODIFIED="1535011057065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$FTP_py.coverage" NAME="FTP-py Coverage Results" MODIFIED="1533113777188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$thread_ssh.coverage" NAME="thread-ssh Coverage Results" MODIFIED="1534924986096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$__Probe__.coverage" NAME="__Probe__ Coverage Results" MODIFIED="1535710029121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del.coverage" NAME="schedul_del Coverage Results" MODIFIED="1533020071705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP.coverage" NAME="IMAP Coverage Results" MODIFIED="1533050301769" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Candy.coverage" NAME="Candy Coverage Results" MODIFIED="1533055402620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/playground/py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script.coverage" NAME="Script Coverage Results" MODIFIED="1534922981404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Probe.coverage" NAME="Probe Coverage Results" MODIFIED="1534843135569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$database.coverage" NAME="database Coverage Results" MODIFIED="1535991166057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service/main" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$distribution.coverage" NAME="distribution Coverage Results" MODIFIED="1536045250671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service/main" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$speedtest_cli_python_test.coverage" NAME="speedtest-cli-python-test Coverage Results" MODIFIED="1532589295672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Script2.coverage" NAME="Script2 Coverage Results" MODIFIED="1534931446107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$throught.coverage" NAME="throught Coverage Results" MODIFIED="1534242008775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP4_py.coverage" NAME="IMAP4-py Coverage Results" MODIFIED="1533096850153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$playground_py.coverage" NAME="playground-py Coverage Results" MODIFIED="1534842727683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$schedul_del2.coverage" NAME="schedul_del2 Coverage Results" MODIFIED="1534780811515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$__Database__.coverage" NAME="__Database__ Coverage Results" MODIFIED="1535598357394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/src" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$Devices.coverage" NAME="Devices Coverage Results" MODIFIED="1536057851131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/usage" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="__Distribution__.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/service-py/src/__Distribution__.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="705">
-                  <caret line="47" column="33" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="47" selection-end-column="33" />
-                  <folding>
-                    <element signature="e#19#54#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="distribution.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service/main/distribution.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-592">
-                  <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CheckProbe.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service-py/src/CheckProbe.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1320">
-                  <caret line="88" column="4" lean-forward="true" selection-start-line="88" selection-start-column="4" selection-end-line="89" selection-end-column="59" />
-                  <folding>
-                    <element signature="e#0#23#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="distribution.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service/main/distribution.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="429">
-                  <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
-                  <folding>
-                    <element signature="e#19#46#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="file_distribution.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/service/main/file_distribution.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="__ScheduleWork__.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/service-py/src/__ScheduleWork__.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="315">
-                  <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="24" selection-end-column="26" />
-                  <folding>
-                    <element signature="e#19#46#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="running.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/running.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#19#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="running_server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/running_server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/dashboard.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="page.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/page.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -207,13 +185,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/service-py/service/runScript.py" />
-        <option value="$PROJECT_DIR$/service-py/service/Database.py" />
-        <option value="$PROJECT_DIR$/service-py/service/Script.py" />
-        <option value="$PROJECT_DIR$/service-py/service/ProbeFile.py" />
-        <option value="$PROJECT_DIR$/service-py/src/main/Database.py" />
-        <option value="$PROJECT_DIR$/service-py/src/ProbeFile.py" />
-        <option value="$PROJECT_DIR$/service-py/src/main/Script.py" />
         <option value="$PROJECT_DIR$/service-py/src/Script.py" />
         <option value="$PROJECT_DIR$/service-py/src/aProbe.py" />
         <option value="$PROJECT_DIR$/service-py/src/aService.py" />
@@ -243,9 +214,6 @@
         <option value="$PROJECT_DIR$/service-py/src/main/__Service__.py" />
         <option value="$PROJECT_DIR$/service-py/src/__ScheduleWork__.py" />
         <option value="$PROJECT_DIR$/service-py/src/__Distribution__.py" />
-        <option value="$PROJECT_DIR$/service/main/service.py" />
-        <option value="$PROJECT_DIR$/service/main/probe.py" />
-        <option value="$PROJECT_DIR$/service/main/database.py" />
         <option value="$PROJECT_DIR$/service/running.py" />
         <option value="$PROJECT_DIR$/service/DNSService.py" />
         <option value="$PROJECT_DIR$/service/ICMPService.py" />
@@ -256,8 +224,18 @@
         <option value="$PROJECT_DIR$/service/VideoService.py" />
         <option value="$PROJECT_DIR$/service/WebService.py" />
         <option value="$PROJECT_DIR$/service-py/src/CheckProbe.py" />
-        <option value="$PROJECT_DIR$/service/main/distribution.py" />
         <option value="$PROJECT_DIR$/service/main/file_distribution.py" />
+        <option value="$PROJECT_DIR$/service/running_server.py" />
+        <option value="$PROJECT_DIR$/usage/Devices.py" />
+        <option value="$PROJECT_DIR$/service/destination.py" />
+        <option value="$PROJECT_DIR$/service/main/database.py" />
+        <option value="$PROJECT_DIR$/service/main/distribution.py" />
+        <option value="$PROJECT_DIR$/service/main/probe.py" />
+        <option value="$PROJECT_DIR$/service/main/service.py" />
+        <option value="$PROJECT_DIR$/service/main/devices.py" />
+        <option value="$PROJECT_DIR$/service/main/interfaces.py" />
+        <option value="$PROJECT_DIR$/server/running_server.py" />
+        <option value="$PROJECT_DIR$/server/destination.py" />
       </list>
     </option>
   </component>
@@ -277,11 +255,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1739" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-31" />
     <option name="y" value="22" />
-    <option name="width" value="1842" />
-    <option name="height" value="1010" />
+    <option name="width" value="1601" />
+    <option name="height" value="987" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -302,45 +280,7 @@
             <path>
               <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
               <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service-py" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service-py" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service-py" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="python-cgi-monitor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="python-cgi-monitor" type="462c0819:PsiDirectoryNode" />
-              <item name="service-py" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -355,19 +295,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/service" />
-      <recent name="$PROJECT_DIR$/service/conf" />
-      <recent name="$PROJECT_DIR$/service-py/service/conf" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/service-py/file" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server" />
       <recent name="$PROJECT_DIR$/service/main" />
       <recent name="$PROJECT_DIR$/service-py/src/useless" />
       <recent name="$PROJECT_DIR$/service-py/src/main" />
       <recent name="$PROJECT_DIR$/service-py/src" />
-      <recent name="$PROJECT_DIR$/service-py/service" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/service" />
+      <recent name="$PROJECT_DIR$/service/conf" />
+      <recent name="$PROJECT_DIR$/service-py/service/conf" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -382,8 +322,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.running">
-    <configuration name="CheckProbe" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.Devices">
+    <configuration name="Devices" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -391,12 +331,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/service-py/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/usage" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service-py/src/CheckProbe.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/usage/Devices.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -421,7 +361,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="__Probe__" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="VideoService" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -429,18 +369,18 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/service-py/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/service" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service-py/src/main/__Probe__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/VideoService.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="database" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="distribution" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -453,26 +393,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/main/database.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="probe" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="python" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/service/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/main/probe.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/main/distribution.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -491,7 +412,26 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/running.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/running_service.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="running_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/service" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/service/running_server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -499,19 +439,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.NodeScript-dev" />
-      <item itemvalue="Python.__Probe__" />
-      <item itemvalue="Python.CheckProbe" />
-      <item itemvalue="Python.database" />
-      <item itemvalue="Python.probe" />
       <item itemvalue="Python.running" />
+      <item itemvalue="Python.Devices" />
+      <item itemvalue="Python.distribution" />
+      <item itemvalue="Python.running_server" />
+      <item itemvalue="Python.VideoService" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Devices" />
+        <item itemvalue="Python.VideoService" />
+        <item itemvalue="Python.running_server" />
+        <item itemvalue="Python.distribution" />
         <item itemvalue="Python.running" />
-        <item itemvalue="Python.database" />
-        <item itemvalue="Python.probe" />
-        <item itemvalue="Python.__Probe__" />
-        <item itemvalue="Python.CheckProbe" />
       </list>
     </recent_temporary>
   </component>
@@ -525,13 +465,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1532485401679</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Open ssh to centOS (2)">
-      <created>1534819848425</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1534819848425</updated>
     </task>
     <task id="LOCAL-00034" summary="Open ssh to centOS (3)">
       <created>1534820930894</created>
@@ -869,20 +802,28 @@
       <option name="project" value="LOCAL" />
       <updated>1535710688350</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="redesign folder (3)">
+      <created>1535996109267</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1535996109268</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1680" y="22" width="1920" height="1017" extended-state="6" />
+    <frame x="-31" y="22" width="1601" height="987" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.3141515" side_tool="true" weight="0.3023001" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32858709" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6858485" visible="true" weight="0.24178155" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6858485" weight="0.35487404" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32968238" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14010416" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14678326" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -909,7 +850,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Action to probe start service (1)" />
     <MESSAGE value="Renew path" />
     <MESSAGE value="Renew path (2)" />
     <MESSAGE value="Renew path (3)" />
@@ -934,91 +874,15 @@
     <MESSAGE value="test for server Notify and check probe. (5)" />
     <MESSAGE value="redesign folder" />
     <MESSAGE value="redesign folder (2)" />
-    <option name="LAST_COMMIT_MESSAGE" value="redesign folder (2)" />
+    <MESSAGE value="redesign folder (3)" />
+    <option name="LAST_COMMIT_MESSAGE" value="redesign folder (3)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="17" />
+      <option name="time" value="18" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hello.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/src/DNSService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="3" column="17" lean-forward="true" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/src/gaming.py" />
-    <entry file="file://$PROJECT_DIR$/index.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="17" lean-forward="true" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/src/SpeedtestService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/src/VideoService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2/time.pyi">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speedtest-py/NodeScript.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="550" column="28" lean-forward="true" selection-start-line="550" selection-start-column="28" selection-end-line="550" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/Devices.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1744" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/Interfaces.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-649" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/test-back.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-888">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usage/mainSc.js" />
     <entry file="file://$PROJECT_DIR$/usage/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -1089,9 +953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
           <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="68" />
-          <folding>
-            <element signature="e#19#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1099,9 +960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="73">
           <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="28" />
-          <folding>
-            <element signature="e#19#49#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1109,36 +967,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2130">
           <caret line="142" column="8" lean-forward="true" selection-start-line="142" selection-start-column="8" selection-end-line="142" selection-end-column="26" />
-          <folding>
-            <element signature="e#19#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service/main/service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="72" column="9" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
-          <folding>
-            <element signature="e#19#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service/main/probe.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service/main/database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="52" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
-          <folding>
-            <element signature="e#19#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1146,9 +974,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="77" selection-start-line="41" selection-start-column="77" selection-end-line="41" selection-end-column="77" />
-          <folding>
-            <element signature="e#18#36#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1156,9 +981,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="77" selection-start-line="41" selection-start-column="77" selection-end-line="41" selection-end-column="77" />
-          <folding>
-            <element signature="e#18#36#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1166,9 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="30" />
-          <folding>
-            <element signature="e#18#48#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1176,19 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="26" column="77" selection-start-line="26" selection-start-column="77" selection-end-line="26" selection-end-column="77" />
-          <folding>
-            <element signature="e#18#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/service/VideoService.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="42" column="76" selection-start-line="42" selection-start-column="76" selection-end-line="42" selection-end-column="76" />
-          <folding>
-            <element signature="e#18#57#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1196,9 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" column="76" selection-start-line="27" selection-start-column="76" selection-end-line="27" selection-end-column="76" />
-          <folding>
-            <element signature="e#18#36#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1206,19 +1009,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="77" selection-start-line="30" selection-start-column="77" selection-end-line="30" selection-end-column="77" />
-          <folding>
-            <element signature="e#18#36#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/running.py">
+    <entry file="file://$PROJECT_DIR$/service/running_service.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#19#45#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1246,40 +1043,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/ICMPService.py">
+    <entry file="file://$PROJECT_DIR$/service-py/src/__ScheduleWork__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="41" column="77" selection-start-line="41" selection-start-column="77" selection-end-line="41" selection-end-column="77" />
+        <state relative-caret-position="495">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/src/CheckProbe.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="88" column="4" lean-forward="true" selection-start-line="88" selection-start-column="4" selection-end-line="89" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="325">
+          <caret line="59" column="32" lean-forward="true" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service-py/src/__Distribution__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
+        <state relative-caret-position="411">
           <caret line="47" column="33" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="47" selection-end-column="33" />
-          <folding>
-            <element signature="e#19#54#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/main/distribution.py">
+    <entry file="file://$PROJECT_DIR$/usage/Utillity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
-          <folding>
-            <element signature="e#19#46#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="435">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service-py/src/VideoService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/VideoService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/ICMPService.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="20" column="53" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/running_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usage/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usage/Devices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="48" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usage/Interfaces.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -1290,12 +1127,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service-py/src/__ScheduleWork__.py">
+    <entry file="file://$PROJECT_DIR$/service/main/probe.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="240">
+          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
           <folding>
             <element signature="e#19#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/main/distribution.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="844">
+          <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
+          <folding>
+            <element signature="e#19#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/main/database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+          <folding>
+            <element signature="e#19#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/main/service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="776">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/main/interfaces.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/main/devices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="73" lean-forward="true" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/main/conf/configuration">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/destination.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="8" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/destination.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2916">
+          <caret line="234" lean-forward="true" selection-start-line="234" selection-end-line="234" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/dashboard.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/page.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/running_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/running.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#19#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
