@@ -6,16 +6,22 @@ import mysql.connector
 class MySQLDatabase:
 
     def __init__(self):
-        # self.host = '192.168.254.31'
-        # self.user = 'monitor'
-        # self.password = 'p@ssword'
+        self.host = '192.168.254.31'
+        self.user = 'monitor'
+        self.password = 'p@ssword'
         # self.database = 'project'
+        self.database = 'project_monitor'
+
+        # self.host = '192.168.1.8'
+        # self.user = 'centos'
+        # self.password = 'root'
         # self.database = 'project_monitor'
 
-        self.host = '192.168.1.8'
-        self.user = 'centos'
-        self.password = 'root'
-        self.database = 'project'
+        # self.host = '192.168.1.8'
+        # self.user = 'centos'
+        # self.password = 'root'
+        # self.database = 'project_monitor'
+
         self.create_connection()
 
     def create_connection(self):
@@ -41,5 +47,21 @@ class MySQLDatabase:
         self.mycursor.close()
         self.connection.disconnect()
 
-if __name__ == '__main__':
-    database = MySQLDatabase()
+# from datetime import date, datetime
+# def json_serial(obj):
+#     """JSON serializer for objects not serializable by default json code"""
+#
+#     if isinstance(obj, (datetime, date)):
+#         return obj.isoformat()
+#     raise TypeError ("Type %s not serializable" % type(obj))
+#
+# if __name__ == '__main__':
+#     import json
+#     json_data = []
+#     database = MySQLDatabase()
+#     sql = 'SELECT * FROM probe'
+#     result = database.select(sql)
+#     row_headers = [x[0] for x in database.mycursor.description]
+#     for result in result:
+#         json_data.append(dict(zip(row_headers, result)))
+#     print json.dumps(json_data, default=json_serial)

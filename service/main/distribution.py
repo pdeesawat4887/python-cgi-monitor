@@ -92,7 +92,7 @@ class Server(maria_db.MySQLDatabase):
             try:
                 request = requests.post(url, headers=headers, data={'message': msg})
                 request.close()
-            except Exeception as error:
+            except Exception as error:
                 print error
 
     def check_if_directory_is_empty(self):
