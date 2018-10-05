@@ -55,11 +55,13 @@ class MySQLDatabase:
 #         return obj.isoformat()
 #     raise TypeError ("Type %s not serializable" % type(obj))
 #
-# if __name__ == '__main__':
-#     import json
-#     json_data = []
-#     database = MySQLDatabase()
-#     sql = 'SELECT * FROM probe'
+if __name__ == '__main__':
+    # import json
+    # json_data = []
+    database = MySQLDatabase()
+
+    sql = 'SELECT * FROM probe'
+    print database.select(sql)
 #     result = database.select(sql)
 #     row_headers = [x[0] for x in database.mycursor.description]
 #     for result in result:
