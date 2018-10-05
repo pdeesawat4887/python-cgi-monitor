@@ -12,7 +12,8 @@ import os
 
 class Probe:
 
-    def __init__(self):
+    def __init__(self, path):
+        self.path = path
         self.mac_address = self.get_mac_address()
         self.db = database.MySQLDatabase()
         self.ip = self.get_ip()
@@ -90,4 +91,4 @@ class Probe:
             else:
                 # sys.argv = [service_id, self.id, service_command]
                 # execfile('{}'.format(service_file))
-                os.system('python {} {} {} {}'.format(service_file, service_id, self.id, service_command))
+                os.system('python {}/{} {} {} {}'.format(self.path, service_file, service_id, self.id, service_command))
