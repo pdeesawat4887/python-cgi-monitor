@@ -4,6 +4,7 @@ import main.database as database
 import os
 import sys
 import cgi
+import re
 import json
 from datetime import date, datetime
 import decimal
@@ -44,6 +45,23 @@ class Method:
         print(exc_type, fname, exc_tb.tb_lineno)
         exit()
 
+    def verify_ip(self, ip):
+        ip_candidates = re.findall(r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+                                   r"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+                                   r"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+                                   r"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", ip)
+
+        if ip_candidates.__len__() != 0:
+            return '.'.join(ip_candidates[0])
+        else:
+            return None
+
+    def verify_text(self, text):
+        return text if re.match("^[a-zA-Z0-9_-]*$", text) else None
+
+    def verify_number(self, number):
+        return number if re.match("^[0-9]*$", number) else None
+
 
 class GetMethod(Method):
 
@@ -54,15 +72,23 @@ class GetMethod(Method):
             if not isinstance(self.attribute, list):
                 self.attribute = self.attribute.split(',')
             try:
-                self.sql = "SELECT {select} FROM `{table}`".format(select=', '.join(
-                    map(lambda item: '{item}'.format(item=self.dict_attribute[item]), self.attribute)),
-                    table=self.table)
+                self.sql = "SELECT {select} FROM `{table}`".format(select=', '.join(map(lambda item: '{item}'.format(item=self.dict_attribute[item]), self.attribute)), table=self.table)
             except Exception as e:
                 print "Incorrect attribute field"
                 self.log_error(e)
-        self.prepare_condition()
-        self.prepare_order()
-        self.prepare_limit()
+
+        self.sql += " WHERE " + " and ".join(map(lambda item: "`{key}`='{value}'".format(key=self.dict_attribute[item], value=self.argument.getvalue('cond[{item}]'.format(item=item))) if self.argument.has_key('cond[{item}]'.format(item=item)) else '1=1', self.dict_attribute))
+        self.sql += " ORDER BY " + ", ".join(map(lambda item: "`{attr}` {sort}".format(attr=self.dict_attribute[item], sort=self.argument.getvalue('order[{item}]'.format(item=item))) if self.argument.has_key('order[{item}]'.format(item=item)) else 'null', self.dict_attribute))
+
+        if self.argument.has_key('limit[]'):
+            try:
+                self.sql += " LIMIT {limit};".format(limit=self.argument['limit[]'].value)
+            except:
+                self.sql += ";"
+
+        # self.prepare_condition()
+        # self.prepare_order()
+        # self.prepare_limit()
 
     def prepare_condition(self):
         pass
@@ -74,10 +100,10 @@ class GetMethod(Method):
         self.sql += ";"
 
     def execute_sql(self, sql):
-        # print sql
-        data = self.db.select(sql)
-        json_data = map(lambda result: dict(zip(self.attribute, result)), data)
-        print json.dumps(json_data, default=self.json_serial)
+        print sql
+        # data = self.db.select(sql)
+        # json_data = map(lambda result: dict(zip(self.attribute, result)), data)
+        # print json.dumps(json_data, default=self.json_serial)
 
     def json_serial(self, obj):
         """JSON serializer for objects not serializable by default json code"""
@@ -175,6 +201,7 @@ class GetTestResult(GetMethod):
             self.sql += " WHERE `probe_id`='{probe_id}' and `destination_id`='{dest_id}'".format(probe_id=probe_id,
                                                                                                  dest_id=destination_id)
 
+
 class GetRunningService(GetMethod):
     table = 'running_service'
     dict_attribute = {
@@ -188,6 +215,7 @@ class GetRunningService(GetMethod):
         ipb = self.argument.getvalue("cond[ipb]", None)
         if ipb != None:
             self.sql += " WHERE `probe_id`='{ipb}';".format(ipb=ipb)
+
 
 class PostMethod(Method):
 
@@ -370,6 +398,7 @@ class UpdateRunning(PatchMethod):
         isvc = self.argument["cond[isvc]"].value
         self.sql += " WHERE `probe_id`='{ipb}' and `service_id`='{isvc}';".format(ipb=ipb, isvc=isvc)
 
+
 class UpdateUser(PatchMethod):
     dictionary = GetUser.dict_attribute
     table = 'user'
@@ -428,7 +457,8 @@ if __name__ == '__main__':
 
         if method_main == 'post':
             if check_override == 'get':
-                print "Content-Type: application/json\n"
+                print "Content-Type: text/html\n"
+                # print "Content-Type: application/json\n"
                 example = dict_tlb[tlb](argument, environ)
             else:
                 print "Content-Type: text/html\n"
@@ -439,27 +469,46 @@ if __name__ == '__main__':
         elif method_main == 'delete':
             print "Content-Type: text/html\n"
             example = dict_tlb_del[tlb](argument, environ)
-            # try:
-            #     if environ['HTTP_X_HTTP_METHOD_OVERRIDE'].lower() == 'get':
-            #         example = dict_tlb[tlb](argument, environ)
-            # except Exception as e:
-            #     print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e)
-            #     exc_type, exc_obj, exc_tb = sys.exc_info()
-            #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            #     print(exc_type, fname, exc_tb.tb_lineno)
 
 
     def tester():
+        print "Content-Type: text/html\n"
         print sys.stdin.read()
         print "------------------------------------ <br>", argument, "<br>"
         print "------------------------------------ <br>", argument.list, "<br>"
-        for i in range(len(argument.getvalue("key[]"))):
-            print argument.getvalue("key[]")[i]
-            print argument.getvalue("value[]")[i]
+        # for i in range(len(argument.getvalue("key[]"))):
+        #     print argument.getvalue("key[]")[i]
+        #     print argument.getvalue("value[]")[i]
 
-        # result = argument.getvalue('condition[0]')
-        # print "CONDITION: <br>", result, "<br>"
+        print 'Hello -   ---------------------------------------------------------- <br><br>'
+
+        dict_attribute = {
+            'isvc': 'service_id',
+            'nsvc': 'service_name',
+            'fn': 'file_name',
+            'cmd': 'command'
+        }
+        # list_result = map(lambda item: argument.has_key('cond['+item+']'), dict_attribute)
+
+        # for i in argument.keys():
+        #     print i
+
+        # for x in dict_attribute:
+        #     item = 'cond['+x+']'
+        #     if argument.has_key('cond['+x+']'):
+        #         # print argument.getvalue('cond[isvc]')
+        #         print argument.getvalue('cond['+x+']')
+
+        # verbs = " WHERE "
+        # verbs += ' and '.join(map(lambda item: "`{key}`={value}".format(key=item, value=argument.getvalue(
+        #     'cond[' + item + ']')) if argument.has_key('cond[' + item + ']') else '1=1', dict_attribute))
+        # print verbs
+
+        verbs = ""
+        verbs += " ORDER BY " + ', '.join(map(lambda item: "`{attr}` {sort}".format(attr=dict_attribute[item], sort=argument.getvalue('order[{item}]'.format(item=item))) if argument.has_key('order[{xxx}]'.format(xxx=item)) else 'null', dict_attribute))
+        print verbs
+        # verbs += ", ".join(map(lambda item: , ))
 
 
-    # do_it()
-    tester()
+    do_it()
+    # tester()
