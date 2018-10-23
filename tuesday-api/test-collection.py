@@ -43,5 +43,10 @@ def statement2():
 # statement2()
 
 db = maria.MySQLDatabase()
-output = db.select("SELECT * FROM PROBES WHERE probe_id='hello';")
-print output.__len__()
+# output = db.select("SELECT * FROM PROBES WHERE probe_id='hello';")
+
+# db.mycursor.execute("SELECT @@GLOBAL.foreign_key_checks;")
+db.mycursor.execute("SET FOREIGN_KEY_CHECKS = 1;")
+db.mycursor.execute("DELETE FROM SERVICES WHERE service_id=3;")
+db.mycursor.execute("SET FOREIGN_KEY_CHECKS = 1;")
+db.connection.commit()

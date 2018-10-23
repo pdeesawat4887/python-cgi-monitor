@@ -383,7 +383,10 @@ class DeleteMethod(Method):
 
     def execute_sql(self, sql):
         # print self.sql
+        if self.table == 'PROBES':
+            self.db.foreign_key_func(func='disable')
         self.db.mycursor.execute(sql)
+        self.db.foreign_key_func(func='enable')
         self.db.connection.commit()
 
 
@@ -407,7 +410,7 @@ class DeleteProbe(DeleteMethod):
     table = 'PROBES'
 
     def prepare_condition(self):
-        ipb = self.verify_input(length=11, restrict='[0-9]', attribute='probe id', value=self.argument.getvalue('del[ipb]', False))
+        ipb = self.verify_input(length=32, restrict='[a-zA-Z0-9]', attribute='probe id', value=self.argument.getvalue('del[ipb]', False))
         self.sql += " WHERE `probe_id`='{ipb}';".format(ipb=ipb)
 
 

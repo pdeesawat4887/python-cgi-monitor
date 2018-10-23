@@ -10,7 +10,7 @@ class MySQLDatabase:
         self.host = '192.168.254.31'
         self.user = 'monitor'
         self.password = base64.b64decode('cEBzc3dvcmQ=')
-        self.database = 'project_monitor_release_copy'
+        self.database = 'project_monitor_release_temp'
         self.create_connection()
 
     def create_connection(self):
@@ -32,6 +32,17 @@ class MySQLDatabase:
         self.mycursor.executemany(query, list_data)
         self.connection.commit()
 
+    def foreign_key_func(self, func='enable', **kwargs):
+        option = {
+            'disable': 0,
+            'enable': 1,
+        }
+        try:
+            self.mycursor.execute("SET FOREIGN_KEY_CHECKS={func}';".format(func=option[func.lower()]))
+            self.connection.commit()
+        except Exception as error:
+            print "Error database:", error
+
     def close_connection(self):
         self.mycursor.close()
         self.connection.disconnect()
@@ -39,5 +50,6 @@ class MySQLDatabase:
 
 if __name__ == '__main__':
     hello = MySQLDatabase()
+    # hello.foreign_key_func()
     # hello.insert('DESTINATIONS', [('NULL', 1, 'www.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrg', 12356789, 'hello girl')])
     # print int(hello.select("SELECT count(`result_id`) FROM TESTRESULTS")[0][0])

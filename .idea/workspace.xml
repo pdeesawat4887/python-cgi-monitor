@@ -2,75 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/api/api5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/conf/configuration" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/conf/reg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/conf/temp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/probe-first.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/probe_register.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/service-first.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/main/service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/server-add-svc-dest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/server_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/service_dns.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/service_ping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/service_speedtest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/service_video.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/service_website.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/startup_cron.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test-result.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/cookie.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/dictionary.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/dnsspecify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/regex-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/running.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/service_website_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/sftp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/test/tcp-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monday-service-server/udp-test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nmap-server/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nmap-server/tcp-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nmap-server/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/api5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/main/checker.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/main/dict-function-param.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/test-collection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/test/ip-address-py.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-api/verify-sth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/first_impression.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/server-add-svc-dest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/service_ping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/service_speedtest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/service_website.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/service_youtube.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/cookie.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/dictionary.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/dnsspecify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/print-py.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/py-ping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/regex-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/running.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/service_website_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/sftp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/split-py.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/tcp-ip.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api4.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/api4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuesday-api/api5.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-api/api5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuesday-api/main/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-api/main/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuesday-api/test-collection.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-api/test-collection.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -111,7 +46,7 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$subprocess.coverage" NAME="subprocess Coverage Results" MODIFIED="1534239483198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$snmp_walk_man_1.coverage" NAME="snmp-walk-man-1 Coverage Results" MODIFIED="1538103923346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/snmp-walk-cgi-bin" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$ICMPService.coverage" NAME="ICMPService Coverage Results" MODIFIED="1535103869767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/service" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$test_collection.coverage" NAME="test-collection Coverage Results" MODIFIED="1540227537447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesday-api" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$test_collection.coverage" NAME="test-collection Coverage Results" MODIFIED="1540236349012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesday-api" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$api.coverage" NAME="api Coverage Results" MODIFIED="1537264195217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-re" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$youtube.coverage" NAME="youtube Coverage Results" MODIFIED="1534784244986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$python_youtube.coverage" NAME="python-youtube Coverage Results" MODIFIED="1533104633930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
@@ -178,89 +113,61 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Devices.coverage" NAME="Devices Coverage Results" MODIFIED="1536057851131" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/usage" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6126126">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="database.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/main/database.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="121">
-                  <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
-                  <folding>
-                    <element signature="e#19#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ip-address-py.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/test/ip-address-py.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret column="11" selection-start-column="11" selection-end-column="11" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="api5.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/api5.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="23">
-                  <caret line="333" column="44" selection-start-line="333" selection-start-column="44" selection-end-line="333" selection-end-column="44" />
-                  <folding>
-                    <element signature="e#19#51#0" expanded="true" />
-                    <element signature="e#13469#13743#0" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test-collection.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/test-collection.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="570">
-                  <caret line="45" column="66" lean-forward="true" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dict-function-param.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/main/dict-function-param.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="api5.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tuesday-api/api5.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="479">
-                  <caret line="280" selection-start-line="280" selection-end-line="291" selection-end-column="5" />
-                  <folding>
-                    <element signature="e#19#51#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="server-add-svc-dest.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tuesday-service-server/server-add-svc-dest.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="195">
-                  <caret line="14" column="45" lean-forward="true" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="database.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tuesday-api/main/database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+              <folding>
+                <element signature="e#19#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ip-address-py.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tuesday-api/test/ip-address-py.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-283">
+              <caret column="11" selection-start-column="11" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api5.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tuesday-api/api5.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="363">
+              <caret line="302" column="80" lean-forward="true" selection-start-line="302" selection-start-column="80" selection-end-line="303" selection-end-column="41" />
+              <folding>
+                <element signature="e#19#51#0" expanded="true" />
+                <element signature="e#7797#7916#0" />
+                <element signature="e#22346#22546#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-collection.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tuesday-api/test-collection.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="705">
+              <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dict-function-param.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tuesday-api/main/dict-function-param.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -387,10 +294,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1713" />
+    <option name="x" value="1680" />
     <option name="y" value="22" />
-    <option name="width" value="1807" />
-    <option name="height" value="1010" />
+    <option name="width" value="1920" />
+    <option name="height" value="1019" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -613,13 +520,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1532485401679</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Action to probe start service (2)">
-      <created>1534840647917</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1534840647917</updated>
     </task>
     <task id="LOCAL-00042" summary="Action to probe start service (3)">
       <created>1534846222205</created>
@@ -957,7 +857,14 @@
       <option name="project" value="LOCAL" />
       <updated>1538764415159</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="api 2 - tuesday">
+      <created>1540229034906</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1540229034907</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -966,17 +873,17 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1713" y="22" width="1807" height="1010" extended-state="0" />
+    <frame x="1680" y="22" width="1920" height="1019" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.31543997" side_tool="true" visible="true" weight="0.22863248" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.31614584" side_tool="true" visible="true" weight="0.22645503" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32858709" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.68456006" visible="true" weight="0.22863248" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.68385416" weight="0.22645503" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32858709" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14001107" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13177083" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -984,14 +891,14 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49880952" weight="0.39978093" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" sideWeight="0.4997233" weight="0.32905984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32968238" />
-      <window_info anchor="right" id="Coverage" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.4997233" weight="0.32905984" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1005,7 +912,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Renew path for test cron (4)" />
     <MESSAGE value="Renew path for test cron (5)" />
     <MESSAGE value="Renew path for test cron (6)" />
     <MESSAGE value="Renew path for test cron (7)" />
@@ -1030,7 +936,8 @@
     <MESSAGE value="mod_rewrite" />
     <MESSAGE value="api" />
     <MESSAGE value="api 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="api 1" />
+    <MESSAGE value="api 2 - tuesday" />
+    <option name="LAST_COMMIT_MESSAGE" value="api 2 - tuesday" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1278,13 +1185,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tuesday-api/main/dict-function-param.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/api5.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
@@ -1299,54 +1199,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tuesday-service-server/server-add-svc-dest.py">
+    <entry file="file://$PROJECT_DIR$/tuesday-api/verify-sth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="45" lean-forward="true" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+        <state relative-caret-position="15">
+          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tuesday-api/test/ip-address-py.py">
+    <entry file="file://$PROJECT_DIR$/tuesday-api/main/dict-function-param.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        <state relative-caret-position="165">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tuesday-service-server/server-add-svc-dest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tuesday-api/test-collection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tuesday-api/main/database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
+        <state relative-caret-position="630">
+          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
           <folding>
             <element signature="e#19#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tuesday-api/verify-sth.py">
+    <entry file="file://$PROJECT_DIR$/tuesday-api/test/ip-address-py.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
-          <folding>
-            <element signature="e#19#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tuesday-api/test-collection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="45" column="66" lean-forward="true" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
+        <state relative-caret-position="-283">
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tuesday-api/api5.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="333" column="44" selection-start-line="333" selection-start-column="44" selection-end-line="333" selection-end-column="44" />
+        <state relative-caret-position="363">
+          <caret line="302" column="80" lean-forward="true" selection-start-line="302" selection-start-column="80" selection-end-line="303" selection-end-column="41" />
           <folding>
             <element signature="e#19#51#0" expanded="true" />
-            <element signature="e#13469#13743#0" />
+            <element signature="e#7797#7916#0" />
+            <element signature="e#22346#22546#0" />
           </folding>
         </state>
       </provider>
