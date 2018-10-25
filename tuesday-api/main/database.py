@@ -28,20 +28,35 @@ class MySQLDatabase:
     def insert(self, table, list_data):
         query = "INSERT INTO %s " % table
         query += "VALUES (" + ",".join(["%s"] * len(list_data[0])) + ")"
-
-        self.mycursor.executemany(query, list_data)
-        self.connection.commit()
+        try:
+            self.mycursor.executemany(query, list_data)
+        except:
+            self.connection.rollback()
+            raise
+        else:
+            self.connection.commit()
+        # self.connection.commit()
 
     def foreign_key_func(self, func='enable', **kwargs):
         option = {
-            'disable': 0,
-            'enable': 1,
+            'disable': '0',
+            'enable': '1',
         }
         try:
-            self.mycursor.execute("SET FOREIGN_KEY_CHECKS={func}';".format(func=option[func.lower()]))
-            self.connection.commit()
+            sql = "SET FOREIGN_KEY_CHECKS={func};".format(func=option[func])
         except Exception as error:
             print "Error database:", error
+        self.mycursor.execute(sql)
+        self.connection.commit()
+
+    def execute_insert(self, table, list_data):
+        query = "INSERT IGNORE INTO %s " % table
+        query += "VALUES (" + ",".join(["%s"] * len(list_data[0])) + ")"
+        try:
+            self.mycursor.executemany(query, list_data)
+        except:
+            self.connection.rollback()
+            raise
 
     def close_connection(self):
         self.mycursor.close()

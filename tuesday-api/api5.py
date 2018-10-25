@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import main.database as database
+import main.jwt_server as token
 import os
 import sys
 import cgi
@@ -10,19 +11,6 @@ from datetime import date, datetime
 import decimal
 from functools import partial
 
-
-# print "Status: 404 Not Found\r\n"
-# print "Content-Type: text/html\n"
-# print "Access-Control-Allow-Origin: *"
-# print "Content-Type: application/json\n"
-
-# argument = cgi.FieldStorage()
-# print argument
-# for a in os.environ:
-#     print 'Var: ', a, 'Value: ', os.getenv(a), '<br>'
-# print("all done")
-# print dir(os.environ), '<br>'
-
 class Method:
     def __init__(self, arg, environ):
         self.db = database.MySQLDatabase()
@@ -31,7 +19,10 @@ class Method:
         self.argument = arg
         self.environ = environ
         self.prepare_statement()
-        self.execute_sql(self.sql)
+        try:
+            self.execute_sql(self.sql)
+        except Exception as e:
+            self.log_error(e)
 
     def prepare_statement(self):
         pass
@@ -53,44 +44,19 @@ class Method:
         print "Error on ", e
         exit()
 
-    # def log_error(self, e):
-    #     self.output_flag = False
-    #     print "Status: 400 Bad Request\r"
-    #     print "Content-Type: text/html\n"
-    #
-    #     exc_type, exc_obj, exc_tb = sys.exc_info()
-    #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-    #
-    #     print 'Error on line {}<br>{}<br>{}<br><br>{}<br>{}<br>{}'.format(sys.exc_info()[-1].tb_lineno, type(e).__name__, e, exc_type, fname, exc_tb.tb_lineno)
-    #
-    #     exit()
-
     def error_insert(self, status=400, explain='Bad Request', word=None, attr=None):
         self.output_flag = False
         print "Status: {status} {explain}\r".format(status=status, explain=explain)
         print "Content-Type: text/html\n"
-        print "{word}: Error {attr}".format(word=word, attr=attr, ty=type)
+        print "{word}: Error {attr}".format(word=word, attr=attr)
         exit()
 
-    def ipFormatChk(self, ip_str):
-        if len(ip_str.split()) == 1:
-            ipList = ip_str.split('.')
-            if len(ipList) == 4:
-                for i, item in enumerate(ipList):
-                    try:
-                        ipList[i] = int(item)
-                    except Exception as e:
-                        self.log_error(e)
-                    if not isinstance(ipList[i], int):
-                        return None
-                if max(ipList) < 256:
-                    return ip_str
-                else:
-                    return None
-            else:
-                return None
-        else:
-            return None
+    def error_update(self, status=400, explain='Bad Request', word=None):
+        self.output_flag = False
+        print "Status: {status} {explain}\r".format(status=status, explain=explain)
+        print "Content-Type: text/html\n"
+        print "Error: {word}".format(word=word)
+        exit()
 
     def verify_text(self, text):
         try:
@@ -115,8 +81,7 @@ class Method:
         else:
             return value
 
-    def verify_input(self, length, restrict, value, attribute):
-
+    def verify_input(self, length, restrict, value, attribute, unique=False):
         format_reg = {
             'limit': length,
             'restrict': restrict
@@ -129,7 +94,14 @@ class Method:
             return None
         else:
             value = str(value)
-            return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg), value) else self.error_insert(attr=attribute, word="Incorrect format")
+            if unique:
+                val = int(self.db.select("SELECT count(`{column}`) FROM {table} WHERE `{column}`='{value}';".format(column=attribute, table=self.table, value=value))[0][0])
+                if val > 0:
+                    return self.error_insert(word="Duplicate Unique key", attr=attribute)
+                else:
+                    return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg), value) else self.error_insert(attr=attribute, word="Incorrect format")
+            else:
+                return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg), value) else self.error_insert(attr=attribute, word="Incorrect format")
 
     # @staticmethod
     def verify_update(self, length, restrict, attribute, value=None):
@@ -138,19 +110,27 @@ class Method:
             'restrict': restrict
         }
         value = str(value)
-
         if int(length) == 1:
             length = 8
-        return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(
-            length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg),
-                                           value) else self.error_insert(attr=attribute, word="Incorrect format")
+        return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg), value) else self.error_insert(attr=attribute, word="Incorrect format")
 
-    # def error_update(self, status=400, explain='Bad Request', word=None, attr=None):
-    #     self.output_flag = False
-    #     print "Status: {status} {explain}\r".format(status=status, explain=explain)
-    #     print "Content-Type: text/html\n"
-    #     print "{word}: Error {attr}".format(word=word, attr=attr, ty=type)
-    #     exit()
+    def logging_statement(self, type=None, table=None, sql=None, user=None, **kwargs):
+        id = self.db.mycursor.lastrowid
+        mapping = {
+            'PROBES': ('probe_name', 'probe_id'),
+            'SERVICES': ('service_name', 'service_id'),
+            'DESTINATIONS': ('destination_name', 'destination_id'),
+            'RUNNING_SERVICES': ('distinct(select service_name from SERVICES where RUNNING_SERVICES.service_id=SERVICES.service_id)', 'id'),
+            'RUNNING_DESTINATIONS': ('distinct(select destination_name from DESTINATIONS where RUNNING_DESTINATIONS.destination_id=DESTINATIONS.destination_id)', 'id'),
+        }
+        word = self.db.select("SELECT {select} FROM {table} WHERE {cond}='{val}';".format(
+            select=mapping[table][0], table=table, cond=mapping[table][1], val=id))[0][0]
+
+        sql_insert = 'INSERT INTO `LOGGING_EVENTS` VALUES ("Null", "{user}", "{ty}", "{tlb}", "{word}", "{sql}", NOW())'.format(
+            user=self.argument.getvalue('log[user]', user), ty=type, tlb=table, word=word, sql=sql)
+        self.db.mycursor.execute(sql_insert)
+        self.db.connection.commit()
+
 
 class GetMethod(Method):
 
@@ -174,7 +154,6 @@ class GetMethod(Method):
                 self.sql += ";"
 
     def execute_sql(self, sql):
-        # print sql
         data = self.db.select(sql)
         json_data = map(lambda result: dict(zip(self.attribute, result)), data)
         self.output_type = 'json'
@@ -187,7 +166,6 @@ class GetMethod(Method):
             return obj.isoformat()
         if isinstance(obj, decimal.Decimal):
             return float(obj)
-        # print TypeError("Type %s not serializable" % type(obj))
 
 
 class GetProbe(GetMethod):
@@ -200,7 +178,6 @@ class GetProbe(GetMethod):
         'pb_stat': 'probe_status',
         'last_ud': 'last_updated',
         'd_add': 'date_added',
-        'icoll': 'collection_id',
     }
 
 
@@ -242,7 +219,7 @@ class GetTestResult(GetMethod):
     table = 'TESTRESULTS'
     dict_attribute = {
         'itst': 'result_id',
-        'icoll': 'collection_id',
+        'iclus': 'cluster_id',
         'isvc': 'service_id',
         'strt': 'start_date',
         'idest': 'destination_id',
@@ -265,7 +242,8 @@ class GetTestResult(GetMethod):
 class GetRunningService(GetMethod):
     table = 'RUNNING_SERVICES'
     dict_attribute = {
-        'icoll': 'collection_id',
+        'n_svc': 'no_svc',
+        'iclus': 'cluster_id',
         'isvc': 'service_id',
         'rning_svc_stat': 'running_svc_status',
         'nsvc': "(select `service_name` from `SERVICES` where `RUNNING_SERVICES`.`service_id`=`SERVICES`.`service_id`) as nsvc",
@@ -281,7 +259,8 @@ class GetRunningService(GetMethod):
 class GetRunningDestination(GetMethod):
     table = 'RUNNING_DESTINATIONS'
     dict_attribute = {
-        'icoll': 'collection_id',
+        'n_dest': 'n_dest',
+        'iclus': 'cluster_id',
         'idest': 'destination_id',
         'rning_dest_stat': 'running_dest_status',
         'ndest': '(select `destination_name` from `DESTINATIONS` where `RUNNING_DESTINATIONS`.`destination_id`=`DESTINATIONS`.`destination_id`) as ndest',
@@ -291,17 +270,33 @@ class GetRunningDestination(GetMethod):
         'nsvc': "(select `service_name` from `SERVICES` where `SERVICES`.`service_id`=(select `service_id` from `DESTINATIONS` where `RUNNING_DESTINATIONS`.`destination_id`=`DESTINATIONS`.`destination_id`)) as nsvc"
     }
 
+class GetCluster(GetMethod):
+    table = 'CLUSTERS'
+    dict_attribute = {
+        'iclus': 'cluster_id',
+        'ipb': 'probe_id',
+        'clus_desc': 'cluster_description',
+        'pb_nom': '(SELECT `probe_name` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as pb_nom',
+        'ipadr': '(SELECT `ip_address` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as ipadr',
+        'madr': '(SELECT `mac_address` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as imadr',
+        'pb_stat': '(SELECT `probe_status` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as pb_stat',
+        'last_ud': '(SELECT `last_updated` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as last_ud',
+        'd_add': '(SELECT `date_added` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as d_add',
+    }
+
 
 class PostMethod(Method):
 
     def execute_sql(self, sql):
         try:
-            self.db.insert(self.table, sql)
+            self.db.execute_insert(self.table, sql)
+            # self.logging_statement()
             self.execute_extend()
+            self.db.connection.commit()
+
             self.output_type = 'plain'
             self.output_flag = True
             self.output = "Insert {table} Successfully".format(table=self.table)
-            # print "Insert Successfully"
         except Exception as e:
             self.log_error(e)
 
@@ -314,24 +309,18 @@ class InsertDestination(PostMethod):
 
     def prepare_statement(self):
 
-        isvc = self.verify_input(length=11, restrict='[0-9]', attribute='service id', value=self.argument.getvalue('val[isvc]', False))
-        ndest = self.verify_input(length=248, restrict='[a-zA-Z0-9\_\-\.\:\?\=\/]', attribute='destination name',value=self.argument.getvalue('val[ndest]', False))
-        ptdest = self.verify_input(length=5, restrict='[0-9]', attribute='destination port',value=self.argument.getvalue('val[ptdest]', False))
-        dest_desc = self.verify_input(length=2083, restrict='[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/]', attribute='destination description', value=self.argument.getvalue('val[dest_desc]', None))
+        isvc = self.verify_input(length=11, restrict='[0-9]', attribute='service_id', value=self.argument.getvalue('val[isvc]', False))
+        ndest = self.verify_input(length=248, restrict='[a-zA-Z0-9\_\-\.\:\?\=\/]', attribute='destination_name',value=self.argument.getvalue('val[ndest]', False))
+        ptdest = self.verify_input(length=5, restrict='[0-9]', attribute='destination_port',value=self.argument.getvalue('val[ptdest]', False))
+        dest_desc = self.verify_input(length=2083, restrict='[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/-_]', attribute='destination_description', value=self.argument.getvalue('val[dest_desc]', None))
         self.sql = [(None, isvc, ndest, ptdest, dest_desc)]
 
-        # isvc = self.verify_number(self.argument.getvalue('val[isvc]', None))
-        # ndest = self.verify_text(self.argument.getvalue('val[ndest]'))
-        # ptdest = self.verify_number(self.argument.getvalue('val[ptdest]', 0))
-        # dest_desc = self.argument.getvalue('val[dest_desc]', None)
-        # self.sql = [(None, isvc, ndest, ptdest, dest_desc)]
-
-        ### insert every collection_id execute_extend()
     def execute_extend(self):
         idest = self.db.mycursor.lastrowid
-        all_collection_id = self.db.select("SELECT DISTINCT(`collection_id`) FROM `PROBES`;")
-        list_data = map(lambda item: (item[0], idest, 'Active'), all_collection_id)
-        self.db.insert('RUNNING_DESTINATIONS', list_data)
+        all_cluster_id = self.db.select("SELECT DISTINCT(`cluster_id`) FROM `CLUSTERS`;")
+        if len(all_cluster_id) != 0:
+            list_data = map(lambda item: (None, item[0], idest, 'Active'), all_cluster_id)
+            self.db.execute_insert('RUNNING_DESTINATIONS', list_data)
 
 
 class InsertUser(PostMethod):
@@ -349,24 +338,42 @@ class InsertService(PostMethod):
 
     def prepare_statement(self):
 
-        often_pattern = "[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/]"
-
-        nsvc = self.verify_input(length=32, restrict='[a-zA-Z0-9\_\-]', attribute='service name', value=self.argument.getvalue('val[nsvc]', False))
-        trans_prot = self.verify_input(length=1, restrict='(?:tcp|udp|other|1|2|3)', attribute='transport protocol', value=self.argument.getvalue('val[trans_prot]', False))
-        f_cmd = self.verify_input(length=256, restrict=often_pattern, attribute='file command', value=self.argument.getvalue('val[f_cmd]', None))
-        fn = self.verify_input(length=64, restrict='[a-zA-Z0-9\.\-\_]', attribute='file command', value=self.argument.getvalue('val[fn]', None))
-        u_cmd = self.verify_input(length=2083, restrict=often_pattern, attribute='udp message', value=self.argument.getvalue('val[u_cmd]', None))
-        svc_desc = self.verify_input(length=2083, restrict=often_pattern, attribute='service description', value=self.argument.getvalue('val[svc_desc]', None))
-        svc_dest_ex = self.verify_input(length=2083, restrict=often_pattern, attribute='destination example', value=self.argument.getvalue('val[svc_dest_ex]', False))
+        often_pattern = "[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/_-]"
+        nsvc = self.verify_input(length=32, restrict='[a-zA-Z0-9\_\-]', attribute='service_name', value=self.argument.getvalue('val[nsvc]', False), unique=True)
+        trans_prot = self.verify_input(length=1, restrict='(?:tcp|udp|other|1|2|3)', attribute='transport_protocol', value=self.argument.getvalue('val[trans_prot]', False))
+        f_cmd = self.verify_input(length=256, restrict=often_pattern, attribute='file_command', value=self.argument.getvalue('val[f_cmd]', None))
+        fn = self.verify_input(length=64, restrict='[a-zA-Z0-9\.\-\_]', attribute='file_name', value=self.argument.getvalue('val[fn]', None), unique=True)
+        u_cmd = self.verify_input(length=2083, restrict=often_pattern, attribute='udp_message', value=self.argument.getvalue('val[u_cmd]', None))
+        svc_desc = self.verify_input(length=2083, restrict=often_pattern, attribute='service_description', value=self.argument.getvalue('val[svc_desc]', None))
+        svc_dest_ex = self.verify_input(length=2083, restrict=often_pattern, attribute='destination_example', value=self.argument.getvalue('val[svc_dest_ex]', False))
         self.sql = [(None, nsvc, trans_prot, f_cmd, fn, u_cmd, svc_desc, svc_dest_ex)]
 
-
-    ## insert every collection_id execute_extend()
     def execute_extend(self):
         isvc = self.db.mycursor.lastrowid
-        all_collection_id = self.db.select("SELECT DISTINCT(`collection_id`) FROM `PROBES`;")
-        list_data = map(lambda item: (item[0], isvc, 'Active'), all_collection_id)
-        self.db.insert('RUNNING_SERVICES', list_data)
+        all_cluster_id = self.db.select("SELECT DISTINCT(`cluster_id`) FROM `CLUSTERS`;")
+        if len(all_cluster_id) != 0:
+            list_data = map(lambda item: (None, item[0], isvc, 'Active'), all_cluster_id)
+            self.db.execute_insert('RUNNING_SERVICES', list_data)
+
+class InsertCluster(PostMethod):
+    table = 'CLUSTERS'
+
+    def prepare_statement(self):
+        iclus = self.verify_input(length=11, restrict='[0-9]', attribute='cluster_id', value=self.argument.getvalue('val[iclus]', None))
+        ipb = self.verify_input(length=32, restrict='[a-zA-Z0-9]', attribute='probe_id', value=self.argument.getvalue('val[ipb]', None))
+        clus_desc = self.verify_input(length=2083, restrict='[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/-_]', attribute='cluster description', value=self.argument.getvalue('val[clus_desc]', None))
+        self.sql = [(iclus, ipb, clus_desc)]
+
+    def execute_extend(self):
+        cluster_id = self.db.mycursor.lastrowid
+        all_isvc = self.db.select("SELECT DISTINCT(`service_id`) FROM `SERVICES`;")
+        if len(all_isvc) != 0:
+            list_data_svc = map(lambda item: (None, cluster_id, item[0], 'Active'), all_isvc)
+            self.db.execute_insert('RUNNING_SERVICES', list_data_svc)
+        all_idest = self.db.select("SELECT DISTINCT(`destination_id`) FROM `DESTINATIONS`;")
+        if len(all_idest) != 0:
+            list_data_dest = map(lambda item: (None, cluster_id, item[0], 'Active'), all_idest)
+            self.db.execute_insert('RUNNING_DESTINATIONS', list_data_dest)
 
 
 class DeleteMethod(Method):
@@ -382,12 +389,14 @@ class DeleteMethod(Method):
         pass
 
     def execute_sql(self, sql):
-        # print self.sql
         if self.table == 'PROBES':
             self.db.foreign_key_func(func='disable')
         self.db.mycursor.execute(sql)
         self.db.foreign_key_func(func='enable')
         self.db.connection.commit()
+        self.output_type = 'plain'
+        self.output_flag = True
+        self.output = "Delete row in {table} Successfully".format(table=self.table)
 
 
 class DeleteDestination(DeleteMethod):
@@ -413,6 +422,13 @@ class DeleteProbe(DeleteMethod):
         ipb = self.verify_input(length=32, restrict='[a-zA-Z0-9]', attribute='probe id', value=self.argument.getvalue('del[ipb]', False))
         self.sql += " WHERE `probe_id`='{ipb}';".format(ipb=ipb)
 
+class DeleteCluster(DeleteMethod):
+    table = 'CLUSTERS'
+
+    def prepare_condition(self):
+        iclus = self.verify_input(length=11, restrict='[0-9]', attribute='cluster id', value=self.argument.getvalue('del[iclus]', False))
+        self.sql += " WHERE `cluster_id`='{iclus}';".format(iclus=iclus)
+
 
 class DeleteUser(DeleteMethod):
     table = 'user'
@@ -423,10 +439,23 @@ class DeleteUser(DeleteMethod):
 
 class PatchMethod(Method):
 
+    def checker(self, key, value):
+        pass
+
+    def verify_update(self, length, restrict, attribute, value=None):
+        format_reg = {
+            'limit': length,
+            'restrict': restrict
+        }
+        value = str(value)
+        if int(length) == 1:
+            length = 8
+        return self.error_insert(attr=attribute, word="Max Length") if len(value) > int(length) else value if re.match("^{restrict}{{0,{limit}}}$".format(**format_reg), value) else self.error_insert(attr=attribute, word="Incorrect format")
+
     def prepare_statement(self):
-        self.sql = "UPDATE `{table}` SET ".format(table=self.table)
+        self.sql = "UPDATE `{table}`".format(table=self.table)
         try:
-            self.prepare_value()
+            self.prepare_argument()
         except Exception as e:
             self.log_error(e)
         try:
@@ -434,107 +463,143 @@ class PatchMethod(Method):
         except Exception as e:
             self.log_error(e)
 
-    def prepare_value(self):
-        if self.argument.has_key('key[]') and self.argument.has_key('value[]'):
-            attribute = self.argument.getvalue('key[]')
-            attribute_key = self.argument.getvalue('value[]')
-            if not isinstance(attribute, list):
-                attribute = attribute.split(',')
-                attribute_key = attribute_key.split(',')
-            # self.sql += ', '.join(map(lambda key, value: "`{key}`='{value}'".format(key=self.dictionary[key], value=value), attribute, attribute_key))
-            self.sql += ', '.join(map(lambda key, value: "`{key}`='{value}'".format(key=self.dictionary[key], value=self.option[key](value=value)), attribute, attribute_key))
-
+    def prepare_argument(self):
+        self.params_value = {}
+        self.params_conditon = {}
+        for key in self.argument.keys():
+            if 'val' in key and self.argument[key].value != 'None':
+                self.params_value[re.compile("=?\[(.*)\]").search(key).group(1)] = self.argument[key].value
+            elif 'cond' in key:
+                self.params_conditon[re.compile("=?\[(.*)\]").search(key).group(1)] = self.argument[key].value
 
     def prepare_condition(self):
-        pass
+        if len(self.params_value) > 0:
+            self.sql += ' SET ' + ', '.join(map(lambda item: "`{key}`='{value}'".format(key=self.dictionary[item], value=self.checker(item, self.params_value[item])), self.params_value))
+            if len(self.params_conditon) > 0:
+                self.sql += ' WHERE ' + ' and '.join(map(lambda item: "`{condition}`='{val}'".format(condition=self.dictionary[item], val=self.checker(item, self.params_conditon[item])), self.params_conditon)) + ';'
+            else:
+                self.error_update(word="Missing condition for update")
+        else:
+            self.error_update(word="Missing data for update")
 
     def execute_sql(self, sql):
+        self.db.mycursor.execute(sql)
+        self.db.connection.commit()
         self.output_type = 'plain'
         self.output_flag = True
-        self.output = self.sql
-        # print self.sql
-        # self.db.mycursor.execute(sql)
-        # self.db.connection.commit()
+        self.output = "Update row in {tlb} Succesfully".format(tlb=self.table)
 
-# length, restrict, attribute, value=None
 class UpdateProbe(PatchMethod):
     dictionary = GetProbe.dict_attribute
     table = 'PROBES'
-    temp = Method(None, None)
-    option = {
-        'pb_nom': partial(temp.verify_update, 32, '[a-zA-Z0-9-_.\s]', 'probe name'),
-        'madr': partial(temp.verify_update, 32, "(?:[0-9a-fA-F]:?)", 'mac address'),
-        'icoll': partial(temp.verify_update, 248, "[a-zA-Z0-9-_.]", 'collection id'),
-        'ipadr': partial(temp.verify_update, 32, "[a-zA-Z0-9-_.]", 'ip address'),
-        'pb_stat': partial(temp.verify_update, 1, "(?:Active|Deactive|Idle|1|2|3)", 'probe status'),
-    }
 
-    def prepare_condition(self):
-        ipb = self.argument["cond[ipb]"].value
-        self.sql += " WHERE `probe_id`='{ipb}';".format(ipb=ipb)
+    def ipFormatChk(self, ip_str):
+        if len(ip_str.split()) == 1:
+            ipList = ip_str.split('.')
+            if len(ipList) == 4:
+                for i, item in enumerate(ipList):
+                    try:
+                        ipList[i] = int(item)
+                    except Exception as e:
+                        self.log_error(e)
+                    if not isinstance(ipList[i], int):
+                        return self.error_update(word="incorrect ip format")
+                if max(ipList) < 256:
+                    return ip_str
+                else:
+                    return self.error_update(word="incorrect range ip")
+            else:
+                return self.error_update(word="incorrect ip format")
+        else:
+            return self.error_update(word="incorrect ip format")
+
+    def macFromatChk(self, mac):
+        if re.match("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$", mac.lower()):
+            return mac
+        else:
+            return self.error_update(word="Invalid MAC Address Format")
+
+    def checker(self, key, value):
+        option = {
+            'ipb': partial(self.verify_update, 32, "[a-zA-Z0-9\_\-]", 'probe_id'),
+            'pb_nom': partial(self.verify_update, 32, "[a-zA-Z0-9\_\-]", 'probe_name'),
+            'ipadr': partial(self.ipFormatChk),
+            'madr': partial(self.macFromatChk),
+            'pb_stat': partial(self.verify_update, 1, "(?:Active|Deactive|Idle|1|2|3)", 'probe_status'),
+        }
+        return option[key](value)
 
 
 class UpdateService(PatchMethod):
     dictionary = GetService.dict_attribute
     table = 'SERVICES'
-    temp = Method(None, None)
-    often_pattern = "[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/]"
-    option = {
-        'nsvc': partial(temp.verify_update, 32, '[a-zA-Z0-9\_\-]', 'service name'),
-        'trans_prot': partial(temp.verify_update, 1, '(?:tcp|udp|other|1|2|3)', 'transport_protocol'),
-        'f_cmd': partial(temp.verify_update, 256, often_pattern, 'file_command'),
-        'fn': partial(temp.verify_update, 64, '[a-zA-Z0-9\_\-]', 'file_name'),
-        'u_cmd': partial(temp.verify_update, 2083, often_pattern, 'udp_command'),
-        'svc_desc': partial(temp.verify_update, 2083, often_pattern, 'service_description'),
-        'svc_dest_ex': partial(temp.verify_update, 2083, often_pattern, 'destination_example'),
-    }
 
-    def prepare_condition(self):
-        isvc = self.argument["cond[isvc]"].value
-        self.sql += " WHERE `service_id`='{isvc}';".format(isvc=isvc)
-
+    def checker(self, key, value):
+        often_pattern = "[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/]"
+        option = {
+            'isvc': partial(self.verify_update, 11, '[0-9]', 'service_id'),
+            'nsvc': partial(self.verify_update, 32, '[a-zA-Z0-9\_\-]', 'service_name'),
+            'trans_prot': partial(self.verify_update, 1, '(?:tcp|udp|other|1|2|3)', 'transport_protocol'),
+            'f_cmd': partial(self.verify_update, 256, often_pattern, 'file_command'),
+            'fn': partial(self.verify_update, 64, '[a-zA-Z0-9\.\-\_]', 'file_name'),
+            'u_cmd': partial(self.verify_update, 2083, often_pattern, 'udp_command'),
+            'svc_desc': partial(self.verify_update, 2083, often_pattern, 'service_description'),
+            'svc_dest_ex': partial(self.verify_update, 2083, often_pattern, 'destination_example'),
+        }
+        return option[key](value)
 
 class UpdateDestination(PatchMethod):
     dictionary = GetDestination.dict_attribute
     table = 'DESTINATIONS'
-    temp = Method(None, None)
-    option = {
-        'isvc': partial(temp.verify_update, 11, '[0-9]', 'service_id'),
-        'ndest': partial(temp.verify_update, 248, '[a-zA-Z0-9\_\-\.\:\?\=\/]', 'destination_name'),
-        'ptdest': partial(temp.verify_update, 5, '[0-9]', 'destination_port'),
-        'dest_desc': partial(temp.verify_update, 2083, '[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/]', 'destination_description'),
-    }
 
-    def prepare_condition(self):
-        idest = self.argument["cond[idest]"].value
-        self.sql += " WHERE `destination_id`='{idest}';".format(idest=idest)
+    def checker(self, key, value):
+        option = {
+            'idest': partial(self.verify_update, 11, '[0-9]', 'destination_id'),
+            'isvc': partial(self.verify_update, 11, '[0-9]', 'service_id'),
+            'ndest': partial(self.verify_update, 248, '[a-zA-Z0-9\_\-\.\:\?\=\/]', 'destination_name'),
+            'ptdest': partial(self.verify_update, 5, '[0-9]', 'destination_port'),
+            'dest_desc': partial(self.verify_update, 2083, '[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/-_]', 'destination_description'),
+        }
+        return option[key](value)
 
 
 class UpdateRunningService(PatchMethod):
     dictionary = GetRunningService.dict_attribute
     table = 'RUNNING_SERVICES'
-    temp = Method(None, None)
-    option = {
-        'rning_svc_stat': partial(temp.verify_update, 1, '(?:Active|Deactive|1|2)', 'running service status')
-    }
 
-    def prepare_condition(self):
-        icoll = self.argument["cond[icoll]"].value
-        isvc = self.argument["cond[isvc]"].value
-        self.sql += " WHERE `collection_id`='{icoll}' and `service_id`='{isvc}';".format(icoll=icoll, isvc=isvc)
+    def checker(self, key, value):
+        option = {
+            'n_svc': partial(self.verify_update, 11, '[0-9]', 'no_svc'),
+            'isvc': partial(self.verify_update, 11, '[0-9]', 'service_id'),
+            'iclus': partial(self.verify_update, 11, '[0-9]', 'cluster_id'),
+            'rning_svc_stat': partial(self.verify_update, 1, '(?:Active|Deactive|1|2|)', 'running_svc_status'),
+            }
+        return option[key](value)
 
 class UpdateRunningDestination(PatchMethod):
     dictionary = GetRunningDestination.dict_attribute
     table = 'RUNNING_DESTINATIONS'
-    temp = Method(None, None)
-    option = {
-        'rning_dest_stat': partial(temp.verify_update, 1, '(?:Active|Deactive|1|2)', 'running destination status')
-    }
 
-    def prepare_condition(self):
-        icoll = self.argument["cond[icoll]"].value
-        idest = self.argument["cond[idest]"].value
-        self.sql += " WHERE `collection_id`='{icoll}' and `destination_id`='{idest}';".format(icoll=icoll, idest=idest)
+    def checker(self, key, value):
+        option = {
+            'n_dest': partial(self.verify_update, 11, '[0-9]', 'no_dest'),
+            'idest': partial(self.verify_update, 11, '[0-9]', 'destination_id'),
+            'iclus': partial(self.verify_update, 11, '[0-9]', 'cluster_id'),
+            'rning_dest_stat': partial(self.verify_update, 1, '(?:Active|Deactive|1|2|)', 'running_dest_status'),
+        }
+        return option[key](value)
+
+class UpdateCluster(PatchMethod):
+    dictionary = GetCluster.dict_attribute
+    table = 'CLUSTERS'
+    temp = Method(None, None)
+    def checker(self, key, value):
+        option = {
+            'iclus': partial(self.verify_update, 11, '[0-9]', 'cluster_id'),
+            'ipb': partial(self.verify_update, 32, "[a-zA-Z0-9\_\-]", 'probe_id'),
+            'clus_deesc': partial(self.verify_update, 1, '[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/-_]', 'running_dest_status'),
+        }
+        return option[key](value)
 
 
 class UpdateUser(PatchMethod):
@@ -547,17 +612,9 @@ class UpdateUser(PatchMethod):
 
 
 if __name__ == '__main__':
-    # print('Status: HTTP/1.0 404 Not Found\r\n')
-    # print('Content-Type: text/html\r\n\r\n')
-    # print('<html><head></head><body><h1>404 Not Found</h1></body></html>')
-
     print "Access-Control-Allow-Origin: *"
     print "Access-Control-Allow-Headers: X-HTTP-Method-Override"
 
-    # print "Status: 200 OK\r\n"
-    # print "Content-Type: text/html\r\n\r\n"
-
-    # print "Content-Type: application/json\n"
     environ = os.environ
     argument = cgi.FieldStorage()
     method_main = environ['REQUEST_METHOD'].lower()
@@ -571,11 +628,13 @@ if __name__ == '__main__':
         'tst': GetTestResult,
         'rning_svc': GetRunningService,
         'rning_dest': GetRunningDestination,
+        'clus': GetCluster,
     }
     dict_tlb_post = {
         'dest': InsertDestination,
         'persty': InsertUser,
         'svc': InsertService,
+        'clus': InsertCluster,
 
     }
     dict_tlb_del = {
@@ -583,6 +642,7 @@ if __name__ == '__main__':
         'svc': DeleteService,
         'pb': DeleteProbe,
         'persty': DeleteUser,
+        'clus': DeleteCluster,
     }
     dict_tlb_update = {
         'pb': UpdateProbe,
@@ -594,21 +654,28 @@ if __name__ == '__main__':
 
     }
 
+    def check_token():
+        agent_token = environ['HTTP_AUTHORIZATION']
+        jwt_token = token.JsonWebToken()
+        jwt_token.decrypt_token(agent_token)
+
+
     def do_it():
         try:
             check_override = environ['HTTP_X_HTTP_METHOD_OVERRIDE'].lower()
         except:
             check_override = None
 
-        if method_main == 'post':
-            if check_override == 'get':
-                example = dict_tlb[tlb](argument, environ)
-            else:
+        if check_override == 'get':
+            example = dict_tlb[tlb](argument, environ)
+        else:
+            check_token()
+            if method_main == 'post':
                 example = dict_tlb_post[tlb](argument, environ)
-        elif method_main == 'patch':
-            example = dict_tlb_update[tlb](argument, environ)
-        elif method_main == 'delete':
-            example = dict_tlb_del[tlb](argument, environ)
+            elif method_main == 'patch':
+                example = dict_tlb_update[tlb](argument, environ)
+            elif method_main == 'delete':
+                example = dict_tlb_del[tlb](argument, environ)
 
         try:
             if example.output_flag:
@@ -643,24 +710,69 @@ if __name__ == '__main__':
     #     #         print "Content-Type: text/html\n"
     #     #         example = dict_tlb_del[tlb](argument, environ)
 
+    def tester_header():
+        # import os
+        #
+        # print "Content-Type: text/html"
+        # print "Cache-Control: no-cache"
+        #
+        # print "<html><body>"
+        # for headername, headervalue in os.environ.iteritems():
+        #     if headername.startswith("HTTP_"):
+        #         print "<p>{0} = {1}</p>".format(headername, headervalue)
+        # print "</html></body>"
+
+        # argument = cgi.FieldStorage()
+        # print argument
+        # print "Content-Type: text/html\n"
+        # print "Access-Control-Allow-Origin: *"
+        # for a in environ:
+        #     print 'Var: ', a, 'Value: ', os.getenv(a), '<br>'
+        # print("all done")
+        # print dir(os.environ), '<br>'
+        # !/usr/local/bin/python
+        print "Content-type: text/html"
+        print
+        print "<pre>"
+        import os, sys
+        from cgi import escape
+        print "<strong>Python %s</strong>" % sys.version
+        keys = os.environ.keys()
+        keys.sort()
+        for k in keys:
+            print "%s\t%s" % (escape(k), escape(os.environ[k]))
+        print "</pre>"
+
 
     def tester():
         print "Content-Type: text/html\n"
         print sys.stdin.read()
-        print "------------------------------------ <br>", argument, "<br>"
-        print "------------------------------------ <br>", argument.list, "<br>"
+        # print "------------------------------------ <br>", argument, "<br>"
+        # print "------------------------------------ <br>", argument.list, "<br>"
+        # print "------------------------------------ <br>", argument.keys(), "<br>"
+        # new = dict((key, value) for key, value in argument.list.iteritems() if 'val' in key)
+
+        # print "------------------------------------ <br>", new, "<br>"
+
         # for i in range(len(argument.getvalue("key[]"))):
         #     print argument.getvalue("key[]")[i]
         #     print argument.getvalue("value[]")[i]
-
         print 'Hello -   ---------------------------------------------------------- <br><br>'
 
-        dict_attribute = {
-            'isvc': 'service_id',
-            'nsvc': 'service_name',
-            'fn': 'file_name',
-            'cmd': 'command'
-        }
+        params = {}
+        for key in argument.keys():
+            params[key] = argument[key].value
+
+        print params
+        # all_keys = argument.keys()
+        # print type(all_keys)
+
+        # dict_attribute = {
+        #     'isvc': 'service_id',
+        #     'nsvc': 'service_name',
+        #     'fn': 'file_name',
+        #     'cmd': 'command'
+        # }
         # list_result = map(lambda item: argument.has_key('cond['+item+']'), dict_attribute)
 
         # for i in argument.keys():
@@ -677,15 +789,16 @@ if __name__ == '__main__':
         #     'cond[' + item + ']')) if argument.has_key('cond[' + item + ']') else '1=1', dict_attribute))
         # print verbs
 
-        verbs = ""
-        verbs += " ORDER BY " + ', '.join(map(lambda item: "`{attr}` {sort}".format(attr=dict_attribute[item],
-                                                                                    sort=argument.getvalue(
-                                                                                        'order[{item}]'.format(
-                                                                                            item=item))) if argument.has_key(
-            'order[{xxx}]'.format(xxx=item)) else 'null', dict_attribute))
-        print verbs
+        # verbs = ""
+        # verbs += " ORDER BY " + ', '.join(map(lambda item: "`{attr}` {sort}".format(attr=dict_attribute[item],
+        #                                                                             sort=argument.getvalue(
+        #                                                                                 'order[{item}]'.format(
+        #                                                                                     item=item))) if argument.has_key(
+        #     'order[{xxx}]'.format(xxx=item)) else 'null', dict_attribute))
+        # print verbs
         # verbs += ", ".join(map(lambda item: , ))
 
 
     do_it()
     # tester()
+    # tester_header()

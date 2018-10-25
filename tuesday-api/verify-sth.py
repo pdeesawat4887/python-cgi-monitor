@@ -44,7 +44,7 @@ class Verify:
         print (time_end - time_start)*1000, 'ms'
 
 
-candy = Verify()
+# candy = Verify()
 # text = 'https://www.youtube.com/watch?v=1O2NlSRb-6o'
 # pat = '[a-zA-Z0-9\_\-\.\:\?\=\/]'
 #
@@ -89,33 +89,56 @@ candy = Verify()
 # sql.format(value=None,
 #            condition=None)
 
-
-
-data = [1, 2, 5, 10, -1]
-
-dict_attribute = {
-        'idest': 'destination_id',
-        'isvc': 'service_id',
-        'ndest': 'destination_name',
-        'ptdest': 'destination_port',
-        'dest_desc': 'destination_description',
-}
-
-data_attribute = {
-        'idest': '11',
-        'isvc': '1',
-        'ndest': 'www.google.com',
-        'ptdest': '443',
-}
-
-# output = filter(lambda x: data_attribute[x] if data_attribute[x] != None else None, dict_attribute)
-output = map(lambda data: "`{ori}`='{data}'".format(ori=dict_attribute[data], data=data_attribute[data]), data_attribute)
-
-# map(lambda key, value: "`{key}`='{value}'".format(key=self.dictionary[key], value=value), attribute, attribute_key)
-
-print tuple(output)
+# data = [1, 2, 5, 10, -1]
+#
+# dict_attribute = {
+#         'idest': 'destination_id',
+#         'isvc': 'service_id',
+#         'ndest': 'destination_name',
+#         'ptdest': 'destination_port',
+#         'dest_desc': 'destination_description',
+# }
+#
+# data_attribute = {
+#         'idest': '11',
+#         'isvc': '1',
+#         'ndest': 'www.google.com',
+#         'ptdest': '443',
+# }
+#
+# # output = filter(lambda x: data_attribute[x] if data_attribute[x] != None else None, dict_attribute)
+# output = map(lambda data: "`{ori}`='{data}'".format(ori=dict_attribute[data], data=data_attribute[data]), data_attribute)
+#
+# # map(lambda key, value: "`{key}`='{value}'".format(key=self.dictionary[key], value=value), attribute, attribute_key)
+#
+# print tuple(output)
 #
 # if "test" in wordFreqDic:
 #     print("Yes 'test' key exists in dict")
 # else:
 #     print("No 'test' key does not exists in dict")
+#
+db = maria.MySQLDatabase()
+
+def logging(user=None, type=None, table=None, sql=None, **kwargs):
+    id = db.mycursor.lastrowid
+    mapping = {
+        'PROBES': ('probe_name', 'probe_id'),
+        'SERVICES': ('service_name', 'service_id'),
+        'DESTINATIONS': ('destination_name', 'destination_id'),
+        'RUNNING_SERVICES': ('distinct(select service_name from SERVICES where RUNNING_SERVICES.service_id=SERVICES.service_id)', 'id'),
+        'RUNNING_DESTINATIONS': ('distinct(select destination_name from DESTINATIONS where RUNNING_DESTINATIONS.destination_id=DESTINATIONS.destination_id)', 'id'),
+    }
+    word = db.select("SELECT {select} FROM {table} WHERE {cond}='{val}';".format(select=mapping[table][0], table=table, cond=mapping[table][1], val=id))[0][0]
+
+    sql_insert = 'INSERT INTO `LOGGING_EVENTS` VALUES ("Null", "{user}", "{ty}", "{tlb}", "{word}", "{sql}", NOW())'.format(user=user, ty=type, tlb=table, word=word, sql=sql)
+    db.mycursor.execute(sql_insert)
+    db.connection.commit()
+
+db.insert('RUNNING_SERVICES', [('null', 'bkk2', '1', '2')])
+logging(user='admin', type='insert', table='RUNNING_SERVICES', sql="INSERT INTO RUNNING_SERVICES VALUES ('null', ''bkk2', '1', '2')")
+
+# def hello(fname=None, lname=None, **kwargs):
+#     print 'First name:', fname, 'Last Name:', lname
+#
+# hello(lname='fluke', fname='lastnamefluke')
