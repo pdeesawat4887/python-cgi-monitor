@@ -41,7 +41,7 @@ class JsonWebToken:
         print msg
         exit()
 
-# tester = JsonWebToken()
-# # print tester.create_token('admin')
+tester = JsonWebToken()
+print tester.create_token('admin')
 # # print tester.decrypt_token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwOi8vMTkyLjE2OC4yNTQuMzEiLCJ1c2VyX2lpZCI6ImFkbWluIiwiaXNzIjoiaHR0cDovLzE5Mi4xNjguMjU0LjMxIiwiZXhwIjoxNTQwNDYwNzgxLCJpYXQiOjE1NDA0NjA3MjEsIm5iZiI6MTU0MDQ2MDcyMX0.aeNeduALnvBKGQ3DdT2QHHdmnxQ7CJvs6U214YXQuiU')
 # tester.decrypt_token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwOi8vMTkyLjE2OC4yNTQuMzEiLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4yNTQuMzEiLCJ1c2VyIjoiYWRtaW4iLCJleHAiOjE1NDA1NzU0MzEsImlhdCI6MTU0MDQ4OTAzMSwibmJmIjoxNTQwNDg5MDMxfQ.X9sqO5Niz-FFS9t-EqaKyZq-qIeufNGwghcYMd31XSU')
