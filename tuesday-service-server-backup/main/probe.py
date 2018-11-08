@@ -52,6 +52,13 @@ class Probe:
             ipd=self.probe_id, nom='NULL', iadr=self.ip_address, madr=self.mac_address, stat=3)
         self.db.execute_sql(sql)
 
+    def details(self):
+        sql = "SELECT `probe_status`, `collection_id` FROM PROBES WHERE `probe_id`='{ipb}';".format(ipb=self.probe_id)
+        information = self.db.select(sql)
+        current_status = information[0][0]
+        current_collection = information[0][1]
+        return current_status, current_collection
+
     def get_active_services(self):
         sql = "SELECT `service_id`, `transport_protocol`, `file_command`, `file_name`, `udp_command` FROM SERVICES WHERE `service_id` IN (SELECT `service_id` FROM RUNNING_SERVICES WHERE `cluster_id`='{iclus}' AND `running_svc_status`='{status}');".format(
             iclus=self.cluster_id, status='Active')

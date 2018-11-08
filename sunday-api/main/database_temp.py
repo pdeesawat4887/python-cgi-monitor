@@ -63,28 +63,28 @@ class MySQLDatabase:
         self.connection.disconnect()
 
 
-if __name__ == '__main__':
-    hello = MySQLDatabase()
-    hello.mycursor.execute('SELECT COUNT(`service_id`) FROM SERVICES;')
-    svc = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`probe_id`) FROM PROBES;')
-    pb = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`destination_id`) FROM DESTINATIONS;')
-    dest = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE `result_status`!=1;')
-    test = hello.mycursor.fetchall()[0][0]
-
-    # json_data = map(lambda result: dict(zip(self.attribute, result)), data)
-
-    collection = [[svc, pb, dest, test]]
-    # print collection
-    oo = ['service', 'probe', 'destination', 'result']
-
-    # hhh = zip(collection, oo)
-    # print hhh
-    import json
-
-    print(json.dumps([dict(zip(oo, row)) for row in collection], indent=1))
+# if __name__ == '__main__':
+#     hello = MySQLDatabase()
+#     hello.mycursor.execute('SELECT COUNT(`service_id`) FROM SERVICES;')
+#     svc = hello.mycursor.fetchall()[0][0]
+#     hello.mycursor.execute('SELECT COUNT(`probe_id`) FROM PROBES;')
+#     pb = hello.mycursor.fetchall()[0][0]
+#     hello.mycursor.execute('SELECT COUNT(`destination_id`) FROM DESTINATIONS;')
+#     dest = hello.mycursor.fetchall()[0][0]
+#     hello.mycursor.execute('SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE `result_status`!=1;')
+#     test = hello.mycursor.fetchall()[0][0]
+#
+#     # json_data = map(lambda result: dict(zip(self.attribute, result)), data)
+#
+#     collection = [[svc, pb, dest, test]]
+#     # print collection
+#     oo = ['service', 'probe', 'destination', 'result']
+#
+#     # hhh = zip(collection, oo)
+#     # print hhh
+#     import json
+#
+#     print(json.dumps([dict(zip(oo, row)) for row in collection], indent=1))
 
     # json_data = map(lambda result: dict(zip(oo, result)), collection)
 

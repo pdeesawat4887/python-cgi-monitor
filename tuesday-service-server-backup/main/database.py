@@ -37,6 +37,15 @@ class MySQLDatabase:
             self.connection.commit()
         # self.connection.commit()
 
+    def execute_sql(self, sql):
+        try:
+            self.mycursor.execute(sql)
+        except:
+            self.connection.rollback()
+            raise
+        else:
+            self.connection.commit()
+
     def foreign_key_func(self, func='enable', **kwargs):
         option = {
             'disable': '0',
@@ -50,7 +59,7 @@ class MySQLDatabase:
         self.connection.commit()
 
     def execute_insert(self, table, list_data):
-        query = "INSERT IGNORE INTO %s " % table
+        query = "INSERT INTO %s " % table
         query += "VALUES (" + ",".join(["%s"] * len(list_data[0])) + ")"
         try:
             self.mycursor.executemany(query, list_data)
@@ -63,42 +72,16 @@ class MySQLDatabase:
         self.connection.disconnect()
 
 
-if __name__ == '__main__':
-    hello = MySQLDatabase()
-    hello.mycursor.execute('SELECT COUNT(`service_id`) FROM SERVICES;')
-    svc = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`probe_id`) FROM PROBES;')
-    pb = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`destination_id`) FROM DESTINATIONS;')
-    dest = hello.mycursor.fetchall()[0][0]
-    hello.mycursor.execute('SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE `result_status`!=1;')
-    test = hello.mycursor.fetchall()[0][0]
+db = MySQLDatabase()
+svc_sql = "SELECT `service_nam3e` FROM SERVICES WHERE `service_id`='{isvc}';"
+db.mycursor.execute(svc_sql.format(isvc=3))
+output = db.mycursor.fetchone()[0]
+print output
 
-    # json_data = map(lambda result: dict(zip(self.attribute, result)), data)
-
-    collection = [[svc, pb, dest, test]]
-    # print collection
-    oo = ['service', 'probe', 'destination', 'result']
-
-    # hhh = zip(collection, oo)
-    # print hhh
-    import json
-
-    print(json.dumps([dict(zip(oo, row)) for row in collection], indent=1))
-
-    # json_data = map(lambda result: dict(zip(oo, result)), collection)
-
-    # json_d = map(lambda item, attr: dict(item, attr), collection, oo)
-    # print json_d
-
-    #
-    # json_data = {'service': svc,
-    #              'probe': pb,
-    #              'destination': dest,
-    #              'test_result': test}
-    #
-    # print json_data
-
-    # hello.foreign_key_func()
-    # hello.insert('DESTINATIONS', [('NULL', 1, 'www.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrg', 12356789, 'hello girl')])
-    # print int(hello.select("SELECT count(`result_id`) FROM TESTRESULTS")[0][0])
+# if __name__ == '__main__':
+#     hello = MySQLDatabase()
+#     sql = "INSERT IGNORE INTO `PROBES` VALUES ('AB5LDCTUTJFUAH8P', 'updatename', '192.168.51.102', 'a0:99:9b:04:6c:ed', 'Idle', NOW(), NOW()) ON DUPLICATE KEY UPDATE `ip_address`='10.10.10.10', `last_updated`=NOW();"
+#     hello.execute_sql(sql)
+#     # hello.foreign_key_func()
+#     # hello.insert('DESTINATIONS', [('NULL', 1, 'www.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrgwww.gh.comwqeqeqewqewqsfdsfssfdsfsdffsjieurfojfiosjfikdjkkxdfserfewsfefrfrg', 12356789, 'hello girl')])
+#     # print int(hello.select("SELECT count(`result_id`) FROM TESTRESULTS")[0][0])
