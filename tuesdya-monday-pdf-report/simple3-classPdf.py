@@ -13,18 +13,20 @@ from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.charts.piecharts import Pie
 from reportlab.graphics.charts.legends import Legend
 from reportlab.lib.validators import Auto
-
+from random import randint
 
 class PDFCreation:
 
     def __init__(self, table, file_name):
         self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
+        self.master_font = "Times-Roman"
         self.styles = getSampleStyleSheet()
         self.table = table
         self.file_name = file_name
         self.db = mariadb.MySQLDatabase()
         self.flowables = []
         self.create_pdf()
+
 
     def create_pdf(self):
         self.doc = SimpleDocTemplate(self.file_name,
@@ -66,7 +68,7 @@ class PDFCreation:
             "<strong>DATE:</strong>&nbsp;&nbsp;&nbsp;&nbsp;{date}".format(date=time.strftime("%A %d %B %Y")),
             style=self.sp_left))
         self.flowables.append(
-            Paragraph("<strong>REPORT TOPIC:</strong>&nbsp;&nbsp;&nbsp;&nbsp;{topic}".format(topic=self.table),
+            Paragraph("<strong>REPORT TOPIC:</strong>&nbsp;&nbsp;&nbsp;&nbsp;{topic}".format(topic=self.table.upper()),
                       style=self.sp_left))
 
     def create_body(self):
@@ -84,18 +86,78 @@ class PDFCreation:
                                    ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
         return table
 
-    def create_pie_chart(self, data_list, label_list):
-        """"""
+    def get_style(self):
+        styles = getSampleStyleSheet()
+        style = styles["Normal"]
+        style.fontSize = 7
+        style.fontName = "Times-Roman"
+        style.alignment=TA_CENTER
+        return style
+
+    # def create_pie_chart(self, data_list, label_list, ):
+    #     """"""
+    #     print data_list
+    #     print label_list
+    #     data = [(item / (sum(data_list) * 1.0)) * 100 for item in data_list]
+    #     u_color = [colors.lawngreen, colors.red, colors.gray]
+    #     # color = [colors.lawngreen, colors.red, colors.gray]
+    #     # u_master = [randint(0, 100) for i in range(4)]
+    #     # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
+    #     # print u_color
+    #     # color = u_color
+    #     d = Drawing()
+    #     pie = Pie()
+    #     pie.x = 180
+    #     pie.y = 80
+    #     pie.data = data
+    #     pie.labels = label_list
+    #     for i, color in enumerate(u_color): pie.slices[i].fillColor = color
+    #     pie.slices.strokeWidth = 0.5
+    #     pie.slices.popout = 1.5
+    #     pie._seriesCount = 3
+    #     pie.sideLabels = 1
+    #
+    #     legend = Legend()
+    #     legend.alignment = 'right'
+    #     legend.x = 0
+    #     legend.y = 75
+    #     legend.colorNamePairs = [(z, (x, '     {val:.2f}%'.format(val=y))) for x, y, z in zip(pie.labels, data, u_color)]
+    #     d.add(legend)
+    #     d.add(pie)
+    #     return d
+
+    def create_pie_chart(self, data_list, label_list, user_color=None):
+        # print data_list
+        # print label_list
+
+        label_list = map(lambda item: item.upper(), label_list)
+
         data = [(item / (sum(data_list) * 1.0)) * 100 for item in data_list]
-        u_color = [colors.lawngreen, colors.red, colors.gray]
-        color = [colors.lawngreen, colors.red, colors.gray]
+
+        if user_color != None:
+            usage_color = user_color
+        else:
+            random_range = [randint(0, 100) for i in range(len(data_list))]
+            usage_color = map(lambda item: PCMYKColor(randint(0, item), randint(0, item), randint(0, item), randint(0, item)), random_range)
+            print user_color
+
+        # u_color = [colors.lawngreen, colors.red, colors.gray]
+        # color = [colors.lawngreen, colors.red, colors.gray]
+        # u_master = [randint(0, 100) for i in range(4)]
+        # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
+        # print u_color
+        # color = u_color
+
         d = Drawing()
         pie = Pie()
-        pie.x = 180
-        pie.y = 80
+        pie.x = 200
+        pie.y = 85
         pie.data = data
         pie.labels = label_list
-        for i, color in enumerate(color): pie.slices[i].fillColor = color
+
+        for i, color in enumerate(usage_color):
+            pie.slices[i].fillColor = color
+
         pie.slices.strokeWidth = 0.5
         pie.slices.popout = 1.5
         pie._seriesCount = 3
@@ -105,10 +167,51 @@ class PDFCreation:
         legend.alignment = 'right'
         legend.x = 0
         legend.y = 75
-        legend.colorNamePairs = [(z, (x, '     {val:.2f}%'.format(val=y))) for x, y, z in zip(pie.labels, data, u_color)]
+        legend.colorNamePairs = [(z, (x, '     {val:.2f}%'.format(val=y))) for x, y, z in zip(pie.labels, data, usage_color)]
         d.add(legend)
         d.add(pie)
-        return d
+
+        self.flowables.append(d)
+        # return d
+
+    def prepare_data_table(self, sql):
+
+        result_all = self.db.select(sql)
+        description = [field[0] for field in self.db.mycursor.description]
+
+        result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_all)
+        description_re = map(lambda item: Paragraph("<strong>{desc}</strong>".format(desc=str(item)), style=self.get_style()), description)
+        result_all.insert(0, description_re)
+
+        return result_all
+
+    def create_table_with_sql(self, sql, max_width=530, max_height=16):
+        output = self.prepare_data_table(sql)
+
+        row = len(output) - 1
+        column = len(output[0]) - 1
+
+        width = [max_width/len(output[0]) for i in range(len(output))]
+        height = [max_height for i in range(len(output))]
+
+        table = Table(output, colWidths=width, rowHeights=height, hAlign='CENTER')
+        table.setStyle(TableStyle([('ALIGN', (0, 0), (column, row), 'CENTER'),
+                                   ('VALIGN', (0, 0), (column, row), 'MIDDLE'),
+                                   ('FONTSIZE', (0, 0), (column, row), 8),
+                                   ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
+                                   ('BOX', (0, 0), (column, row), 0.25, colors.black),
+                                   ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
+
+        self.flowables.append(table)
+
+    def before_table_log(self, table):
+        log_sql = "SELECT `event_type`, count(`logging_id`) AS 'record' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' GROUP BY `event_type`;".format(tlb=table.upper())
+        log_result = self.db.select(log_sql)
+
+        if not log_result:
+            self.flowables.append(Paragraph("<strong>EMPTY LOGGING</strong>", style=self.sp_small_topi))
+        else:
+            map(lambda item: self.flowables.append(Paragraph("<strong>{main} Logging:</strong>{tab}{val} record(s)".format(tab=self.tab, main=item[0].capitalize(), val=item[1]), style=self.sp_left)), log_result)
 
 class PDFProbe(PDFCreation):
 
@@ -139,6 +242,11 @@ class PDFProbe(PDFCreation):
         self.break_part(1)
 
     def create_bar(self, data_list, data_label, x_axis):
+
+        print data_list
+        print data_label
+        print x_axis
+
         d = Drawing(width=180, height=200)
         bar = VerticalBarChart()
         bar.x = 150
@@ -270,7 +378,7 @@ class PDFProbe(PDFCreation):
         total_idle = Paragraph(
             "<strong>TOTAL IDLE PROBE:</strong>{tab}{total}{tab}probe(s)".format(tab=tab, total=len(data_idle) - 1),
             style=self.sp_left)
-        table_idle = self.create_table(length_idle, data_idle)
+        table_idle = self.create_table(length_idle, data_idle, 'LEFT')
 
         chart = self.create_pie_chart(data_list=[len(data_active) - 1, len(data_inactive) - 1, len(data_idle) - 1], label_list=['Active', 'Inactive', 'Idle'])
 
@@ -320,136 +428,270 @@ class PDFService(PDFCreation):
         sql_type = "SELECT COUNT(`service_id`) FROM SERVICES WHERE `transport_protocol`={protocol};".format(protocol=int(protocol) if type(protocol)==int else '"{}"'.format(protocol))
         return self.db.select(sql_type)[0][0]
 
-    def get_style(self):
-        styles = getSampleStyleSheet()
-        style = styles["Normal"]
-        style.fontSize = 7
-        style.fontName = "Times-Roman"
-        style.alignment=TA_CENTER
-        return style
-
-    def get_services(self, protocol):
-
-        sql_query = """SELECT `service_name` AS 'Name', `transport_protocol` AS 'Protocol', `file_name` AS 'File Name', `udp_command` AS 'UDP Msg.', `service_description` AS 'Description', 
-        `destination_example` AS 'Example of Destination', 
-        (SELECT `event_date` FROM LOGGING_EVENTS WHERE LOGGING_EVENTS.event_table='SERVICES' AND LOGGING_EVENTS.`event_name`=SERVICES.`service_name` ORDER BY `event_date` DESC LIMIT 1) AS 'Last Update',
-        (SELECT COUNT(`destination_id`) FROM DESTINATIONS WHERE SERVICES.service_id=DESTINATIONS.service_id) AS 'Total Destination'
-        FROM SERVICES WHERE `transport_protocol`={trans_prot};""".format(trans_prot=int(protocol) if type(protocol) == int else "'{}'".format(protocol))
-
-
-        result_all_svc = self.db.select(sql_query)
-        description_svc = [field[0] for field in self.db.mycursor.description]
-
-        result_all_svc.insert(0, description_svc)
-
-        length_attribute = [i for i in range(len(description_svc))]
-        length_service = map(lambda val: max(map(lambda item: len(str(item[val]))*3.25 if len(str(item[val])) > 10 else len(str(item[val]))*5 if item[val] != None else 60, result_all_svc)), length_attribute)
-
-        result_all_svc = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_all_svc)
-        return length_service, result_all_svc
-
-    def prepare_data_table(self, sql):
-
-        result_all = self.db.select(sql)
-        description = [field[0] for field in self.db.mycursor.description]
-
-        result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_all)
-        description_re = map(lambda item: Paragraph("<strong>{}</strong>".format(str(item)), style=self.get_style()), description)
-        result_all.insert(0, description_re)
-
-        return result_all
-
-    def create_logging(self):
-        logging_sql = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Service Name', `event_date` AS 'Time', DATEDIFF(NOW(), `event_date`) AS 'Day Ago' FROM LOGGING_EVENTS WHERE `event_table`='SERVICES' ORDER BY 'Time' ASC;"
-
-        result_log = self.db.select(logging_sql)
-        description_log = [field[0] for field in self.db.mycursor.description]
-        result_log.insert(0, description_log)
-
-        length_attribute = [i for i in range(len(description_log))]
-        length_log = map(lambda val: max(map(lambda item: len(str(item[val]))*8 if item[val] != None else 60, result_log)), length_attribute)
-        result_log = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_log)
-
-        return length_log, result_log
-
-        # action = ['insert', 'update', 'delete']
-        # logging_data = map()
-
     def create_body(self):
+        sql_query = """SELECT `service_name` AS 'Name', `transport_protocol` AS 'Protocol', `file_name` AS 'File Name', `udp_command` AS 'UDP Msg.', `service_description` AS 'Description', 
+                `destination_example` AS 'Example of Destination', 
+                (SELECT `event_date` FROM LOGGING_EVENTS WHERE LOGGING_EVENTS.event_table='SERVICES' AND LOGGING_EVENTS.`event_name`=SERVICES.`service_name` ORDER BY `event_date` DESC LIMIT 1) AS 'Last Update',
+                (SELECT COUNT(`destination_id`) FROM DESTINATIONS WHERE SERVICES.service_id=DESTINATIONS.service_id) AS 'Total Destination'
+                FROM SERVICES WHERE `transport_protocol`='{trans_prot}';"""
 
         protocol_main = ['tcp', 'udp', 'other']
         protocol_num = map(lambda item: self.get_service_type(protocol=item), protocol_main)
-        protocol_data = map(lambda item: self.get_services(protocol=item), protocol_main)
-
         self.break_part(1)
         self.flowables.append(self.create_pie_chart(data_list=protocol_num, label_list=[protocol.upper() for protocol in protocol_main]))
 
-        length = map(lambda item: item[0], protocol_data)
-        max_length = map(lambda index: max(map(lambda item: item[index], length)), [i for i in range(len(length[0]))])
-
-        for key, val, data in zip(protocol_main, protocol_num, protocol_data):
+        for key, val in zip(protocol_main, protocol_num):
             self.flowables.append(Paragraph("<strong>TOTAL {main} service:</strong>{tab}{val} service(s)".format(main=key.upper(), val=val, tab=self.tab), style=self.sp_left))
-            self.flowables.append(self.create_table(length=max_length, data=data[1], align='LEFT'))
+            self.create_table_with_sql(sql_query.format(trans_prot=key), max_height=32)
             self.break_part(1)
 
-        self.flowables.append(PageBreak())
-
-        logging_sql = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Service Name', `event_date` AS 'Time', DATEDIFF(NOW(), `event_date`) AS 'Day Ago' FROM LOGGING_EVENTS WHERE `event_table`='SERVICES' ORDER BY 'Time' ASC;"
-        self.flowables.append(Paragraph("<strong>SERVICE LOGGING</strong>", style=self.sp_left))
-        self.before_table_log(table='SERVICES')
-        self.break_part(1)
-        # self.flowables.append(Paragraph("<strong>DETAILS LOGGING ABOUT SERVICE:</strong>{tab}{val} record(s)".format(val=len(result_log)-1, tab=self.tab), style=self.sp_left))
-        self.create_table_with_sql(logging_sql)
-
         # self.flowables.append(PageBreak())
+        self.break_part(1)
 
-        self.break_part(1)
-        self.flowables.append(Paragraph("<strong>SUMMARY SERVICE AND TEST RESULTS</strong>", style=self.sp_left))
-        self.break_part(1)
-        testresult = """SELECT (SELECT `probe_name` FROM PROBES WHERE PROBES.probe_id=(SELECT `probe_id` FROM CLUSTERS WHERE CLUSTERS.cluster_id=x.cluster_id)) AS 'Probe Name'
-                        ,(SELECT `service_name` FROM SERVICES WHERE x.service_id=SERVICES.service_id) AS 'Service Name'
-                        , (select count(result_id) from TESTRESULTS y where result_status=1 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Pass'
-                        , (select count(result_id) from TESTRESULTS y where result_status=2 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Fail'
-                        , (select count(result_id) from TESTRESULTS y where result_status=3 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Error'
-                        , COUNT(`result_id`) AS 'Amount Test' FROM TESTRESULTS x GROUP BY `cluster_id` , `service_id`"""
-        self.create_table_with_sql(testresult)
-
-        self.break_part(1)
         self.flowables.append(Paragraph("<strong>STATUS OF SERVICE</strong>", style=self.sp_left))
         self.break_part(1)
         running = "SELECT (SELECT `probe_name` FROM PROBES WHERE PROBES.probe_id=(SELECT `probe_id` FROM CLUSTERS WHERE CLUSTERS.cluster_id=RUNNING_SERVICES.cluster_id)) AS 'Probe Name', (SELECT `service_name` FROM SERVICES WHERE RUNNING_SERVICES.service_id=SERVICES.service_id) AS 'Service Name', `running_svc_status` AS 'Status' FROM RUNNING_SERVICES;"
         self.create_table_with_sql(running)
 
+        # self.flowables.append(PageBreak())
+        self.break_part(1)
 
+        self.flowables.append(Paragraph("<strong>SUMMARY SERVICE AND TEST RESULTS</strong>", style=self.sp_left))
+        self.break_part(1)
+        test_result = """SELECT (SELECT `probe_name` FROM PROBES WHERE PROBES.probe_id=(SELECT `probe_id` FROM CLUSTERS WHERE CLUSTERS.cluster_id=x.cluster_id)) AS 'Probe Name'
+                        ,(SELECT `service_name` FROM SERVICES WHERE x.service_id=SERVICES.service_id) AS 'Service Name'
+                        , (select count(result_id) from TESTRESULTS y where result_status=1 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Pass'
+                        , (select count(result_id) from TESTRESULTS y where result_status=2 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Fail'
+                        , (select count(result_id) from TESTRESULTS y where result_status=3 and x.cluster_id=y.cluster_id and x.service_id=y.service_id) AS 'Error'
+                        , COUNT(`result_id`) AS 'Amount Test' FROM TESTRESULTS x GROUP BY `cluster_id` , `service_id`"""
+        self.create_table_with_sql(test_result)
 
+        # self.flowables.append(PageBreak())
+        self.break_part(1)
 
-    def before_table_log(self, table):############## MOVE TO PARENT
-        log_sql = "SELECT `event_type`, count(`logging_id`) AS 'record' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' GROUP BY `event_type`;".format(tlb=table.upper())
-        log_result = self.db.select(log_sql)
-        map(lambda item: self.flowables.append(Paragraph("<strong>{main} Logging:</strong>{tab}{val} record(s)".format(tab=self.tab, main=item[0].capitalize(), val=item[1]), style=self.sp_left)), log_result)
+        logging_sql = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Service Name', `event_date` AS 'Time', DATEDIFF(NOW(), `event_date`) AS 'Day Ago' FROM LOGGING_EVENTS WHERE `event_table`='SERVICES' ORDER BY 'Time' ASC;"
+        self.flowables.append(Paragraph("<strong>SERVICE LOGGING</strong>", style=self.sp_left))
+        self.before_table_log(table='SERVICES')
+        self.break_part(1)
+        self.create_table_with_sql(logging_sql)
 
-    def create_table_with_sql(self, sql, max_width=530, max_height=19):
-        output = self.prepare_data_table(sql)
+class PDFDestination(PDFCreation):
 
-        row = len(output) - 1
-        column = len(output[0]) - 1
+    def get_destination_type(self):
+        sql_query = "SELECT (SELECT `service_name` FROM SERVICES WHERE SERVICES.service_id=DESTINATIONS.service_id) AS 'Service Name', COUNT(`destination_id`) FROM DESTINATIONS GROUP BY `service_id`"
+        result_query = self.db.select(sql_query)
+        label = map(lambda item: item[0], result_query)
+        data = map(lambda item: item[1], result_query)
+        self.create_pie_chart(data_list=data, label_list=label)
+        return label, data
 
-        width = [max_width/len(output[0]) for i in range(len(output))]
-        height = [max_height for i in range(len(output))]
+    def create_body(self):
+        dest_label, dest_data = self.get_destination_type()
+        sql_condition = """SELECT `destination_name` AS 'Destination', `destination_port` AS 'Port'
+                        , (SELECT `service_name` FROM SERVICES WHERE SERVICES.service_id=DESTINATIONS.service_id) AS 'Service Name', `destination_description` AS 'Description'
+                        , (SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE TESTRESULTS.destination_id=DESTINATIONS.destination_id) AS 'Amount Test'
+                        , (SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE result_status=1 AND TESTRESULTS.destination_id=DESTINATIONS.destination_id) AS 'Amount Pass'
+                        , (SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE result_status=2 AND TESTRESULTS.destination_id=DESTINATIONS.destination_id) AS 'Amount Fail'
+                        , (SELECT COUNT(`result_id`) FROM TESTRESULTS WHERE result_status=3 AND TESTRESULTS.destination_id=DESTINATIONS.destination_id) AS 'Amount Error'
+                        FROM DESTINATIONS WHERE `service_id`=(SELECT `service_id` FROM SERVICES WHERE SERVICES.`service_name`='{svc}') ORDER BY `service_id` ASC"""
+        self.flowables.append(Paragraph("<strong>DESTINATION DETAIL</strong>",style=self.sp_left))
 
-        table = Table(output, colWidths=width, rowHeights=height, hAlign='CENTER')
-        table.setStyle(TableStyle([('ALIGN', (0, 0), (column, row), 'CENTER'),
-                                   ('VALIGN', (0, 0), (column, row), 'MIDDLE'),
-                                   ('FONTSIZE', (0, 0), (column, row), 8),
-                                   ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
-                                   ('BOX', (0, 0), (column, row), 0.25, colors.black),
-                                   ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
+        for svc, val in zip(dest_label, dest_data):
+            self.flowables.append(Paragraph("TOTAL DESTINATION(S) IN{tab}<strong>{svc}</strong>:{tab}{val} destination(s).".format(tab=self.tab, svc=svc.capitalize(), val=val), style=self.sp_small_topi))
+            self.create_table_with_sql(sql_condition.format(svc=svc))
+            self.break_part(1)
 
-        self.flowables.append(table)
+        running_dest = """SELECT (SELECT `probe_name` FROM PROBES WHERE PROBES.probe_id=(SELECT `probe_id` FROM CLUSTERS WHERE CLUSTERS.cluster_id=RUNNING_DESTINATIONS.cluster_id)) AS 'Probe Name'
+                        , (SELECT `destination_name` FROM DESTINATIONS WHERE RUNNING_DESTINATIONS.destination_id=DESTINATIONS.destination_id) AS 'Destination Name'
+                        , (SELECT `destination_port` FROM DESTINATIONS WHERE RUNNING_DESTINATIONS.destination_id=DESTINATIONS.destination_id) AS 'Port'
+                        , (SELECT `destination_description` FROM DESTINATIONS WHERE RUNNING_DESTINATIONS.destination_id=DESTINATIONS.destination_id) AS 'Description'
+                        ,`running_dest_status` AS 'Status' FROM RUNNING_DESTINATIONS;"""
+        self.flowables.append(Paragraph("<strong>STATUS OF DESTINATION</strong>", style=self.sp_left))
+        self.create_table_with_sql(running_dest)
+
+        self.break_part(1)
+
+        test_result = """SELECT (SELECT `probe_name` FROM PROBES WHERE PROBES.probe_id=(SELECT `probe_id` FROM CLUSTERS WHERE CLUSTERS.cluster_id=TESTRESULTS.cluster_id)) AS 'Probe Name'
+                      , (SELECT `service_name` FROM SERVICES WHERE SERVICES.service_id=TESTRESULTS.service_id) AS 'Service Name'
+                      , (SELECT `destination_name` FROM DESTINATIONS WHERE DESTINATIONS.destination_id=TESTRESULTS.destination_id) AS 'Destination Name'
+                      , (SELECT `destination_port` FROM DESTINATIONS WHERE DESTINATIONS.destination_id=TESTRESULTS.destination_id) AS 'Port'
+                      , (SELECT `destination_description` FROM DESTINATIONS WHERE DESTINATIONS.destination_id=TESTRESULTS.destination_id) AS 'Description'
+                      , ROUND(AVG(`round_trip_time`), 3) AS 'Avg. RTT (ms)', ROUND(AVG(`download`)/POWER(10,6), 3) AS 'Avg. Download (Mbps)', ROUND(AVG(`upload`)/POWER(10,6), 3) AS 'Avg. Upload (Mbps)', AVG(`other`) AS 'Avg. Other Value'
+                      FROM TESTRESULTS WHERE `result_status`=1 GROUP BY `cluster_id` , `destination_id`;"""
+        self.flowables.append(Paragraph("<strong>SUMMARY DESTINATION AND TEST RESULTS</strong>", style=self.sp_left))
+        self.create_table_with_sql(test_result, max_height=25)
+        self.break_part(1)
+
+class PDFLogging(PDFCreation):
+
+    def create_log_bar_chart(self):
+        sql_query = "SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE `user`='{usr}' AND `event_type`='{type}'"
+        event_action = ['insert', 'update', 'delete']
+        all_user = map(lambda item: item[0], self.db.select("SELECT DISTINCT(`user`) FROM LOGGING_EVENTS;"))
+
+        output = map(lambda item: map(lambda val: self.db.select(sql_query.format(usr=val, type=item))[0][0], all_user), event_action)
+        self.create_bar_two(data_list=output, label_x_axis=all_user, contain=event_action)
+
+    def create_bar(self, data_list, data_label, x_axis):
+        d = Drawing(width=530, height=200)
+        bar = VerticalBarChart()
+        bar.x = 180
+        bar.y = 60
+        bar.strokeColor = colors.black
+        bar.barLabelFormat = '%s'
+        bar.barLabels.nudge = 6
+        bar.barLabels.fontSize = 6
+
+        bar.categoryAxis.labels.dx = +5
+        bar.categoryAxis.labels.dy = -7
+        bar.categoryAxis.labels.boxAnchor = 'ne'
+        bar.categoryAxis.labels.fontSize = 6
+        bar.categoryAxis.labels.fontName = 'Helvetica'
+        bar.categoryAxis.tickDown = 5
+        bar.categoryAxis.categoryNames = data_label
+
+        bar.valueAxis.forceZero = 1
+        bar.valueAxis.labels.fontSize = 8
+        bar.valueAxis.labels.fontName = 'Helvetica'
+        bar.valueAxis.rangeRound = 'both'
+        bar.valueAxis.valueMin = 0
+        bar.valueAxis.visibleGrid = 1
+        bar.valueAxis.visibleAxis = 1
+        bar.valueAxis.labels.dx = -10
+
+        bar.barSpacing = 2.5
+        bar.groupSpacing = 10
+
+        bar.data = data_list
+
+        for i in range(len(data_list)):
+            bar.bars[i].name = x_axis[i].upper()
+
+        legend = Legend()
+        legend.alignment = 'right'
+        legend.boxAnchor = 'sw'
+        legend.columnMaximum = 3
+        legend.dx = 8
+        legend.dxTextSpace = 4
+        legend.dy = 6
+        legend.fontSize = 8
+        legend.fontName = 'Helvetica'
+        legend.strokeColor = None
+        legend.strokeWidth = 0
+        legend.subCols.minWidth = 55
+        legend.variColumn = 1
+        legend.y = 1
+        legend.deltay = 10
+        legend.colorNamePairs = Auto(obj=bar)
+        legend.autoXPadding = 65
+
+        YLabel = Label()
+        YLabel.angle = 90
+        YLabel.fontSize = 6
+        YLabel.height = 0
+        YLabel.maxWidth = 100
+        YLabel.textAnchor = 'middle'
+        YLabel.x = 12
+        YLabel.y = 80
+        YLabel._text = "User Modify"
+
+        d.add(bar)
+        d.add(legend)
+        d.add(YLabel)
+        self.flowables.append(d)
+        self.flowables.append(PageBreak())
+
+    def create_bar_two(self, data_list, label_x_axis, contain, bar_width=530, bar_height=200):
+        d = Drawing(width=bar_width, height=bar_height)
+        bar = VerticalBarChart()
+        bar.x = bar.width
+        bar.y = bar.height
+        bar.strokeColor = colors.black
+        bar.barLabelFormat = '%s'
+        bar.barLabels.nudge = 7
+        bar.barLabels.fontSize = 6
+
+        ################# X AXIS PROPERTIES #################
+        bar.categoryAxis.labels.dx = +6
+        bar.categoryAxis.labels.boxAnchor = 'ne'
+        bar.categoryAxis.labels.fontSize = 6.5
+        bar.categoryAxis.labels.fontName = self.master_font
+        bar.categoryAxis.tickDown = 5
+        bar.categoryAxis.categoryNames = label_x_axis
+        #####################################################
+
+        ################# Y AXIS PROPERTIES #################
+        bar.valueAxis.forceZero = 1
+        bar.valueAxis.labels.fontSize = 8
+        bar.valueAxis.labels.fontName = 'Helvetica'
+        bar.valueAxis.rangeRound = 'both'
+        bar.valueAxis.valueMin = 0
+        bar.valueAxis.visibleGrid = 1
+        bar.valueAxis.visibleAxis = 1
+        bar.valueAxis.labels.dx = -10
+        #####################################################
+
+        bar.barSpacing = 2.5
+        bar.groupSpacing = 10
+
+        bar.data = data_list
+
+        for i in range(len(data_list)):
+            bar.bars[i].name = contain[i].upper()
+
+        legend = Legend()
+        legend.alignment = 'right'
+        legend.boxAnchor = 'sw'
+        legend.columnMaximum = 3
+        legend.dx = 8
+        legend.dxTextSpace = 4
+        legend.dy = 6
+        legend.fontSize = 8
+        legend.fontName = 'Helvetica'
+        legend.strokeColor = None
+        legend.strokeWidth = 0
+        legend.subCols.minWidth = 55
+        legend.variColumn = 1
+        legend.y = 1
+        legend.deltay = 10
+        legend.colorNamePairs = Auto(obj=bar)
+        legend.autoXPadding = 65
+
+        YLabel = Label()
+        YLabel.angle = 90
+        YLabel.fontSize = 6
+        YLabel.height = 0
+        YLabel.maxWidth = 100
+        YLabel.textAnchor = 'middle'
+        YLabel.x = 12
+        YLabel.y = 80
+        YLabel._text = "User Modify"
+
+        d.add(bar)
+        d.add(legend)
+        d.add(YLabel)
+        self.flowables.append(d)
+        self.flowables.append(PageBreak())
+
+    def create_body(self):
+        log_table = ['PROBES','SERVICES','DESTINATIONS','RUNNING_SERVICES','RUNNING_DESTINATIONS','NOTIFY_TOKEN','NOTIFICATIONS','DASHBOARD']
+        sql_amount = "SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE `event_table`='{tlb}';"
+        sql_log_detail = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Service Name', `event_date` AS 'Time' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' ORDER BY 'Time' ASC;"
+
+        # for item in log_table:
+        #     total = self.db.select(sql_amount.format(tlb=item))[0][0]
+        #     self.flowables.append(Paragraph("TOTAL {tlb} LOG:{tab}{val} record(s)".format(tab=self.tab, tlb=item.replace('_', ' '), val=total), style=self.sp_header))
+        #     self.create_table_with_sql(sql=sql_log_detail.format(tlb=item), max_height=25)
+        #     self.flowables.append(PageBreak())
+
+        self.create_log_bar_chart()
 
 if __name__ == '__main__':
     # pass
     # probe_report = PDFProbe('Probe', 'probe_report_gen1.pdf')
-    # probe_report.get_fk_cluster_information(1)
-    service_report = PDFService('Service', 'service_report_gen1.pdf')
+    # probe_report.get_Rfk_cluster_information(1)
+    # service_report = PDFService('Service', 'service_report_gen1.pdf')
+    # destination_report = PDFDestination('Destination', 'destination_report_gen1.pdf')
+    log_report = PDFLogging('Logging Event', 'logging_report_gen1.pdf')
+    # random_color()
 

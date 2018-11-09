@@ -2,65 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f642c7a-1d48-4cc4-a46c-17c647fdc659" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/sunday-api/api5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sunday-api/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sunday-api/main/database_temp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sunday-api/main/jwt_server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/first_impression.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/database-backup-1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/monitor_server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/service-return.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/main/service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/server_notify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/server_status_probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/service_ping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/service_speedtest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/service_website.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/service_youtube.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/cookie.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/dictionary.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/dnsspecify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/print-py.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/py-ping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/regex-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/running.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/server_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/service_website_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/sftp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/split-py.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/string-format.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/tcp-ip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/create_csv.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/monitor_server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/main/service-return.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/server_notify.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/server_status_probe.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/server-add-svc-dest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/server_check.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesday-service-server/test/string-format.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/main/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/main/database-backup-1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/main/database.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/py-test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/reportlab-example-piechart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple-barchart.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple1-reportlab.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple2-reportlab.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple3-classPdf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/pacharapoldeesawat.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-api/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-api/api5.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-api/api5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-api/main/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-api/main/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-service-server/main/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-service-server/main/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-service-server/main/probe.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-service-server/main/probe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-service-server/main/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-service-server/main/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuesday-service-server/server-add-svc-dest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesday-service-server-backup/test/server-add-svc-dest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple-barchart.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple-barchart.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple3-classPdf.py" beforeDir="false" afterPath="$PROJECT_DIR$/tuesdya-monday-pdf-report/simple3-classPdf.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -94,7 +39,7 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$reportlab_example_piechart.coverage" NAME="reportlab-example-piechart Coverage Results" MODIFIED="1541523769492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesdya-monday-pdf-report" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3_p.coverage" NAME="POP3-p Coverage Results" MODIFIED="1533058586846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$split_text.coverage" NAME="split-text Coverage Results" MODIFIED="1539787924461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesday-service-server/test" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$simple_barchart.coverage" NAME="simple-barchart Coverage Results" MODIFIED="1541697695367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesdya-monday-pdf-report" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$simple_barchart.coverage" NAME="simple-barchart Coverage Results" MODIFIED="1541702926485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesdya-monday-pdf-report" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$base6_4.coverage" NAME="base6_4 Coverage Results" MODIFIED="1540791066557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sunday-api" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$POP3.coverage" NAME="POP3 Coverage Results" MODIFIED="1533050634806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py/conf" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$running_server.coverage" NAME="running_server Coverage Results" MODIFIED="1536045400030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service" />
@@ -183,7 +128,7 @@
     <SUITE FILE_PATH="coverage/python_cgi_monitor$Script2.coverage" NAME="Script2 Coverage Results" MODIFIED="1534931446107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/file" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$api5__1_.coverage" NAME="api5 (1) Coverage Results" MODIFIED="1540735209500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sunday-api" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$jwt_server__1_.coverage" NAME="jwt_server (1) Coverage Results" MODIFIED="1540781865968" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sunday-api/main" />
-    <SUITE FILE_PATH="coverage/python_cgi_monitor$simple3_classPdf.coverage" NAME="simple3-classPdf Coverage Results" MODIFIED="1541702342003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesdya-monday-pdf-report" />
+    <SUITE FILE_PATH="coverage/python_cgi_monitor$simple3_classPdf.coverage" NAME="simple3-classPdf Coverage Results" MODIFIED="1541759363928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tuesdya-monday-pdf-report" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$sftp.coverage" NAME="sftp Coverage Results" MODIFIED="1536746460261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-re/test" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$IMAP4_py.coverage" NAME="IMAP4-py Coverage Results" MODIFIED="1533096850153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/speedtest-py" />
     <SUITE FILE_PATH="coverage/python_cgi_monitor$playground_py.coverage" NAME="playground-py Coverage Results" MODIFIED="1534842727683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/service-py/playground" />
@@ -195,66 +140,33 @@
       <file leaf-file-name="simple3-classPdf.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/simple3-classPdf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="448" lean-forward="true" selection-start-line="448" selection-end-line="448" />
+            <state relative-caret-position="460">
+              <caret line="617" column="39" selection-start-line="617" selection-start-column="39" selection-end-line="617" selection-end-column="39" />
               <folding>
-                <element signature="e#769#4718#0" />
-                <element signature="e#815#1054#0" />
-                <element signature="e#1090#2382#0" />
-                <element signature="e#2424#2567#0" />
-                <element signature="e#2606#3073#0" />
-                <element signature="e#3110#3114#0" />
-                <element signature="e#3173#3827#0" />
-                <element signature="e#3336#3804#0" />
-                <element signature="e#3892#4718#0" />
-                <element signature="e#4754#14000#0" />
-                <element signature="e#4809#5788#0" />
-                <element signature="e#0#138#1" />
-                <element signature="e#22#95#0" />
-                <element signature="e#0#49#1" />
-                <element signature="e#0#93#0" />
-                <element signature="e#5326#5564#0" />
-                <element signature="e#5855#7833#0" />
-                <element signature="e#7888#9000#0" />
-                <element signature="e#0#195#0" />
-                <element signature="e#8199#8460#0" />
-                <element signature="e#0#45#0" />
-                <element signature="e#9039#9851#0" />
-                <element signature="e#0#243#0" />
-                <element signature="e#9907#10063#0" />
-                <element signature="e#0#108#1" />
-                <element signature="e#10100#14000#0" />
-                <element signature="e#12649#12697#0" />
-                <element signature="e#14084#14305#0" />
-                <element signature="e#0#81#0" />
-                <element signature="e#14340#14524#0" />
-                <element signature="e#14573#15965#0" />
-                <element signature="e#14585#15215#0" />
-                <element signature="e#0#624#0" />
-                <element signature="e#439#537#0" />
-                <element signature="e#16095#16869#0" />
-                <element signature="e#16012#16555#0" />
-                <element signature="e#0#227#0" />
-                <element signature="e#16922#16963#0" />
-                <element signature="e#18397#18691#0" />
-                <element signature="e#0#227#0" />
-                <element signature="e#19360#20125#0" />
-                <element signature="e#0#759#1" />
-                <element signature="e#8#134#0" />
-                <element signature="e#63#133#0" />
-                <element signature="e#154#228#0" />
-                <element signature="e#251#375#0" />
-                <element signature="e#390#514#0" />
-                <element signature="e#529#653#0" />
-                <element signature="e#0#333#0" />
-                <element signature="e#8#149#0" />
-                <element signature="e#63#148#0" />
-                <element signature="e#169#258#0" />
-                <element signature="e#0#130#0" />
-                <element signature="e#20539#21400#0" />
-                <element signature="e#20892#21360#0" />
-                <element signature="e#19219#19408#0" />
-                <element signature="e#17273#17279#0" />
+                <element signature="e#2450#2593#0" />
+                <element signature="e#2632#3099#0" />
+                <element signature="e#3136#3140#0" />
+                <element signature="e#3385#3853#0" />
+                <element signature="e#3915#4099#0" />
+                <element signature="e#4105#4159#0" />
+                <element signature="e#5454#7045#0" />
+                <element signature="e#5079#5547#0" />
+                <element signature="e#5629#6506#0" />
+                <element signature="e#5998#6466#0" />
+                <element signature="e#8470#9027#0" />
+                <element signature="e#8195#9307#0" />
+                <element signature="e#8506#8767#0" />
+                <element signature="e#9346#10158#0" />
+                <element signature="e#10214#10370#0" />
+                <element signature="e#12956#13004#0" />
+                <element signature="e#14391#14612#0" />
+                <element signature="e#17778#18440#0" />
+                <element signature="e#18417#18711#0" />
+                <element signature="e#19644#20529#0" />
+                <element signature="e#22244#22686#0" />
+                <element signature="e#22799#23731#0" />
+                <element signature="e#24342#25298#0" />
+                <element signature="e#26928#28906#0" />
               </folding>
             </state>
           </provider>
@@ -263,8 +175,8 @@
       <file leaf-file-name="simple-barchart.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/simple-barchart.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="180">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -272,7 +184,7 @@
       <file leaf-file-name="py-test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/py-test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
+            <state relative-caret-position="120">
               <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -293,8 +205,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ping</find>
-      <find>par</find>
       <find>)</find>
       <find>#</find>
       <find>4347</find>
@@ -323,6 +233,8 @@
       <find>TA_LE</find>
       <find>max</find>
       <find>LOGGING</find>
+      <find>color</find>
+      <find>capi</find>
     </findStrings>
     <replaceStrings>
       <replace>load_setting</replace>
@@ -408,11 +320,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1665" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="256" />
     <option name="y" value="22" />
-    <option name="width" value="1935" />
-    <option name="height" value="1019" />
+    <option name="width" value="1680" />
+    <option name="height" value="989" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -630,13 +542,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1532485401679</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Action to probe start service (5)">
-      <created>1534846745160</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1534846745160</updated>
     </task>
     <task id="LOCAL-00046" summary="Action to probe start service (6)">
       <created>1534846987097</created>
@@ -974,7 +879,14 @@
       <option name="project" value="LOCAL" />
       <updated>1540611585340</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Report Part">
+      <created>1541702767932</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1541702767940</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -983,32 +895,32 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1680" y="22" width="1920" height="1019" extended-state="6" />
+    <frame x="707" y="22" width="1680" height="989" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.31666666" side_tool="true" weight="0.22645503" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32968238" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32698414" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.68333334" visible="true" weight="0.22857143" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32858709" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.096354164" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32677597" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.68333334" visible="true" weight="0.2284153" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32786885" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09583333" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="5" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32896176" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49880952" weight="0.39978093" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.4997233" weight="0.32905984" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32896176" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.4997233" weight="0.32905984" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1022,7 +934,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Probe do it by yourself. (1)" />
     <MESSAGE value="Probe do it by yourself. (2)&#10;Fixed VideoService.py path" />
     <MESSAGE value="Notify (1)" />
     <MESSAGE value="Notify (2)" />
@@ -1047,11 +958,12 @@
     <MESSAGE value="api 2 - tuesday (testing time)" />
     <MESSAGE value="api 5 - Thursday with token PyJWT" />
     <MESSAGE value="api 5 - Thursday with token PyJWT - 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="api 5 - Thursday with token PyJWT - 2" />
+    <MESSAGE value="Report Part" />
+    <option name="LAST_COMMIT_MESSAGE" value="Report Part" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="101" />
+      <option name="time" value="103" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1330,16 +1242,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/lib/python2.7/site-packages/reportlab/lib/styles.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="285" column="56" selection-start-line="285" selection-start-column="56" selection-end-line="285" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/py-test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
+        <state relative-caret-position="120">
           <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
@@ -1349,73 +1254,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/simple-barchart.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python2.7/site-packages/reportlab/lib/styles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="280" column="4" selection-start-line="280" selection-start-column="4" selection-end-line="280" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tuesdya-monday-pdf-report/simple3-classPdf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="448" lean-forward="true" selection-start-line="448" selection-end-line="448" />
+        <state relative-caret-position="460">
+          <caret line="617" column="39" selection-start-line="617" selection-start-column="39" selection-end-line="617" selection-end-column="39" />
           <folding>
-            <element signature="e#769#4718#0" />
-            <element signature="e#815#1054#0" />
-            <element signature="e#1090#2382#0" />
-            <element signature="e#2424#2567#0" />
-            <element signature="e#2606#3073#0" />
-            <element signature="e#3110#3114#0" />
-            <element signature="e#3173#3827#0" />
-            <element signature="e#3336#3804#0" />
-            <element signature="e#3892#4718#0" />
-            <element signature="e#4754#14000#0" />
-            <element signature="e#4809#5788#0" />
-            <element signature="e#0#138#1" />
-            <element signature="e#22#95#0" />
-            <element signature="e#0#49#1" />
-            <element signature="e#0#93#0" />
-            <element signature="e#5326#5564#0" />
-            <element signature="e#5855#7833#0" />
-            <element signature="e#7888#9000#0" />
-            <element signature="e#0#195#0" />
-            <element signature="e#8199#8460#0" />
-            <element signature="e#0#45#0" />
-            <element signature="e#9039#9851#0" />
-            <element signature="e#0#243#0" />
-            <element signature="e#9907#10063#0" />
-            <element signature="e#0#108#1" />
-            <element signature="e#10100#14000#0" />
-            <element signature="e#12649#12697#0" />
-            <element signature="e#14084#14305#0" />
-            <element signature="e#0#81#0" />
-            <element signature="e#14340#14524#0" />
-            <element signature="e#14573#15965#0" />
-            <element signature="e#14585#15215#0" />
-            <element signature="e#0#624#0" />
-            <element signature="e#439#537#0" />
-            <element signature="e#16095#16869#0" />
-            <element signature="e#16012#16555#0" />
-            <element signature="e#0#227#0" />
-            <element signature="e#16922#16963#0" />
-            <element signature="e#18397#18691#0" />
-            <element signature="e#0#227#0" />
-            <element signature="e#19360#20125#0" />
-            <element signature="e#0#759#1" />
-            <element signature="e#8#134#0" />
-            <element signature="e#63#133#0" />
-            <element signature="e#154#228#0" />
-            <element signature="e#251#375#0" />
-            <element signature="e#390#514#0" />
-            <element signature="e#529#653#0" />
-            <element signature="e#0#333#0" />
-            <element signature="e#8#149#0" />
-            <element signature="e#63#148#0" />
-            <element signature="e#169#258#0" />
-            <element signature="e#0#130#0" />
-            <element signature="e#20539#21400#0" />
-            <element signature="e#20892#21360#0" />
-            <element signature="e#19219#19408#0" />
-            <element signature="e#17273#17279#0" />
+            <element signature="e#2450#2593#0" />
+            <element signature="e#2632#3099#0" />
+            <element signature="e#3136#3140#0" />
+            <element signature="e#3385#3853#0" />
+            <element signature="e#3915#4099#0" />
+            <element signature="e#4105#4159#0" />
+            <element signature="e#5454#7045#0" />
+            <element signature="e#5079#5547#0" />
+            <element signature="e#5629#6506#0" />
+            <element signature="e#5998#6466#0" />
+            <element signature="e#8470#9027#0" />
+            <element signature="e#8195#9307#0" />
+            <element signature="e#8506#8767#0" />
+            <element signature="e#9346#10158#0" />
+            <element signature="e#10214#10370#0" />
+            <element signature="e#12956#13004#0" />
+            <element signature="e#14391#14612#0" />
+            <element signature="e#17778#18440#0" />
+            <element signature="e#18417#18711#0" />
+            <element signature="e#19644#20529#0" />
+            <element signature="e#22244#22686#0" />
+            <element signature="e#22799#23731#0" />
+            <element signature="e#24342#25298#0" />
+            <element signature="e#26928#28906#0" />
           </folding>
         </state>
       </provider>
