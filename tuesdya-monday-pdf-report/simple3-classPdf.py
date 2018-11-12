@@ -1,12 +1,16 @@
+from reportlab.graphics.charts.axes import NormalDateXValueAxis, AdjYValueAxis
 from reportlab.graphics.charts.barcharts import VerticalBarChart
+from reportlab.graphics.charts.lineplots import LinePlot
 from reportlab.graphics.charts.textlabels import Label
+from reportlab.graphics.widgets.markers import makeMarker
 from reportlab.lib.colors import PCMYKColor
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
-from reportlab.lib.pagesizes import A4, landscape
+from reportlab.lib.pagesizes import A4, landscape, mm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 import main.database as mariadb
 import time
+import datetime
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.graphics.shapes import Drawing
@@ -55,7 +59,7 @@ class PDFCreation:
         self.create_header()
         self.create_body()
 
-        self.doc.build(self.flowables)
+        self.doc.build(self.flowables, onFirstPage=self.addPageNumber, onLaterPages=self.addPageNumber)
 
     def break_part(self, line):
         blank = Paragraph("&nbsp;&nbsp;&nbsp;&nbsp;", style=self.sp_left)
@@ -179,6 +183,9 @@ class PDFCreation:
         result_all = self.db.select(sql)
         description = [field[0] for field in self.db.mycursor.description]
 
+        # print result_all
+        # print description
+
         result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_all)
         description_re = map(lambda item: Paragraph("<strong>{desc}</strong>".format(desc=str(item)), style=self.get_style()), description)
         result_all.insert(0, description_re)
@@ -212,6 +219,15 @@ class PDFCreation:
             self.flowables.append(Paragraph("<strong>EMPTY LOGGING</strong>", style=self.sp_small_topi))
         else:
             map(lambda item: self.flowables.append(Paragraph("<strong>{main} Logging:</strong>{tab}{val} record(s)".format(tab=self.tab, main=item[0].capitalize(), val=item[1]), style=self.sp_left)), log_result)
+
+    def addPageNumber(self, canvas, doc):
+        """
+        Add the page number
+        """
+        page_num = canvas.getPageNumber()
+        # text = Paragraph("Page {num}".format(num=page_num), style=self.sp_small_topi)
+        text = "%s" % page_num
+        canvas.drawRightString(195*mm, 280*mm, text)
 
 class PDFProbe(PDFCreation):
 
@@ -528,163 +544,280 @@ class PDFLogging(PDFCreation):
         sql_query = "SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE `user`='{usr}' AND `event_type`='{type}'"
         event_action = ['insert', 'update', 'delete']
         all_user = map(lambda item: item[0], self.db.select("SELECT DISTINCT(`user`) FROM LOGGING_EVENTS;"))
-
+        sql_part_user = """SELECT `user` AS 'Username', `event_date` AS 'Last Logged Time'
+                        , (SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE user = '{usr}' AND `event_type`='insert') AS 'Total Insert Transaction'
+                        , (SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE user = '{usr}' AND `event_type`='update') AS 'Total Update Transaction'
+                        , (SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE user = '{usr}' AND `event_type`='delete') AS 'Total Delete Transaction'
+                        , (SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE user = '{usr}') AS 'Total Transaction'
+                        FROM LOGGING_EVENTS WHERE user='{usr}' ORDER BY `event_date` DESC LIMIT 1"""
+        part_user_data = map(lambda item: self.db.select(sql_part_user.format(usr=item))[0], all_user)
+        part_user_desc = [field[0] for field in self.db.mycursor.description]
         output = map(lambda item: map(lambda val: self.db.select(sql_query.format(usr=val, type=item))[0][0], all_user), event_action)
-        self.create_bar_two(data_list=output, label_x_axis=all_user, contain=event_action)
 
-    def create_bar(self, data_list, data_label, x_axis):
-        d = Drawing(width=530, height=200)
+        self.flowables.append(Paragraph("<strong>SUMMARY TRANSACTION OF EACH USER</strong>", style=self.sp_small_topi))
+        self.create_bar(data_list=output, label_x_axis=all_user, contain=event_action, y_label='transaction(s)', x_label='user', user_color=[colors.lawngreen, colors.blue, colors.red], fontSize=8)
+        self.create_table_with_data_description(list_data=part_user_data, list_description=part_user_desc,
+                                                max_width=540)
+
+    def create_bar(self, data_list, label_x_axis, contain, y_label=None, x_label=None, bar_width=520, bar_height=100,
+                   draw_width=520, draw_height=200, user_color=None, fontName="Times-Roman", fontSize=6, x_angle=0, bar_space=0):
+
+        d = Drawing(width=draw_width, height=draw_height)
         bar = VerticalBarChart()
-        bar.x = 180
-        bar.y = 60
-        bar.strokeColor = colors.black
-        bar.barLabelFormat = '%s'
-        bar.barLabels.nudge = 6
-        bar.barLabels.fontSize = 6
-
-        bar.categoryAxis.labels.dx = +5
-        bar.categoryAxis.labels.dy = -7
-        bar.categoryAxis.labels.boxAnchor = 'ne'
-        bar.categoryAxis.labels.fontSize = 6
-        bar.categoryAxis.labels.fontName = 'Helvetica'
-        bar.categoryAxis.tickDown = 5
-        bar.categoryAxis.categoryNames = data_label
-
-        bar.valueAxis.forceZero = 1
-        bar.valueAxis.labels.fontSize = 8
-        bar.valueAxis.labels.fontName = 'Helvetica'
-        bar.valueAxis.rangeRound = 'both'
-        bar.valueAxis.valueMin = 0
-        bar.valueAxis.visibleGrid = 1
-        bar.valueAxis.visibleAxis = 1
-        bar.valueAxis.labels.dx = -10
-
-        bar.barSpacing = 2.5
-        bar.groupSpacing = 10
-
-        bar.data = data_list
-
-        for i in range(len(data_list)):
-            bar.bars[i].name = x_axis[i].upper()
-
-        legend = Legend()
-        legend.alignment = 'right'
-        legend.boxAnchor = 'sw'
-        legend.columnMaximum = 3
-        legend.dx = 8
-        legend.dxTextSpace = 4
-        legend.dy = 6
-        legend.fontSize = 8
-        legend.fontName = 'Helvetica'
-        legend.strokeColor = None
-        legend.strokeWidth = 0
-        legend.subCols.minWidth = 55
-        legend.variColumn = 1
-        legend.y = 1
-        legend.deltay = 10
-        legend.colorNamePairs = Auto(obj=bar)
-        legend.autoXPadding = 65
-
-        YLabel = Label()
-        YLabel.angle = 90
-        YLabel.fontSize = 6
-        YLabel.height = 0
-        YLabel.maxWidth = 100
-        YLabel.textAnchor = 'middle'
-        YLabel.x = 12
-        YLabel.y = 80
-        YLabel._text = "User Modify"
-
-        d.add(bar)
-        d.add(legend)
-        d.add(YLabel)
-        self.flowables.append(d)
-        self.flowables.append(PageBreak())
-
-    def create_bar_two(self, data_list, label_x_axis, contain, bar_width=530, bar_height=200):
-        d = Drawing(width=bar_width, height=bar_height)
-        bar = VerticalBarChart()
-        bar.x = bar.width
-        bar.y = bar.height
+        bar.width=bar_width
+        bar.height=bar_height
+        bar.y = bar.height-(bar_height/4)
         bar.strokeColor = colors.black
         bar.barLabelFormat = '%s'
         bar.barLabels.nudge = 7
-        bar.barLabels.fontSize = 6
+        bar.barLabels.fontSize = fontSize
 
         ################# X AXIS PROPERTIES #################
-        bar.categoryAxis.labels.dx = +6
-        bar.categoryAxis.labels.boxAnchor = 'ne'
-        bar.categoryAxis.labels.fontSize = 6.5
+        bar.categoryAxis.labels.dx = 0
+        bar.categoryAxis.labels.angle = x_angle
+        bar.categoryAxis.labels.boxAnchor = 'autox'
+        bar.categoryAxis.labels.fontSize = fontSize
         bar.categoryAxis.labels.fontName = self.master_font
-        bar.categoryAxis.tickDown = 5
+        bar.categoryAxis.strokeWidth = 0.25
+        bar.categoryAxis.tickDown = -(bar.height)
         bar.categoryAxis.categoryNames = label_x_axis
+
+        labX = Label()
+        labX.boxAnchor = 'ne'
+        labX.dx = bar.width * 2.15
+        labX.dy = bar.height
+        labX.fontName = fontName
+        labX.fontSize = fontSize
+        labX.setText(x_label)
+        d.add(labX)
         #####################################################
 
         ################# Y AXIS PROPERTIES #################
         bar.valueAxis.forceZero = 1
-        bar.valueAxis.labels.fontSize = 8
-        bar.valueAxis.labels.fontName = 'Helvetica'
+        bar.valueAxis.labels.fontSize = fontSize
+        bar.valueAxis.labels.fontName = fontName
         bar.valueAxis.rangeRound = 'both'
         bar.valueAxis.valueMin = 0
         bar.valueAxis.visibleGrid = 1
         bar.valueAxis.visibleAxis = 1
         bar.valueAxis.labels.dx = -10
+
+        labY = Label()
+        labY.boxAnchor = 'autox'
+        labY.dy = bar.y+(bar.height/1.5)
+        labY.dx = bar.x-30
+        labY.angle = 90
+        labY.fontName = fontName
+        labY.fontSize = fontSize
+        labY.setText(y_label)
+        d.add(labY)
         #####################################################
 
-        bar.barSpacing = 2.5
-        bar.groupSpacing = 10
+        bar.barSpacing = bar_space
+        # bar.groupSpacing = 3
 
         bar.data = data_list
 
+        print len(data_list)
+        print len(contain)
+
+        if user_color != None:
+            usage_color = user_color
+        else:
+            random_range = [randint(0, 100) for i in range(len(contain))]
+            usage_color = map(lambda item: PCMYKColor(randint(0, item), randint(0, item), randint(0, item), randint(0, item)), random_range)
+
         for i in range(len(data_list)):
             bar.bars[i].name = contain[i].upper()
+            bar.bars[i].fillColor = usage_color[i]
 
         legend = Legend()
+        # legend.autoXPadding = 10
         legend.alignment = 'right'
         legend.boxAnchor = 'sw'
-        legend.columnMaximum = 3
-        legend.dx = 8
-        legend.dxTextSpace = 4
-        legend.dy = 6
-        legend.fontSize = 8
-        legend.fontName = 'Helvetica'
-        legend.strokeColor = None
-        legend.strokeWidth = 0
+        legend.dxTextSpace = 10
+        legend.fontSize = fontSize
+        legend.fontName = fontName
         legend.subCols.minWidth = 55
         legend.variColumn = 1
-        legend.y = 1
-        legend.deltay = 10
+        legend.deltay = 15
+        legend.x = bar.x
         legend.colorNamePairs = Auto(obj=bar)
-        legend.autoXPadding = 65
-
-        YLabel = Label()
-        YLabel.angle = 90
-        YLabel.fontSize = 6
-        YLabel.height = 0
-        YLabel.maxWidth = 100
-        YLabel.textAnchor = 'middle'
-        YLabel.x = 12
-        YLabel.y = 80
-        YLabel._text = "User Modify"
 
         d.add(bar)
         d.add(legend)
-        d.add(YLabel)
         self.flowables.append(d)
-        self.flowables.append(PageBreak())
+
+    def create_table_with_data_description(self, list_data, list_description, max_width=530, max_height=16):
+        # print list_data
+        # print list_description
+
+        result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), list_data)
+        description = map(lambda item: Paragraph("<strong>{desc}</strong>".format(desc=str(item)), style=self.get_style()), list_description)
+        result_all.insert(0, description)
+
+        row = len(result_all) - 1
+        column = len(list_description) -1
+
+        width = [max_width / len(result_all[0]) for i in range(len(result_all))]
+        height = [max_height for i in range(len(result_all))]
+
+        table = Table(result_all, colWidths=width, rowHeights=height, hAlign='CENTER')
+        table.setStyle(TableStyle([('ALIGN', (0, 0), (column, row), 'CENTER'),
+                                   ('VALIGN', (0, 0), (column, row), 'MIDDLE'),
+                                   ('FONTSIZE', (0, 0), (column, row), 8),
+                                   ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
+                                   ('BOX', (0, 0), (column, row), 0.25, colors.black),
+                                   ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
+
+        self.flowables.append(table)
+
+    def get_log_time_interval(self):
+        sql = """select DATE_FORMAT(event_date, '%Y-%m-%d %H:%00:00') AS 'start', DATE_FORMAT(event_date + INTERVAL 1 DAY, '%Y-%m-%d %H:%00:00') AS 'end'
+              , (select count(logging_id) FROM LOGGING_EVENTS WHERE event_date between start and end and event_type='insert') AS 'Insert'
+              , (select count(logging_id) FROM LOGGING_EVENTS WHERE event_date between start and end and event_type='update') AS 'Update'
+              , (select count(logging_id) FROM LOGGING_EVENTS WHERE event_date between start and end and event_type='delete') AS 'Delete'
+              from LOGGING_EVENTS
+              GROUP BY UNIX_TIMESTAMP(event_date) DIV 86400"""
+        ### 1296000 equal 15 days
+        ### 86400 equal 1 day
+        ### 604800 equal 1 week
+        action = ['insert', 'update', 'delete']
+        format1 = '%Y-%m-%d %H:%M:%S'
+        format2 = '%d-%b'
+        result = self.db.select(sql)
+        result_description_date = map(lambda item: datetime.datetime.strptime(item[0], format1).strftime(format2), result)
+        result_format = map(lambda index: map(lambda item: item[index], result), [i for i in range(2, len(action)+2)])
+
+        self.flowables.append(Paragraph("<strong>SUMMARY TRANSACTION BY TIME AND TYPE OF TRANSACTION</strong>", style=self.sp_small_topi))
+        self.create_bar(data_list=result_format, contain=action, label_x_axis=result_description_date, user_color=[colors.lawngreen, colors.blue, colors.red], y_label='transaction(s)', x_label='Date', x_angle=45)
+
+    def create_line_chart(self, list_data, list_line, bar_width=530, bar_height=150):
+        d = Drawing(width=bar_width, height=bar_height)
+        chart = LinePlot()
+        font = 'Helvetica'
+        size = 6
+        chart.x = chart.width
+        chart.y = chart.height
+        # chart.width = bar_width
+        # chart.height = bar_height
+        chart.lines.strokeWidth = 1.5
+        # chart.lines.symbol= makeMarker('FilledSquare')
+        # chart._inFill = 1
+
+        chart.xValueAxis = NormalDateXValueAxis()
+        chart.xValueAxis.labels.fontName          = font
+        chart.xValueAxis.labels.fontSize          = size
+        chart.xValueAxis.labels.angle          = 90
+        chart.xValueAxis.forceEndDate             = 1
+        chart.xValueAxis.forceFirstDate           = 1
+        chart.xValueAxis.labels.boxAnchor      ='autox'
+        chart.xValueAxis.xLabelFormat          = '{d}-{MMM}'
+        chart.xValueAxis.maximumTicks          = len(list_data[0])
+        chart.xValueAxis.minimumTickSpacing    = 1
+        chart.xValueAxis.niceMonth             = 0
+        chart.xValueAxis.strokeWidth           = 1
+        chart.xValueAxis.loLLen                = 5
+        chart.xValueAxis.hiLLen                = 5
+        chart.xValueAxis.gridEnd               = bar_width
+        chart.xValueAxis.gridStart             = chart.x
+        chart.xValueAxis.labels.rightPadding = 2
+        chart.xValueAxis.specialTickClear = True
+        # chart.xValueAxis.labels.bottomPadding = 5
+
+        chart.yValueAxis = AdjYValueAxis()
+        chart.yValueAxis.visibleGrid           = 1
+        chart.yValueAxis.visibleAxis            = 1
+        chart.yValueAxis.labels.fontName       = font
+        chart.yValueAxis.labels.fontSize       = size
+        # chart.yValueAxis.labelTextFormat       = '%0.2f%%'
+        chart.yValueAxis.labelTextFormat       = '%s'
+        chart.yValueAxis.strokeWidth           = 1
+        chart.yValueAxis.visible               = 1
+        chart.yValueAxis.labels.rightPadding   = 3
+        #chart.yValueAxis.maximumTicks          = 6
+        chart.yValueAxis.rangeRound            ='both'
+        chart.yValueAxis.tickLeft              = 5
+        chart.yValueAxis.minimumTickSpacing    = 1
+        chart.yValueAxis.maximumTicks          = 8
+        chart.yValueAxis.forceZero             = 0
+        # chart.yValueAxis.avoidBoundFrac = 0
+
+        chart.data = list_data
+
+        for i in range(len(chart.data)):
+            chart.lines[i].name = list_line[i].upper()
+
+        for i in range(len(list_data)):
+            chart.lines[i].strokeColor = colors.toColor('hsl(%s,80%%,40%%)' % (i * 60))
+
+        legend = Legend()
+        legend.fontName = font
+        legend.fontSize = size
+        legend.alignment ='right'
+        legend.dx = 5
+        legend.colorNamePairs = Auto(obj=chart)
+        legend.dxTextSpace    = 7
+        legend.boxAnchor      = 'nw'
+        legend.subCols.dx        = 0
+        legend.subCols.dy        = -2
+        legend.subCols.rpad      = 0
+        legend.columnMaximum  = 3
+        legend.deltax         = 1
+        legend.boxAnchor = 'nw'
+        legend.deltay         = 0
+        legend.dy             = 5
+        legend.x = chart.width/2
+        # legend.y = chart.height+(chart.height / 2)
+        legend.y = chart.height*1.5
+        # legend.y              = 135
+        # legend.x              = 120
+        # chart.lines.symbol.kind        = 'FilledCross'
+        # chart.lines.symbol.size        = 5
+        # chart.lines.symbol.angle       = 45
+
+        d.add(chart)
+        d.add(legend)
+
+        self.flowables.append(d)
 
     def create_body(self):
-        log_table = ['PROBES','SERVICES','DESTINATIONS','RUNNING_SERVICES','RUNNING_DESTINATIONS','NOTIFY_TOKEN','NOTIFICATIONS','DASHBOARD']
+        log_table = {'PROBES': 'PROBE',
+                     'SERVICES': 'SERVICE',
+                     'DESTINATIONS': 'DEDSTINATION',
+                     'RUNNING_SERVICES': 'STATUS SERVICE',
+                     'RUNNING_DESTINATIONS': 'STATUS DESTINATION',
+                     'NOTIFY_TOKEN': 'LINE TOKEN',
+                     'NOTIFICATIONS': ' NOTIFICATION',
+                     'DASHBOARD': 'DASHBOARD'
+                     }
+
+        log_rf_name = ['Probe Name', 'Service Name', 'Destination Name', 'Service Name', 'Destination Name', 'Token Description', 'Notification Name', 'Chart Name']
         sql_amount = "SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE `event_table`='{tlb}';"
-        sql_log_detail = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Service Name', `event_date` AS 'Time' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' ORDER BY 'Time' ASC;"
+        sql_log_detail = "SELECT  `event_date` AS 'Logged Time', `user` AS 'Username', `event_type` AS 'Transaction', `event_name` AS '{ref_name}' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' ORDER BY 'Logged Time' ASC;"
+        total_transaction = map(lambda item: self.db.select(sql_amount.format(tlb=item))[0][0], sorted(log_table))
 
-        # for item in log_table:
-        #     total = self.db.select(sql_amount.format(tlb=item))[0][0]
-        #     self.flowables.append(Paragraph("TOTAL {tlb} LOG:{tab}{val} record(s)".format(tab=self.tab, tlb=item.replace('_', ' '), val=total), style=self.sp_header))
-        #     self.create_table_with_sql(sql=sql_log_detail.format(tlb=item), max_height=25)
-        #     self.flowables.append(PageBreak())
+        self.flowables.append(Paragraph("<strong>COLLECT LOG EVENT FROM:</strong>", style=self.sp_left))
+        map(lambda table: self.flowables.append(Paragraph("{text}".format(text=table), style=self.sp_small_topi)), sorted(log_table))
 
+        self.break_part(1)
         self.create_log_bar_chart()
+        self.break_part(1)
+        self.get_log_time_interval()
+
+        self.flowables.append(PageBreak())
+
+        for item, rf_name, total in zip(sorted(log_table), sorted(log_rf_name), total_transaction):
+            # total = self.db.select(sql_amount.format(tlb=item))[0][0]
+            self.flowables.append(Paragraph("TOTAL <strong>{tlb}</strong> LOG:{tab}<strong>{val} transaction{word}</strong>".format(tab=self.tab, word='' if total <= 1 else 's', tlb=log_table[item], val=total), style=self.sp_small_topi))
+            self.break_part(1)
+            self.create_table_with_sql(sql=sql_log_detail.format(tlb=item, ref_name=rf_name), max_height=18)
+            self.flowables.append(PageBreak())
+        # print 'create aeach table:', (time.time()-ss)*1000, 'ms'
+
+        print "test Part"
+
+
 
 if __name__ == '__main__':
     # pass
@@ -692,6 +825,8 @@ if __name__ == '__main__':
     # probe_report.get_Rfk_cluster_information(1)
     # service_report = PDFService('Service', 'service_report_gen1.pdf')
     # destination_report = PDFDestination('Destination', 'destination_report_gen1.pdf')
+    s = time.time()
     log_report = PDFLogging('Logging Event', 'logging_report_gen1.pdf')
+    print 'all:', (time.time()-s)*1000, 'ms.'
     # random_color()
 

@@ -129,6 +129,9 @@ class Method:
 class GetMethod(Method):
 
     def prepare_statement(self):
+
+        # special_table = ['RUNNING_DESTINATIONS']
+
         if self.argument.has_key('select[]'):
             self.attribute = self.argument.getvalue('select[]')
             if not isinstance(self.attribute, list):
@@ -139,7 +142,11 @@ class GetMethod(Method):
                 self.log_error(e)
 
         self.sql += " WHERE " + " and ".join(map(lambda item: "`{key}` in ({value})".format(key=self.dict_attribute[item], value=self.argument.getvalue('cond[{item}]'.format(item=item))) if self.argument.has_key('cond[{item}]'.format(item=item)) else '1=1', self.dict_attribute))
-        self.sql += " ORDER BY " + ", ".join(map(lambda item: "`{attr}` {sort}".format(attr=self.dict_attribute[item], sort=self.argument.getvalue('order[{item}]'.format(item=item))) if self.argument.has_key('order[{item}]'.format(item=item)) else 'null', self.dict_attribute))
+
+        if any("cond_ex" in s for s in self.argument.keys()):
+            self.sql += " AND " + " and ".join(map(lambda item: "{key}".format(key=self.dict_attribute_extra[item].format(value=self.argument.getvalue('cond_ex[{item}]'.format(item=item))) if self.argument.has_key('cond_ex[{item}]'.format(item=item)) else '1=1'), self.dict_attribute_extra))
+
+        self.sql += " ORDER BY " + ", ".join(map(lambda item: "`{attr}` {sort}".format(attr=self.dict_attribute[item],sort=self.argument.getvalue('order[{item}]'.format(item=item))) if self.argument.has_key('order[{item}]'.format(item=item)) else 'null', self.dict_attribute))
 
         if self.argument.has_key('limit[]'):
             try:
@@ -153,6 +160,8 @@ class GetMethod(Method):
         self.output_type = 'json'
         self.output_flag = True
         self.output = json.dumps(json_data, default=self.json_serial)
+        # self.output = sql
+        # self.output = self.argument.keys()
 
     def json_serial(self, obj):
         """JSON serializer for objects not serializable by default json code"""
@@ -193,6 +202,7 @@ class GetProbe(GetMethod):
         'd_add': 'date_added',
         'iclus': '(SELECT `cluster_id` FROM CLUSTERS WHERE CLUSTERS.`probe_id`=PROBES.`probe_id`) as iclus'
     }
+    dict_attribute_extra = {}
 
 class GetService(GetMethod):
     table = 'SERVICES'
@@ -206,6 +216,7 @@ class GetService(GetMethod):
         'svc_desc': 'service_description',
         'svc_dest_ex': 'destination_example'
     }
+    dict_attribute_extra = {}
 
 # class GetUser(GetMethod):
 #     table = 'USERS'
@@ -224,6 +235,7 @@ class GetDestination(GetMethod):
         'ptdest': 'destination_port',
         'dest_desc': 'destination_description',
     }
+    dict_attribute_extra = {}
 
 class GetTestResult(GetMethod):
     table = 'TESTRESULTS'
@@ -250,6 +262,7 @@ class GetTestResult(GetMethod):
         'svc_desc': "(select `service_description` from `SERVICES` where `TESTRESULTS`.`service_id`=`SERVICES`.`service_id`) as svc_desc",
         'clus_desc': "(select `cluster_description` from `CLUSTERS` where `TESTRESULTS`.`cluster_id`=`CLUSTERS`.`cluster_id`) as clus_desc",
     }
+    dict_attribute_extra = {}
 
 class GetRunningService(GetMethod):
     table = 'RUNNING_SERVICES'
@@ -266,6 +279,7 @@ class GetRunningService(GetMethod):
         'svc_desc': "(select `service_description` from `SERVICES` where `RUNNING_SERVICES`.`service_id`=`SERVICES`.`service_id`) as svc_desc",
         'svc_dest_ex': "(select `destination_example` from `SERVICES` where `RUNNING_SERVICES`.`service_id`=`SERVICES`.`service_id`) as svc_dest_ex"
     }
+    dict_attribute_extra = {}
 
 class GetRunningDestination(GetMethod):
     table = 'RUNNING_DESTINATIONS'
@@ -280,6 +294,14 @@ class GetRunningDestination(GetMethod):
         'isvc': "(select `service_id` from `DESTINATIONS` where `RUNNING_DESTINATIONS`.`destination_id`=`DESTINATIONS`.`destination_id`) as isvc",
         'nsvc': "(select `service_name` from `SERVICES` where `SERVICES`.`service_id`=(select `service_id` from `DESTINATIONS` where `RUNNING_DESTINATIONS`.`destination_id`=`DESTINATIONS`.`destination_id`)) as nsvc"
     }
+    dict_attribute_extra = {
+        'isvc': "`destination_id` IN (SELECT `destination_id` FROM DESTINATIONS WHERE `service_id`='{value}')",
+    }
+
+    # def extra_condition(self):
+    #
+    #     if self.argument.has_key('sp_cond[svc]'):
+    #         self.sql += " AND `destination_id` IN (SELECT `destination_id` FROM DESTINATIONS WHERE `service_id`='{item}') ".format(item=self.argument.getvalue('sp_cond[svc]'))
 
 class GetCluster(GetMethod):
     table = 'CLUSTERS'
@@ -294,6 +316,7 @@ class GetCluster(GetMethod):
         'last_ud': '(SELECT `last_updated` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as last_ud',
         'd_add': '(SELECT `date_added` FROM PROBES WHERE CLUSTERS.probe_id=PROBES.probe_id) as d_add',
     }
+    dict_attribute_extra = {}
 
 class GetLogEvent(GetMethod):
     table = 'LOGGING_EVENTS'
@@ -305,6 +328,7 @@ class GetLogEvent(GetMethod):
         'evnt_nom': 'event_name',
         'evnt_d': 'event_date'
     }
+    dict_attribute_extra = {}
 
 class GetNotifyToken(GetMethod):
     table = 'NOTIFY_TOKEN'
@@ -313,6 +337,7 @@ class GetNotifyToken(GetMethod):
         'tk_val': 'token_value',
         'tk_desc': 'token_description',
     }
+    dict_attribute_extra = {}
 
 class GetNotification(GetMethod):
     table = 'NOTIFICATIONS'
@@ -335,6 +360,7 @@ class GetNotification(GetMethod):
         'tk_val': '(SELECT `token_value` FROM NOTIFY_TOKEN WHERE NOTIFY_TOKEN.token_id=NOTIFICATIONS.notify_token_id)',
         'tk_desc': '(SELECT `token_description` FROM NOTIFY_TOKEN WHERE NOTIFY_TOKEN.token_id=NOTIFICATIONS.notify_token_id)',
     }
+    dict_attribute_extra = {}
 
 class GetDashboard(GetMethod):
     table = 'DASHBOARD'
@@ -346,6 +372,7 @@ class GetDashboard(GetMethod):
         'ch_dest': 'chart_destinations',
         'ch_tlb': 'chart_table',
     }
+    dict_attribute_extra = {}
 
 ####
 ## POST <INSERT>
@@ -769,7 +796,7 @@ class UpdateCluster(PatchMethod):
 class UpdateNotifyToken(PatchMethod):
     dictionary = GetNotifyToken.dict_attribute
     table = 'NOTIFY_TOKEN'
-    log_attribute = 'token_value'
+    log_attribute = 'token_description'
 
     def checker(self, key, value):
         option = {
