@@ -8,19 +8,20 @@ class JsonWebToken:
     JWT_ALGORITHM = 'HS256'
     JWT_EXP_DELTA_SECONDS = 86400
 
-    def create_token(self, subscriber):
+    def create_token(self, subscriber, role=1):
 
         payload = {
             'user': subscriber,
+            'role': role,
             'exp': datetime.utcnow() + timedelta(seconds=self.JWT_EXP_DELTA_SECONDS)
         }
 
         jwt_token = jwt.encode(payload, self.JWT_SECRET, self.JWT_ALGORITHM)
         return jwt_token
 
-    def decrypt_token(self, token):
+    def decrypt_token(self, token, key='user'):
         try:
-            return jwt.decode(token, self.JWT_SECRET, self.JWT_ALGORITHM)['user']
+            return jwt.decode(token, self.JWT_SECRET, self.JWT_ALGORITHM)[key]
         except jwt.ExpiredSignatureError as error:
             self.response(error)
         except jwt.InvalidSignatureError as error:
