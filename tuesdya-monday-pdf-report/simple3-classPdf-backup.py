@@ -22,7 +22,6 @@ import datetime
 class PDFCreation:
 
     def __init__(self, table, file_name, logo):
-        # self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
         self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
         self.master_font = "Times-Roman"
         self.styles = getSampleStyleSheet()
@@ -37,7 +36,6 @@ class PDFCreation:
     def create_pdf(self):
         self.doc = SimpleDocTemplate(self.file_name,
                                      pagesize=A4,
-                                     # pagesize=landscape(A4),
                                      rightMargin=20,
                                      leftMargin=30,
                                      topMargin=50,
@@ -114,41 +112,7 @@ class PDFCreation:
         style.alignment=TA_CENTER
         return style
 
-    # def create_pie_chart(self, data_list, label_list, ):
-    #     """"""
-    #     print data_list
-    #     print label_list
-    #     data = [(item / (sum(data_list) * 1.0)) * 100 for item in data_list]
-    #     u_color = [colors.lawngreen, colors.red, colors.gray]
-    #     # color = [colors.lawngreen, colors.red, colors.gray]
-    #     # u_master = [randint(0, 100) for i in range(4)]
-    #     # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
-    #     # print u_color
-    #     # color = u_color
-    #     d = Drawing()
-    #     pie = Pie()
-    #     pie.x = 180
-    #     pie.y = 80
-    #     pie.data = data
-    #     pie.labels = label_list
-    #     for i, color in enumerate(u_color): pie.slices[i].fillColor = color
-    #     pie.slices.strokeWidth = 0.5
-    #     pie.slices.popout = 1.5
-    #     pie._seriesCount = 3
-    #     pie.sideLabels = 1
-    #
-    #     legend = Legend()
-    #     legend.alignment = 'right'
-    #     legend.x = 0
-    #     legend.y = 75
-    #     legend.colorNamePairs = [(z, (x, '     {val:.2f}%'.format(val=y))) for x, y, z in zip(pie.labels, data, u_color)]
-    #     d.add(legend)
-    #     d.add(pie)
-    #     return d
-
     def create_pie_chart(self, data_list, label_list, user_color=None):
-        # print data_list
-        # print label_list
 
         label_list = map(lambda item: item.upper(), label_list)
 
@@ -160,13 +124,6 @@ class PDFCreation:
             random_range = [randint(0, 100) for i in range(len(data_list))]
             usage_color = map(lambda item: PCMYKColor(randint(0, item), randint(0, item), randint(0, item), randint(0, item)), random_range)
             print user_color
-
-        # u_color = [colors.lawngreen, colors.red, colors.gray]
-        # color = [colors.lawngreen, colors.red, colors.gray]
-        # u_master = [randint(0, 100) for i in range(4)]
-        # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
-        # print u_color
-        # color = u_color
 
         d = Drawing()
         pie = Pie()
@@ -192,15 +149,11 @@ class PDFCreation:
         d.add(pie)
 
         self.flowables.append(d)
-        # return d
 
     def prepare_data_table(self, sql):
 
         result_all = self.db.select(sql)
         description = [field[0] for field in self.db.mycursor.description]
-
-        # print result_all
-        # print description
 
         result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), result_all)
         description_re = map(lambda item: Paragraph("<strong>{desc}</strong>".format(desc=str(item)), style=self.get_style()), description)
@@ -241,7 +194,6 @@ class PDFCreation:
         Add the page number
         """
         page_num = canvas.getPageNumber()
-        # text = Paragraph("Page {num}".format(num=page_num), style=self.sp_small_topi)
         text = "%s" % page_num
         canvas.drawRightString(195*mm, 280*mm, text)
 
@@ -304,9 +256,6 @@ class PDFCreation:
 
         bar.data = data_list
 
-        # print len(data_list)
-        # print len(contain)
-
         if user_color != None:
             usage_color = user_color
         else:
@@ -318,7 +267,6 @@ class PDFCreation:
             bar.bars[i].fillColor = usage_color[i]
 
         legend = Legend()
-        # legend.autoXPadding = 10
         legend.alignment = 'right'
         legend.boxAnchor = 'sw'
         legend.dxTextSpace = 10
@@ -361,120 +309,6 @@ class PDFProbe(PDFCreation):
             self.create_bar(happy, x_axis_probe, x_axis)
         self.break_part(1)
 
-    # def create_bar(self, data_list, data_label, x_axis):
-    #
-    #     print data_list
-    #     print data_label
-    #     print x_axis
-    #
-    #     d = Drawing(width=180, height=200)
-    #     bar = VerticalBarChart()
-    #     bar.x = 150
-    #     bar.y = 60
-    #     bar.strokeColor = colors.black
-    #     bar.barLabelFormat = '%s'
-    #     bar.barLabels.nudge = 6
-    #     bar.barLabels.fontSize = 6
-    #
-    #     bar.categoryAxis.labels.dx = +5
-    #     bar.categoryAxis.labels.dy = -7
-    #     bar.categoryAxis.labels.boxAnchor = 'ne'
-    #     bar.categoryAxis.labels.fontSize = 6
-    #     bar.categoryAxis.labels.fontName = 'Helvetica'
-    #     bar.categoryAxis.tickDown = 5
-    #     bar.categoryAxis.categoryNames = data_label
-    #
-    #     bar.valueAxis.forceZero = 1
-    #     bar.valueAxis.labels.fontSize = 8
-    #     bar.valueAxis.labels.fontName = 'Helvetica'
-    #     bar.valueAxis.rangeRound = 'both'
-    #     bar.valueAxis.valueMin = 0
-    #     bar.valueAxis.visibleGrid = 1
-    #     bar.valueAxis.visibleAxis = 1
-    #     bar.valueAxis.labels.dx = -10
-    #
-    #     bar.barSpacing = 2.5
-    #     bar.groupSpacing = 10
-    #
-    #     bar.data = data_list
-    #
-    #     for i in range(len(data_list)):
-    #         bar.bars[i].name = x_axis[i].upper()
-    #
-    #     legend = Legend()
-    #     legend.alignment = 'right'
-    #     legend.boxAnchor = 'sw'
-    #     legend.columnMaximum = 3
-    #     legend.dx = 8
-    #     legend.dxTextSpace = 4
-    #     legend.dy = 6
-    #     legend.fontSize = 8
-    #     legend.fontName = 'Helvetica'
-    #     legend.strokeColor = None
-    #     legend.strokeWidth = 0
-    #     legend.subCols.minWidth = 55
-    #     legend.variColumn = 1
-    #     legend.y = 1
-    #     legend.deltay = 10
-    #     legend.colorNamePairs = Auto(obj=bar)
-    #     legend.autoXPadding = 65
-    #
-    #     YLabel = Label()
-    #     YLabel._text = ''
-    #     YLabel.angle = 90
-    #     YLabel.fontSize = 6
-    #     YLabel.height = 0
-    #     YLabel.maxWidth = 100
-    #     YLabel.textAnchor = 'middle'
-    #     YLabel.x = 12
-    #     YLabel.y = 80
-    #
-    #     d.add(bar)
-    #     d.add(legend)
-    #     d.add(YLabel)
-    #     self.flowables.append(d)
-    #     self.flowables.append(PageBreak())
-
-    def get_probe_information(self, status):
-        sql = "SELECT `probe_name`, `ip_address`, `mac_address`, `date_added`, `last_updated`, DATEDIFF(`last_updated`,`date_added`) as uptime FROM PROBES WHERE `probe_status`={status} order by `probe_name` ASC;"
-        result = map(lambda item: list(item), self.db.select(sql.format(status=status)))
-        option = {
-            'probe_name': 'Probe Name',
-            'ip_address': 'IP Address',
-            'mac_address': 'MAC Address',
-            'last_updated': 'Last Activity',
-            'date_added': 'Installed Date',
-            'uptime': 'Up time day(s)'
-        }
-        restrict = ['uptime']
-
-        description = [field[0] for field in self.db.mycursor.description]
-        probe_description = [option[field[0]] for field in self.db.mycursor.description]
-        result.insert(0, probe_description)
-
-        sql_width = "SELECT MAX(LENGTH(`{attribute}`)) FROM PROBES;"
-        table_width = map(
-            lambda item: (self.db.select(sql_width.format(attribute=item))[0][0]) * 5 if item not in restrict else len(
-                option[item]) * 4, description)
-
-        return table_width, result
-
-    def get_probe_log(self):
-        sql_log = "SELECT `user` AS 'User Modify', `event_type` AS 'Action', `event_name` AS 'Probe Name', `event_date` AS 'Time', DATEDIFF(NOW(),`event_date`) as 'days ago' FROM LOGGING_EVENTS WHERE `event_table`='PROBES' ORDER BY `event_date` ASC, `event_type`;"
-        result_log = self.db.select(sql_log)
-        description_log = [field[0] for field in self.db.mycursor.description]
-        result_log.insert(0, description_log)
-        tlb_0_width = max(map(lambda item: len(item[0]), result_log))
-        tlb_1_width = max(map(lambda item: len(item[1]), result_log))
-        tlb_2_width = max(map(lambda item: len(item[2]), result_log))
-        table_log_width = [tlb_0_width, tlb_1_width, tlb_2_width, 20, 8]
-        table_log_width = [i * 5 for i in table_log_width]
-
-        return table_log_width, result_log
-
-    def get_log_event_type(self, event_type):
-        return self.db.select("SELECT COUNT(`logging_id`) FROM LOGGING_EVENTS WHERE `event_type`='{type}' AND `event_table`='PROBES'".format(type=event_type))[0][0]
-
     def create_body(self):
         sql_status = """SELECT `probe_name` AS 'Probe Name', `ip_address` AS 'IP Address', `mac_address` AS 'MAC Address'
                       , DATE_FORMAT(`date_added`, '%d-%b-%Y') AS 'Installed Date', DATE_FORMAT(`last_updated`, '%d-%b-%Y %H:%m:%s') AS 'Last Updated Date'
@@ -493,102 +327,35 @@ class PDFProbe(PDFCreation):
 
         probe_type_count = map(lambda item: self.db.select(sql_count.format(status=item))[0][0], probe_status)
 
+        ################################################################################################################
         self.flowables.append(Paragraph("<strong>COLLECT PROBE INFORMATION WITH STATUS:</strong>", style=self.sp_left))
         map(lambda stat, val: self.flowables.append(Paragraph("{val}. {status}:{tab}{desc}".format(val=val, status=str(stat).upper(), tab=self.tab, desc=probe_status[stat][0]), style=self.sp_small_topi)), probe_status, [i for i in range(1, len(probe_status)+1)])
         self.break_part(1)
-
+        ################################################################################################################
         self.flowables.append(Paragraph("<strong>PROBE STATUS CHART</strong>", style=self.sp_topic))
         self.flowables.append(self.create_pie_chart(data_list=probe_type_count, label_list=[protocol.upper() for protocol in probe_status], user_color=[ probe_status[i][2] for i in probe_status]))
-
-
+        ################################################################################################################
         self.flowables.append(Paragraph("<strong>SUMMARY TEST RESULT EACH PROBE</strong>", style=self.sp_topic))
         self.break_part(1)
         map(lambda item: self.get_fk_cluster_information(status=item), probe_status)
+        ################################################################################################################
 
         self.flowables.append(PageBreak())
 
+        ################################################################################################################
         self.flowables.append(Paragraph("<strong>SUMMARY PROBE INFORMATION WITH TEST RESULT</strong>", style=self.sp_topic))
         self.break_part(1)
         for status,value in zip(probe_status, probe_type_count):
             self.flowables.append(Paragraph("TOTAL<font color='{color}'> {status}</font> PROBE:{tab}{val} PROBE(S)".format(color=probe_status[status][1], status=status.upper(), tab=self.tab, val=value), style=self.sp_left))
             self.create_table_with_sql(sql_status.format(status=status), max_height=30)
             self.break_part(1)
-
-
-
-    # def create_body(self):
-    #     tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
-    #
-    #     length, data_active = self.get_probe_information(status='1')
-    #     active_header = Paragraph("<strong><font color='green'>ACTIVE</font> PROBE</strong>", style=self.sp_left)
-    #     total_active = Paragraph(
-    #         "<strong>TOTAL ACTIVE PROBE:</strong>{tab}{total}{tab}probe(s)".format(tab=tab, total=len(data_active) - 1),
-    #         style=self.sp_left)
-    #     table_active = self.create_table(length, data_active, 'LEFT')
-    #
-    #     length_inactive, data_inactive = self.get_probe_information(status='2')
-    #     inactive_header = Paragraph("<strong><font color='red'>INACTIVE</font> PROBE</strong>", style=self.sp_left)
-    #     total_inactive = Paragraph("<strong>TOTAL INACTIVE PROBE:</strong>{tab}{total}{tab}probe(s)".format(tab=tab,
-    #                                                                                                         total=len(
-    #                                                                                                             data_inactive) - 1),
-    #                                style=self.sp_left)
-    #     table_inactive = self.create_table(length_inactive, data_inactive, 'LEFT')
-    #
-    #     length_idle, data_idle = self.get_probe_information(status='3')
-    #     idle_header = Paragraph("<strong><font color='gray'>IDLE</font> PROBE</strong>", style=self.sp_left)
-    #     total_idle = Paragraph(
-    #         "<strong>TOTAL IDLE PROBE:</strong>{tab}{total}{tab}probe(s)".format(tab=tab, total=len(data_idle) - 1),
-    #         style=self.sp_left)
-    #     table_idle = self.create_table(length_idle, data_idle, 'LEFT')
-    #
-    #     chart = self.create_pie_chart(data_list=[len(data_active) - 1, len(data_inactive) - 1, len(data_idle) - 1], label_list=['Active', 'Inactive', 'Idle'])
-    #
-    #
-    #     ################################################### LOGGING ###################################################
-    #     length_log, data_log = self.get_probe_log()
-    #     log_header0 = Paragraph('<strong>PROBE LOGGING</strong>', style=self.sp_left)
-    #
-    #     log_insert = Paragraph("<strong>Insert Logging:</strong>{tab}{count} record(s).".format(tab=tab,count=self.get_log_event_type('insert')), style=self.sp_small_topi)
-    #     log_update = Paragraph("<strong>Update Logging:</strong>{tab}{count} record(s).".format(tab=tab,count=self.get_log_event_type('update')), style=self.sp_small_topi)
-    #     log_delete = Paragraph("<strong>Delete Logging:</strong>{tab}{count} record(s).".format(tab=tab,count=self.get_log_event_type('delete')), style=self.sp_small_topi)
-    #     # log_update = self.get_log_event_type('update')
-    #     # log_delete = self.get_log_event_type('delete')
-    #
-    #     log_header = Paragraph('<strong>DETAILS LOGGING ABOUT PROBE</strong>:{tab}{count} list(s)'.format(tab=tab, count=len(data_log)-1), style=self.sp_left)
-    #     table_log = self.create_table(length_log, data_log, 'LEFT')
-    #
-    #     self.break_part(1)
-    #     self.flowables.append(chart)
-    #     self.break_part(1)
-    #     self.flowables.append(active_header)
-    #     self.flowables.append(total_active)
-    #     self.flowables.append(table_active)
-    #     self.get_fk_cluster_information(1)
-    #     # self.flowables.append(PageBreak())
-    #     self.flowables.append(inactive_header)
-    #     self.flowables.append(total_inactive)
-    #     self.flowables.append(table_inactive)
-    #     self.get_fk_cluster_information(2)
-    #     # self.flowables.append(PageBreak())
-    #     self.flowables.append(idle_header)
-    #     self.flowables.append(total_idle)
-    #     self.flowables.append(table_idle)
-    #     self.get_fk_cluster_information(3)
-    #     self.flowables.append(log_header0)
-    #     # self.break_part(1)
-    #     self.flowables.append(log_insert)
-    #     self.flowables.append(log_update)
-    #     self.flowables.append(log_delete)
-    #     self.break_part(1)
-    #     self.flowables.append(log_header)
-    #     self.flowables.append(table_log)
+        ################################################################################################################
 
 class PDFService(PDFCreation):
 
     def create_body_destination(self):
         self.flowables.append(
-            Paragraph("<strong>REPORT TOPIC:</strong>&nbsp;&nbsp;&nbsp;&nbsp;{topic}".format(topic='DESTINATION'),
-                      style=self.sp_left))
+            Paragraph("<strong>REPORT TOPIC:</strong{tab}{topic}".format(tab=self.tab, topic='DESTINATION'), style=self.sp_left))
 
         sql_condition = """SELECT `destination_name` AS 'Destination', `destination_port` AS 'Port'
                                         , (SELECT `service_name` FROM SERVICES WHERE SERVICES.service_id=DESTINATIONS.service_id) AS 'Service Name', `destination_description` AS 'Description'
@@ -726,9 +493,6 @@ class PDFLogging(PDFCreation):
                                                 max_width=540)
 
     def create_table_with_data_description(self, list_data, list_description, max_width=530, max_height=16):
-        # print list_data
-        # print list_description
-
         result_all = map(lambda item: map(lambda inner: Paragraph(str(inner), style=self.get_style()) if inner != None else '-', item), list_data)
         description = map(lambda item: Paragraph("<strong>{desc}</strong>".format(desc=str(item)), style=self.get_style()), list_description)
         result_all.insert(0, description)
@@ -746,7 +510,6 @@ class PDFLogging(PDFCreation):
                                    ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
                                    ('BOX', (0, 0), (column, row), 0.25, colors.black),
                                    ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
-
         self.flowables.append(table)
 
     def get_log_time_interval(self):
@@ -800,10 +563,6 @@ class PDFLogging(PDFCreation):
             self.break_part(1)
             self.create_table_with_sql(sql=sql_log_detail.format(tlb=item, ref_name=rf_name), max_height=18)
             self.break_part(1)
-            # self.flowables.append(PageBreak())
-        # print 'create each table:', (time.time()-ss)*1000, 'ms'
-        # print "test Part"
-
 
 if __name__ == '__main__':
     probe_report = PDFProbe('Probe', 'probe_report_gen1.pdf', 'both_logo.png')
