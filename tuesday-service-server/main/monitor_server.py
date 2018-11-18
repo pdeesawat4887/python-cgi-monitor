@@ -92,7 +92,7 @@ class Server:
         self.db.connection.commit()
         print 'Successfully Update Probe Status.'
 
-if __name__ == '__main__':
-    server = Server()
-    # server.notify_working()
-    server.monitor_probe()
+# if __name__ == '__main__':
+#     server = Server()
+#     # server.notify_working()
+#     server.monitor_probe()

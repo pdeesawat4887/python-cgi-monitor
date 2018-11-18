@@ -811,3 +811,17 @@ if __name__ == '__main__':
     log_report = PDFLogging('Logging Event', 'logging_report_gen1.pdf', 'both_logo.png')
 
 
+    # full_path = '/var/www/html'
+    # path = '/probe'
+    # user = 'JWT'
+    #
+    # test = check_first(admin, path)
+    #
+    # if test:
+    #     return full_path + path
+    #
+    #
+    # if probe_report:
+    #     print
+
+
