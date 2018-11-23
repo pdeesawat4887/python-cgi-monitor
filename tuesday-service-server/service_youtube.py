@@ -43,9 +43,9 @@ class YoutubeDownloader:
         self.output = "status=1, upload={avg_upload}".format(avg_upload=avg)
 
 if __name__ == '__main__':
-    # service = YoutubeDownloader(sys.argv[1], sys.argv[2])
-    service = YoutubeDownloader("https://www.youtube.com/watch?v=1O2NlSRb-6o", 0)
+    service = YoutubeDownloader(sys.argv[1], sys.argv[2])
+    # service = YoutubeDownloader("https://www.youtube.com/watch?v=1O2NlSRb-6o", 0)
     sys.stdout = sys.__stdout__
-    print service.output
+    # print service.output
 
 

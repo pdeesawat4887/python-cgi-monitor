@@ -48,8 +48,8 @@ class Probe:
         return ':'.join(mac[i:i + 2] for i in range(0, 12, 2))
 
     def setup_probe(self):
-        sql = "INSERT INTO PROBES VALUES ('{ipd}', {nom}, '{iadr}', '{madr}', '{stat}', NOW(), NOW()) ON DUPLICATE KEY UPDATE `ip_address`='{iadr}', `mac_address`='{madr}', `last_updated`=NOW();".format(
-            ipd=self.probe_id, nom='NULL', iadr=self.ip_address, madr=self.mac_address, stat=3)
+        sql = "INSERT INTO PROBES VALUES ('{ipd}', '{nom}', '{iadr}', '{madr}', '{stat}', NOW(), NOW()) ON DUPLICATE KEY UPDATE `ip_address`='{iadr}', `mac_address`='{madr}', `last_updated`=NOW();".format(
+            ipd=self.probe_id, nom=self.probe_id, iadr=self.ip_address, madr=self.mac_address, stat=3)
         self.db.execute_sql(sql)
 
     def get_active_services(self):

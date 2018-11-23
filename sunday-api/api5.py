@@ -362,6 +362,19 @@ class GetNotification(GetMethod):
     }
     dict_attribute_extra = {}
 
+class GetPrivilege(GetMethod):
+    table = 'PRIVILEGES'
+    dict_attribute = {
+        'ipriv': 'id',
+        'priv_lvl': 'privilege_level',
+        'priv_rol': 'role',
+        'priv_dash': 'dashboard',
+        'priv_ch': 'chart',
+        'priv_sets': 'setting',
+        'priv_usr_sets': 'user_setting',
+    }
+    dict_attribute_extra = {}
+
 class GetDashboard(GetMethod):
     table = 'DASHBOARD'
     dict_attribute = {
@@ -427,7 +440,7 @@ class InsertService(PostMethod):
         fn = self.verify_input(length=64, restrict='[a-zA-Z0-9\.\-\_]', attribute='file_name', value=self.argument.getvalue('val[fn]', None), unique=True)
         u_cmd = self.verify_input(length=2083, restrict=often_pattern, attribute='udp_message', value=self.argument.getvalue('val[u_cmd]', None))
         svc_desc = self.verify_input(length=2083, restrict=often_pattern, attribute='service_description', value=self.argument.getvalue('val[svc_desc]', None))
-        svc_dest_ex = self.verify_input(length=2083, restrict=often_pattern, attribute='destination_example', value=self.argument.getvalue('val[svc_dest_ex]', False))
+        svc_dest_ex = self.verify_input(length=2083, restrict=often_pattern, attribute='destination_example', value=self.argument.getvalue('val[svc_dest_ex]', None))
         self.sql = [(None, nsvc, trans_prot, f_cmd, fn, u_cmd, svc_desc, svc_dest_ex)]
 
         ### log event
@@ -509,6 +522,22 @@ class InsertNotification(PostMethod):
 
         ### log event
         self.logging_statement(type='insert', table=self.table, word=notif_desc)
+
+class InsertPrivilege(PostMethod):
+    table = 'PRIVILEGES'
+
+    def prepare_statement(self):
+        priv_lvl = self.verify_input(length=1, restrict='[0-9]', attribute='privilege_level', value=self.argument.getvalue('val[priv_lvl]', False))
+        priv_rol = self.verify_input(length=50, restrict="[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/_-]", attribute='privilege_role', value=self.argument.getvalue('val[priv_rol]', False))
+        priv_dash = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='dashboard', value=self.argument.getvalue('val[priv_dash]', False))
+        priv_ch = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='chart', value=self.argument.getvalue('val[priv_ch]', False))
+        priv_sets = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='setting', value=self.argument.getvalue('val[priv_sets]', False))
+        priv_usr_sets = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='user_setting', value=self.argument.getvalue('val[priv_usr_sets]', False))
+        self.sql = [('Null', priv_lvl, priv_rol, priv_dash, priv_ch, priv_sets, priv_usr_sets)]
+
+        ### log event
+        self.logging_statement(type='insert', table=self.table, word=priv_rol)
+
 # class InsertUser(PostMethod):
 #     table = 'user'
 #
@@ -585,6 +614,13 @@ class DeleteCluster(DeleteMethod):
         ### log event
         self.word = self.db.select("SELECT `cluster_description` FROM {tlb} WHERE `cluster_id`='{iclus}'".format(tlb=self.table, iclus=iclus))[0][0]
 
+        self.external_statement(iclus)
+
+    def external_statement(self, iclus):
+        probe_id = self.db.select("SELECT `probe_id` FROM CLUSTERS WHERE `cluster_id`='{iclus}'".format(iclus=iclus))[0][0]
+        sql_update = "UPDATE PROBES SET `probe_status`='Idle' WHERE `probe_id`='{ipb}'".format(ipb=probe_id)
+        self.db.mycursor.execute(sql_update)
+
 class DeleteNotifyToken(DeleteMethod):
     table = 'NOTIFY_TOKEN'
 
@@ -604,6 +640,16 @@ class DeleteNotification(DeleteMethod):
 
         ### log event
         self.word = self.db.select("SELECT `notify_description` FROM {tlb} WHERE `notify_id`='{inotif}'".format(tlb=self.table, inotif=inotif))[0][0]
+
+class DeletePrivilege(DeleteMethod):
+    table = 'PRIVILEGES'
+
+    def prepare_condition(self):
+        ipriv = self.verify_input(length=11, restrict='[0-9]', attribute='id', value=self.argument.getvalue('del[ipriv]', False))
+        self.sql += " WHERE `id`='{ipriv}';".format(ipriv=ipriv)
+
+        ### log event
+        self.word = self.db.select("SELECT `role` FROM {tlb} WHERE `id`='{ipriv}'".format(tlb=self.tlb, ipriv=ipriv))[0][0]
 
 
 # class DeleteUser(DeleteMethod):
@@ -848,6 +894,22 @@ class UpdateDashboard(PatchMethod):
         }
         return option[key](value)
 
+class UpdatePrivilede(PatchMethod):
+    dictionary = GetPrivilege.dict_attribute
+    table = 'PRIVILEGES'
+    log_attribute = 'role'
+
+    def checker(self, key, value):
+        option = {
+            'priv_lvl': partial(self.verify_update, 11, '[0-9]', 'privilege_level'),
+            'priv_role': partial(self.verify_update, 50, '[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];\':.\\\/-_]', 'role'),
+            'priv_dash': partial(self.verify_update, 5, '(?:true|false|1|2)', 'dashboard'),
+            'priv_ch': partial(self.verify_update, 5, '(?:true|false|1|2)', 'chart'),
+            'priv_sets': partial(self.verify_update, 5, '(?:true|false|1|2)', 'setting'),
+            'priv_usr_sets': partial(self.verify_update, 5, '(?:true|false|1|2)', 'user_setting'),
+        }
+        return option[key](value)
+
 
 ################## MANY UPDATE ################
 
@@ -918,6 +980,7 @@ if __name__ == '__main__':
         'tk': GetNotifyToken,
         'notif': GetNotification,
         'dash': GetDashboard,
+        'priv': GetPrivilege,
     }
     dict_tlb_post = {
         'dest': InsertDestination,
@@ -926,7 +989,7 @@ if __name__ == '__main__':
         'clus': InsertCluster,
         'tk': InsertNotifyToken,
         'notif': InsertNotification,
-
+        'priv': InsertPrivilege,
 
     }
     dict_tlb_del = {
@@ -937,6 +1000,7 @@ if __name__ == '__main__':
         'clus': DeleteCluster,
         'tk': DeleteNotifyToken,
         'notif': DeleteNotification,
+        'priv': DeletePrivilege,
 
 
     }
@@ -952,6 +1016,7 @@ if __name__ == '__main__':
         'rning_svcs': UpdateManyServices,
         'rning_dests': UpdateManyDestinations,
         'dash': UpdateDashboard,
+        'priv': UpdatePrivilede,
         # 'persty': UpdateUser,
 
     }

@@ -73,7 +73,7 @@ class MySQLDatabase:
 
 
 # db = MySQLDatabase()
-# svc_sql = "SELECT `service_nam3e` FROM SERVICES WHERE `service_id`='{isvc}';"
+# svc_sql = "SELECT `service_name` FROM SERVICES WHERE `service_id`='{isvc}';"
 # db.mycursor.execute(svc_sql.format(isvc=3))
 # output = db.mycursor.fetchone()[0]
 # print output
