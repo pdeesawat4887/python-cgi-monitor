@@ -113,6 +113,8 @@ class Service:
             stdout += ", rtt={rtt}".format(rtt=(end_time - start_time) * 1000)
         except socket.timeout:
             status_final = 2
+        except Exception:
+            status_final = 3
         finally:
             s.close()
             return stdout.format(status_final=status_final)

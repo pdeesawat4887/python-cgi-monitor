@@ -59,28 +59,28 @@ class Method:
         print "Error: {word}".format(word=word)
         exit()
 
-    def verify_text(self, text):
-        try:
-            return text if re.match("^[a-zA-Z0-9_-]*$", text) else None
-        except Exception as e:
-            self.log_error(e)
+    # def verify_text(self, text):
+    #     try:
+    #         return text if re.match("^[a-zA-Z0-9_-]*$", text) else None
+    #     except Exception as e:
+    #         self.log_error(e)
 
-    def verify_number(self, number):
-        try:
-            return number if re.match("^[0-9]*$", number) else None
-        except Exception as e:
-            self.log_error(e)
+    # def verify_number(self, number):
+    #     try:
+    #         return number if re.match("^[0-9]*$", number) else None
+    #     except Exception as e:
+    #         self.log_error(e)
 
-    def verify_unique(self, table, column, value):
-        if value == None:
-            self.bad_request('cannot found {col} value.'.format(col=column))
-
-        val = int(self.db.select("SELECT count(`{column}`) FROM {table} WHERE `{column}`={value};".format(column=column, table=table, value=value))[0][0])
-
-        if val > 0:
-            self.bad_request('Duplicate key')
-        else:
-            return value
+    # def verify_unique(self, table, column, value):
+    #     if value == None:
+    #         self.bad_request('cannot found {col} value.'.format(col=column))
+    #
+    #     val = int(self.db.select("SELECT count(`{column}`) FROM {table} WHERE `{column}`={value};".format(column=column, table=table, value=value))[0][0])
+    #
+    #     if val > 0:
+    #         self.bad_request('Duplicate key')
+    #     else:
+    #         return value
 
     def verify_input(self, length, restrict, value, attribute, unique=False):
         format_reg = {
@@ -261,6 +261,7 @@ class GetTestResult(GetMethod):
         'trans_prot': "(select `transport_protocol` from `SERVICES` where `TESTRESULTS`.`service_id`=`SERVICES`.`service_id`) as trans_prot",
         'svc_desc': "(select `service_description` from `SERVICES` where `TESTRESULTS`.`service_id`=`SERVICES`.`service_id`) as svc_desc",
         'clus_desc': "(select `cluster_description` from `CLUSTERS` where `TESTRESULTS`.`cluster_id`=`CLUSTERS`.`cluster_id`) as clus_desc",
+        'pb_nom': "(select `probe_name` from PROBES where (select `probe_id` from CLUSTERS where CLUSTERS.cluster_id=TESTRESULTS.cluster_id)=`PROBES`.`probe_id`) as probe_name",
     }
     dict_attribute_extra = {}
 
@@ -527,7 +528,7 @@ class InsertPrivilege(PostMethod):
     table = 'PRIVILEGES'
 
     def prepare_statement(self):
-        priv_lvl = self.verify_input(length=1, restrict='[0-9]', attribute='privilege_level', value=self.argument.getvalue('val[priv_lvl]', False))
+        priv_lvl = self.verify_input(length=1, restrict='[0-9]', attribute='privilege_level', value=self.argument.getvalue('val[priv_lvl]', False), unique=True)
         priv_rol = self.verify_input(length=50, restrict="[a-zA-Z0-9\s~!@#$%^&?*()+`={}|\[\];':.\\\/_-]", attribute='privilege_role', value=self.argument.getvalue('val[priv_rol]', False))
         priv_dash = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='dashboard', value=self.argument.getvalue('val[priv_dash]', False))
         priv_ch = self.verify_input(length=5, restrict="(?:true|false|1|2)", attribute='chart', value=self.argument.getvalue('val[priv_ch]', False))
@@ -602,7 +603,7 @@ class DeleteProbe(DeleteMethod):
         self.sql += " WHERE `probe_id`='{ipb}';".format(ipb=ipb)
 
         ### log event
-        self.word = self.db.select("SELECT `probe_name` FROM {tlb} WHERE `probe_id`='{ipb}'".format(tlb=self.table,idest=ipb))[0][0]
+        self.word = self.db.select("SELECT `probe_name` FROM {tlb} WHERE `probe_id`='{ipb}'".format(tlb=self.table,ipb=ipb))[0][0]
 
 class DeleteCluster(DeleteMethod):
     table = 'CLUSTERS'

@@ -65,7 +65,7 @@ class PDFCreation:
         self.create_header()
         self.create_body()
 
-        self.doc.build(self.flowables, onFirstPage=self.addPageNumber, onLaterPages=self.addPageNumber)
+        self.doc.build(self.flowables, onFirstPage=self.add_page_number, onLaterPages=self.add_page_number)
 
     def break_part(self, line):
         blank = Paragraph("&nbsp;&nbsp;&nbsp;&nbsp;", style=self.sp_left)
@@ -92,17 +92,17 @@ class PDFCreation:
     def create_body(self):
         pass
 
-    def create_table(self, length, data, align, row_height=24):
-        row = len(data) - 1
-        column = len(data[0]) - 1
-        table = Table(data, colWidths=length, rowHeights=row_height, hAlign=align)
-        table.setStyle(TableStyle([('ALIGN', (0, 0), (column, row), 'CENTER'),
-                                   ('VALIGN', (0, 0), (column, row), 'MIDDLE'),
-                                   ('FONTSIZE', (0, 0), (column, row), 8),
-                                   ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
-                                   ('BOX', (0, 0), (column, row), 0.25, colors.black),
-                                   ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
-        return table
+    # def create_table(self, length, data, align, row_height=24):
+    #     row = len(data) - 1
+    #     column = len(data[0]) - 1
+    #     table = Table(data, colWidths=length, rowHeights=row_height, hAlign=align)
+    #     table.setStyle(TableStyle([('ALIGN', (0, 0), (column, row), 'CENTER'),
+    #                                ('VALIGN', (0, 0), (column, row), 'MIDDLE'),
+    #                                ('FONTSIZE', (0, 0), (column, row), 8),
+    #                                ('INNERGRID', (0, 0), (column, row), 0.25, colors.black),
+    #                                ('BOX', (0, 0), (column, row), 0.25, colors.black),
+    #                                ('TEXTCOLOR', (0, 0), (column, row), colors.black), ]))
+    #     return table
 
     def get_style(self):
         styles = getSampleStyleSheet()
@@ -180,16 +180,16 @@ class PDFCreation:
 
         self.flowables.append(table)
 
-    def before_table_log(self, table):
-        log_sql = "SELECT `event_type`, count(`logging_id`) AS 'record' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' GROUP BY `event_type`;".format(tlb=table.upper())
-        log_result = self.db.select(log_sql)
+    # def before_table_log(self, table):
+    #     log_sql = "SELECT `event_type`, count(`logging_id`) AS 'record' FROM LOGGING_EVENTS WHERE `event_table`='{tlb}' GROUP BY `event_type`;".format(tlb=table.upper())
+    #     log_result = self.db.select(log_sql)
+    #
+    #     if not log_result:
+    #         self.flowables.append(Paragraph("<strong>EMPTY LOGGING</strong>", style=self.sp_small_topi))
+    #     else:
+    #         map(lambda item: self.flowables.append(Paragraph("<strong>{main} Logging:</strong>{tab}{val} record(s)".format(tab=self.tab, main=item[0].capitalize(), val=item[1]), style=self.sp_left)), log_result)
 
-        if not log_result:
-            self.flowables.append(Paragraph("<strong>EMPTY LOGGING</strong>", style=self.sp_small_topi))
-        else:
-            map(lambda item: self.flowables.append(Paragraph("<strong>{main} Logging:</strong>{tab}{val} record(s)".format(tab=self.tab, main=item[0].capitalize(), val=item[1]), style=self.sp_left)), log_result)
-
-    def addPageNumber(self, canvas, doc):
+    def add_page_number(self, canvas, doc):
         """
         Add the page number
         """

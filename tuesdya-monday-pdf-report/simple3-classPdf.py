@@ -66,6 +66,7 @@ class PDFCreation:
                                       leading=16)
         self.create_header()
         self.create_body()
+        self.create_footer()
 
         self.doc.build(self.flowables, onFirstPage=self.addPageNumber, onLaterPages=self.addPageNumber)
 
@@ -78,10 +79,9 @@ class PDFCreation:
         img = utils.ImageReader(path)
         iw, ih = img.getSize()
         aspect = ih / float(iw)
-        return Image(path, width=width, height=(width * aspect))
+        return Image(path, width=width, height=(width * aspect), hAlign=TA_LEFT)
 
     def create_header(self):
-        self.flowables.append(self.get_image(path=self.logo, width=5*cm))
         self.break_part(1)
         self.flowables.append(Paragraph("NETWORK ACTIVE MONITORING SYSTEM REPORT", style=self.sp_header))
         self.flowables.append(Paragraph(
@@ -93,6 +93,11 @@ class PDFCreation:
 
     def create_body(self):
         pass
+
+    def create_footer(self):
+        self.break_part(1)
+        self.flowables.append(Paragraph("COPYRIGHT BY<br></br>Advanced Information Technology PLC<br></br>CAT Telecom PLC<br></br>", style=self.sp_small_topi))
+        self.flowables.append(self.get_image(path=self.logo, width=5 * cm))
 
     def create_table(self, length, data, align, row_height=24):
         row = len(data) - 1
