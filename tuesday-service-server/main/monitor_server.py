@@ -12,7 +12,7 @@ class Server:
     def working_notify(self):
         static_sql = "SELECT (select `probe_name` from CLUSTERS join PROBES on CLUSTERS.probe_id=PROBES.probe_id WHERE CLUSTERS.cluster_id=test.cluster_id) as probe_name," \
                      "(select `ip_address` from CLUSTERS join PROBES on CLUSTERS.probe_id=PROBES.probe_id WHERE CLUSTERS.cluster_id=test.cluster_id) as ip_address, " \
-                     "`start_date`, `service_name`, `service_description`, `destination_name`, `destination_port`, `round_trip_time`, `download`, `upload`, `other`, `other_unit`, `other_description`" \
+                     "`start_date`, `service_name`, `service_description`, `destination_name`, `destination_port`, `round_trip_time`, `download`, `upload`, `other`, `other_unit`, `other_description`, dest.`destination_description`" \
                      "FROM TESTRESULTS test LEFT JOIN DESTINATIONS dest ON dest.destination_id=test.destination_id LEFT JOIN SERVICES svc ON svc.service_id=test.service_id " \
                      "WHERE `start_date` >= (NOW() - INTERVAL 10 MINUTE) and ({condition});"
 
@@ -55,7 +55,7 @@ class Server:
 
         url = 'https://notify-api.line.me/api/notify'
         headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + token}
-        msg_header = "\nWarning! {info}\n".format(info=notify_desc if notify_desc != None else '')
+        msg_header = "\nWarning! {info}\n".format(info= notify_desc if notify_desc != None else '')
 
         ################################################################
 
