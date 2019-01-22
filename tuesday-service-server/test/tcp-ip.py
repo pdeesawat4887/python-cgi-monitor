@@ -37,4 +37,4 @@ class Mum:
         s.close()
 
 if __name__ == '__main__':
-    iron = Mum('8.8.8.8', 53)
+    iron = Mum('google.com', 443)

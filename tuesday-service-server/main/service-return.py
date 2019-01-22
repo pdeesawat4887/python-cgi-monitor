@@ -66,5 +66,5 @@ def tcp(destination, destination_port):
         s.close()
         return stdout.format(status_final=status_final)
 
-hello = tcp('172.217.160.36', 443)
+hello = tcp('google.com', 443)
 print hello

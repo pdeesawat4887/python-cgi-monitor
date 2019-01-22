@@ -5,6 +5,7 @@ import bitmath
 import socket
 import time
 import subprocess
+import requests
 
 
 class Service:
@@ -86,38 +87,59 @@ class Service:
 
         return stdout.format(status_final=status_final)
 
+    # def tcp_work(self, destination, destination_port):
+    #     stdout = "status={status_final}"
+    #
+    #     try:
+    #         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #     except socket.error as err:
+    #         print "socket creation failed with error %s" % (err)
+    #         status_final = 3
+    #
+    #     regex = {'http://': '', 'https://': ''}
+    #     destination = reduce(lambda a, kv: a.replace(*kv), regex.iteritems(), destination)
+    #
+    #     try:
+    #         host_ip = socket.gethostbyname(destination)
+    #     except socket.gaierror:
+    #         status_final = 3
+    #
+    #     s.settimeout(1)
+    #
+    #     try:
+    #         start_time = time.time()
+    #         s.connect((host_ip, destination_port))
+    #         end_time = time.time()
+    #         status_final = 1
+    #         stdout += ", rtt={rtt}".format(rtt=(end_time - start_time) * 1000)
+    #     except socket.timeout:
+    #         status_final = 2
+    #     except Exception:
+    #         status_final = 3
+    #     finally:
+    #         s.close()
+    #         return stdout.format(status_final=status_final)
+
     def tcp_work(self, destination, destination_port):
+
+        if 'http://' not in destination:
+            destination = 'http' + destination
+
         stdout = "status={status_final}"
+        list_data = []
 
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except socket.error as err:
-            print "socket creation failed with error %s" % (err)
-            status_final = 3
-
-        regex = {'http://': '', 'https://': ''}
-        destination = reduce(lambda a, kv: a.replace(*kv), regex.iteritems(), destination)
-
-        try:
-            host_ip = socket.gethostbyname(destination)
-        except socket.gaierror:
-            status_final = 3
-
-        s.settimeout(1)
-
-        try:
-            start_time = time.time()
-            s.connect((host_ip, destination_port))
-            end_time = time.time()
+        try :
+            for i in range(1, 10):
+                r = requests.get(destination)
+                roundtrip = r.elapsed.total_seconds()
+                list_data.append(roundtrip)
             status_final = 1
-            stdout += ", rtt={rtt}".format(rtt=(end_time - start_time) * 1000)
-        except socket.timeout:
-            status_final = 2
+            stdout += ", rtt={rtt}".format(rtt = (reduce(lambda x, y: x + y, list_data) / len(list_data)) * 1000)
         except Exception:
             status_final = 3
         finally:
-            s.close()
             return stdout.format(status_final=status_final)
+
 
     def file_work(self, destination, destination_port):
         process = subprocess.Popen(
