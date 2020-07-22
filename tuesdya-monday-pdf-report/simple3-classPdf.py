@@ -24,7 +24,7 @@ class PDFCreation:
     def __init__(self, table, file_name, logo):
         # self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
         self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
-        self.master_font = "Times-Roman"
+        self.main_font = "Times-Roman"
         self.styles = getSampleStyleSheet()
         self.table = table
         self.file_name = file_name
@@ -126,8 +126,8 @@ class PDFCreation:
     #     data = [(item / (sum(data_list) * 1.0)) * 100 for item in data_list]
     #     u_color = [colors.lawngreen, colors.red, colors.gray]
     #     # color = [colors.lawngreen, colors.red, colors.gray]
-    #     # u_master = [randint(0, 100) for i in range(4)]
-    #     # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
+    #     # u_main = [randint(0, 100) for i in range(4)]
+    #     # u_color = [PCMYKColor(randint(0, u_main[0]), randint(0, u_main[1]), randint(0, u_main[2]), randint(0, u_main[3])) for i in range(3)]
     #     # print u_color
     #     # color = u_color
     #     d = Drawing()
@@ -168,8 +168,8 @@ class PDFCreation:
 
         # u_color = [colors.lawngreen, colors.red, colors.gray]
         # color = [colors.lawngreen, colors.red, colors.gray]
-        # u_master = [randint(0, 100) for i in range(4)]
-        # u_color = [PCMYKColor(randint(0, u_master[0]), randint(0, u_master[1]), randint(0, u_master[2]), randint(0, u_master[3])) for i in range(3)]
+        # u_main = [randint(0, 100) for i in range(4)]
+        # u_color = [PCMYKColor(randint(0, u_main[0]), randint(0, u_main[1]), randint(0, u_main[2]), randint(0, u_main[3])) for i in range(3)]
         # print u_color
         # color = u_color
 
@@ -268,7 +268,7 @@ class PDFCreation:
         bar.categoryAxis.labels.angle = x_angle
         bar.categoryAxis.labels.boxAnchor = 'autox'
         bar.categoryAxis.labels.fontSize = fontSize
-        bar.categoryAxis.labels.fontName = self.master_font
+        bar.categoryAxis.labels.fontName = self.main_font
         bar.categoryAxis.strokeWidth = 0.25
         bar.categoryAxis.tickDown = -(bar.height)
         bar.categoryAxis.categoryNames = label_x_axis

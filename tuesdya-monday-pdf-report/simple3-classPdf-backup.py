@@ -23,7 +23,7 @@ class PDFCreation:
 
     def __init__(self, table, file_name, logo):
         self.tab = "&nbsp;&nbsp;&nbsp;&nbsp;"
-        self.master_font = "Times-Roman"
+        self.main_font = "Times-Roman"
         self.styles = getSampleStyleSheet()
         self.table = table
         self.file_name = file_name
@@ -215,7 +215,7 @@ class PDFCreation:
         bar.categoryAxis.labels.angle = x_angle
         bar.categoryAxis.labels.boxAnchor = 'autox'
         bar.categoryAxis.labels.fontSize = fontSize
-        bar.categoryAxis.labels.fontName = self.master_font
+        bar.categoryAxis.labels.fontName = self.main_font
         bar.categoryAxis.strokeWidth = 0.25
         bar.categoryAxis.tickDown = -(bar.height)
         bar.categoryAxis.categoryNames = label_x_axis

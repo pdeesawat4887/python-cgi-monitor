@@ -271,7 +271,7 @@ class Service:
                 mail.reset_smtp_connection()
                 print server, mail.status, mail.code
                 self.f_database.put_data(self.node, 'mailService/' + temp_server, mail.status)
-                # self.f_database.put_data('testObj','master1', mail)
+                # self.f_database.put_data('testObj','main1', mail)
             except Exception as e:
                 print e
                 print "\nCouldn't connect."

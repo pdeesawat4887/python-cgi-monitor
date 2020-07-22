@@ -30,16 +30,16 @@ class DnsSolution(service_cl.Service):
 
     def get_status(self, destination, port):
         try:
-            master, time_master = self.get_record('8.8.8.8')
+            main, time_main = self.get_record('8.8.8.8')
             tester, time_tester = self.get_record(destination)
         except:
             return 2, None, None, None
 
-        check = set(master).intersection(tester).__len__()
+        check = set(main).intersection(tester).__len__()
 
-        if (master.__len__() - 1) <= check and time_tester <= 100:
+        if (main.__len__() - 1) <= check and time_tester <= 100:
             return 0, time_tester, None, None
-        elif (master.__len__() - 1) <= check and time_tester > 100 and time_tester <= 1000:
+        elif (main.__len__() - 1) <= check and time_tester > 100 and time_tester <= 1000:
             return 1, time_tester, None, None
         else:
             return 2, None, None, None

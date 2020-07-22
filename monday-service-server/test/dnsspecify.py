@@ -15,18 +15,18 @@ answer = my_resolver.query('google.com', 'A')
 my_resolver_test.nameservers = ['1.1.1.1']
 answer_test = my_resolver_test.query('google.com', 'A')
 
-collection_master = []
+collection_main = []
 collection_test = []
 
 for data in answer:
-    collection_master.append(data.to_text())
+    collection_main.append(data.to_text())
 
 print '-------------------------------------------'
 
 for data in answer_test:
     collection_test.append(data.to_text())
 
-if collection_master.sort() == collection_test.sort():
+if collection_main.sort() == collection_test.sort():
     print 'Yeap'
 # print "canonical_name: ", answer.canonical_name
 # print "Expiration: ", answer.expiration
